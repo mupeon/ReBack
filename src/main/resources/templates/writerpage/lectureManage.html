@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <a sec:authorize="isAuthenticated()">
+        <h2>강의 관리</h2>
+        <div>
+
+        </div>
+        <button type="submit">강의 업로드</button>
+        </a>
+    </th:block>
+</th:block>
+</body>
+</html>

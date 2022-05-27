@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<!--      th:replace="~{layout::layout(~{::#main})}">-->
+
+<meta charset="UTF-8">
+<title>구매하기</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+
+
+        </head>
+        <a sec:authorize="isAuthenticated()">
+        <body>
+        <h3>상품명 : productDetails 에서 받아온 값 orders 테이블에 넣기</h3>
+        <br>
+        <h3>상품정보  : productDetails 에서 받아온 값 orders 테이블에 넣기</h3>
+        <br>
+        <h3>총 수량 : productDetails 에서 받아온 값 orders 테이블에 넣기</h3>
+        <br>
+        <h3>총 가격 : productDetails 에서 받아온 값 orders 테이블에 넣기</h3>
+        <br>
+        <h3>수신자 주소 : 직접입력 해서 orders 테이블에 넣기</h3>
+        <br>
+        <h3>수신자 이름 : 직접입력 해서 orders 테이블에 넣기</h3>
+        <br>
+        <h3>수신사 번호 : 직접입력 해서 orders 테이블에 넣기</h3>
+        <br>
+        <h3>주문 요청 사항 : 직접입력 해서 orders 테이블에 넣기</h3>
+        </body>
+        </a>
+    </th:block>
+</th:block>
+</html>

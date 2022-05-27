@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+<head>
+    <meta charset="UTF-8">
+    <title>맞춤교육</title>
+</head>
+        <a sec:authorize="isAuthenticated()">
+<body>
+<div id="main">
+    <h1>맞춤교육</h1>
+    <p></p>
+    <div>
+        <div>
+            <label for="topic">희망하는 강의 주제</label>
+            <input type="text" id="topic">
+        </div>
+        <div>
+            <label for="date">희망 날짜</label>
+            <input type="date" id="date">
+        </div>
+        <div>
+            <label for="time">희망 시간대</label>
+            <input type="time" id="time"> ~ <input type="time">
+        </div>
+        <div>
+            <label for="place">강의 장소</label>
+            <input type="text" id="place">
+        </div>
+        <div>
+            <label for="number">수강 인원</label>
+            <input type="text" id="number">
+        </div>
+        <div>
+            <label for="price">희망 가격</label>
+            <input type="text" id="price">
+        </div>
+        <div>
+            <input type="button" value="강사 매칭하기">
+        </div>
+
+
+    </div>
+</div>
+</body>
+        </a>
+    </th:block>
+</th:block>
+</html>

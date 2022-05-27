@@ -1,0 +1,52 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  output:
+    ansi:
+      enabled: always
+  servlet:
+    multipart:
+      location: C:/upload
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  datasource: # 여기가 DB 설정하는 곳
+    url: jdbc:oracle:thin:@reback_high?TNS_ADMIN=./src/main/resources/wallet/Wallet_ReBack
+    username: admin
+    password: CapstoneTeam2
+    driver-class-name: oracle.jdbc.OracleDriver
+
+    # 설치된 H2 DB와 연결 URL
+#    url: jdbc:h2:tcp://localhost/~/capstone
+
+    # 접속을 위한 드라이버
+#    driver-class-name: org.h2.Driver
+
+#    # springboot 2.4 부터는 username 꼭 있어야 함.
+#    username: sa
+
+  jpa:
+    hibernate:
+      ddl-auto: update # 애플리케이션 실행시점에 내가 가지고 있는 테이블 제거(drop) 후 다시 생성
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        user_sql_comments: true
+  open-in-view: false
+
+logging: # 로거를 통해 로그 출력
+  level:
+    org.hibernate.SQL: debug # 로거를 통해 hibernate 실행 SQL을 남긴다.
+    spring:
+      mvc:
+        static-path-pattern=/webapp/**:
+#    org:
+#      hibernate:
+#        type:
+#          desciptor:
+#            sql: trace
+
+server:
+  port: 8086
+

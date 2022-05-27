@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+<head>
+    <meta charset="UTF-8">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+    ></script>
+    <title>교육나눔</title>
+</head>
+        <a sec:authorize="isAuthenticated()">
+<body>
+
+<div id="main">
+
+
+
+<h1>강사 목록</h1>
+
+<div th:each="i:${info}">
+    <div th:text="${i.memberCode.memberName}"></div>
+    <div th:text="${i.trainingTopic}"></div>
+    <div th:text="${i.availableDay}"></div>
+    <div th:text="${i.writerLecturePlace}"></div>
+    <button><a th:href="@{'/education/shareedu/writerResult/'+${i.memberCode.memberCode}}">보기</a></button>
+</div>
+</div>
+</body>
+        </a>
+    </th:block>
+</th:block>
+</html>

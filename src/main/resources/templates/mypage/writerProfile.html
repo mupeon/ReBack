@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+<head>
+    <meta charset="UTF-8">
+    <title>강사프로필</title>
+</head>
+        <a sec:authorize="isAuthenticated()">
+<body>
+<div id="main">
+    <p>강사프로필</p>
+    <div th:each="i:${info}">
+        <div th:text="${i.memberCode.memberName}"></div>
+        <div th:text="${i.writerLecturePlace}"></div>
+        <div th:text="${i.availableStartTime}"></div>
+        <div th:text="${i.availableFinishTime}"></div>
+        <div th:text="${i.availableDay}"></div>
+        <div th:text="${i.trainingTopic}"></div>
+        <div th:text="${i.trainingStatus}"></div>
+        <div th:text="${i.feedbackStatus}"></div>
+        <button><a th:href="@{/mypage/writerprofilemanage(id=${i.writerInformationCode})}">수정하기</a></button>
+        <hr>
+    </div>
+</div>
+<hr>
+
+</body>
+        </a>
+    </th:block>
+</th:block>
+</html>

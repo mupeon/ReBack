@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+</head>
+        <a sec:authorize="isAuthenticated()">
+<body>
+<div id="main">
+    <p>마이페이지</p>
+    <button><a th:href="@{/mypage/writerprofile}">강사프로필 관리</a></button>
+    <button><a th:href="@{/mypage/lecturemanage}">강의관리</a></button>
+</div>
+
+</body>
+        </a>
+    </th:block>
+</th:block>
+</html>

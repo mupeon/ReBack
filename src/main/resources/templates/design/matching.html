@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<!--      th:replace="~{layout::layout(~{::#main})}">-->
+<meta charset="UTF-8">
+<title>Writer matching</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <a sec:authorize="isAuthenticated()">
+        <body style="background-color: #D2FFD8">
+        <form id="form" enctype="multipart/form-data">
+            <div class="wrap">
+                <div class="product-desc">
+                    <h2>
+                        컨설팅
+                    </h2>
+                </div>
+                <div class="item-order">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">카테고리</span>
+                        </div>
+                        <select class="input-group-text" id="categoryCode" name="categoryCode">
+                            <option>--</option>
+                            <option th:each="category : ${categories}" th:value="${category.categoryCode}"
+                                    th:text="${category.categoryName}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">소재</span>
+                        </div>
+                        <select class="input-group-text" id="materialCode" name="materialCode">
+                            <option>--</option>
+                            <option th:each="material : ${materials}" th:value="${material.materialCode}"
+                                    th:text="${material.materialName}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">컨설팅명</span>
+                        </div>
+                        <input
+                                type="text"
+                                class="form-control"
+                                aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default"
+                                name="consultingName" id="consultingName"
+                        />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">시작 시간</span>
+                        </div>
+                        <input
+                                type="number"
+                                class="form-control"
+                                aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default"
+                                name="consultingStartingTime" id="consultingStartingTime"
+                                placeholder="0~23사이의 숫자로 입력해주세요."/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">종료 시간</span>
+                        </div>
+                        <input
+                                type="number"
+                                class="form-control"
+                                aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default"
+                                name="consultingEndTime" id="consultingEndTime" placeholder="0~23사이의 숫자로 입력해주세요."/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">디자인 사진</span>
+                        </div>
+                        <input
+                                type="file"
+                                class="form-control"
+                                aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default"
+                                name="file" id="file"
+                        />
+                    </div>
+
+                    <button type="submit" id="submit" class="btn btn-primary btn-order">
+                        등록
+                    </button>
+                </div>
+            </div>
+        </form>
+        </body>
+        </a>
+        <script th:inline="javascript">
+            $(() => {
+                $('#submit').on('click', () => {
+                    const data = {
+                        consultingName: $('#consultingName').val(),
+                        consultingStartingTime: $('#consultingStartingTime').val(),
+                        consultingEndTime: $('#consultingEndTime').val(),
+
+
+                        categoryCode: {
+                            categoryCode: $('#categoryCode option:selected').val(),
+                            categoryName: $('#categoryCode option:selected').text(),
+                        },
+                        materialCode: {
+                            materialCode: $('#materialCode option:selected').val(),
+                            materialName: $('#materialCode option:selected').text(),
+                        },
+
+
+                    }
+
+
+                    console.log(data);
+                    console.log(data.categoryCode.categoryCode);
+                    console.log(data.materialCode.materialCode);
+                    alert(data);
+                    const path = '/api/design/consulting';
+
+                    const form = $('#form')[0];
+                    const formData = new FormData(form);
+                    formData.append('file', $('#file'));
+                    formData.append('key', new Blob([JSON.stringify(data)], {type: "application/json"}));
+                    $.ajax({
+                        url: path,
+                        type: 'POST',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                    }).done(() => {
+                        alert("컨설팅 등록 완료");
+                        window.location.href = '/design/consulting';
+
+                    }).fail((error) => {
+                        alert((error));
+                    })
+                })
+            })
+        </script>
+    </th:block>
+</th:block>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+<head>
+    <meta charset="UTF-8">
+    <title>기부 영수증</title>
+</head>
+        <a sec:authorize="isAuthenticated()">
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+
+<div id="content">
+    <h1 style="color:green">기부해 주셔서 감사합니다!</h1>
+    <p>ㅇㅇㅇ 님의 후원 내역은 ~입니다(추가 예정)</p>
+</div>
+
+<script language = "javascript">
+
+    const doc = new jsPDF({
+        //orientation: "landscape",
+        orientation: "portrait",
+        format: "a4"
+        //format: [4, 2]
+    });
+
+    doc.addHTML(document.body,function() {
+        doc.save('기부영수증.pdf');
+    });
+
+</script>
+</body>
+        </a>
+    </th:block>
+</th:block>
+</html>

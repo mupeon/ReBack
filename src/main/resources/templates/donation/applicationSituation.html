@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+<head>
+    <meta charset="UTF-8">
+    <title>후원 현황</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+</head>
+        <a sec:authorize="isAuthenticated()">
+<body>
+<div id="main">
+    <h2>의류 후원 현황</h2>
+    <table border="1px">
+        <thead>
+        <tr>
+            <th scope="col">의류후원코드</th>
+            <th scope="col">의류후원자</th>
+            <th scope="col">의류량</th>
+            <th scope="col">수거날짜</th>
+            <th scope="col">수거지역</th>
+            <th scope="col">기부영수증발행여부</th>
+            <th scope="col">기부영수증신청여부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cloth:${clothes}">
+            <th th:text="${cloth.clothingSponsorCode}"></th>
+            <th>후원자</th>
+            <!--<th th:text="${cloth.MemberCode}"></th>-->
+            <th th:text="${cloth.amount}"></th>
+            <th th:text="${cloth.pickupDate}"></th>
+            <th th:text="${cloth.pickupArea}"></th>
+            <th th:text="${cloth.issueStatus}"></th>
+            <th th:text="${cloth.appStatus}"></th>
+        </tr>
+        </tbody>
+    </table>
+    <h2>금전 후원 현황</h2>
+    <table border="1px">
+        <thead>
+        <tr>
+            <th scope="col">금전후원코드</th>
+            <th scope="col">금전후원자</th>
+            <th scope="col">후원금액</th>
+            <th scope="col">후원날짜</th>
+            <th scope="col">후원유형</th>
+            <th scope="col">기부영수증발행여부</th>
+            <th scope="col">기부영수증신청여부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="financial:${financials}">
+            <th th:text="${financial.financialSupportCode}" id="financialSupportCode" th:value="${financial.financialSupportCode}"></th>
+            <th th:text="${financial.memberCode}" id="memberCode" th:value="${financial.memberCode}"></th>
+            <!--        <th th:text="${cloth.MemberCode}"></th>-->
+            <th th:text="${financial.financialAmount}"></th>
+            <th th:text="${financial.financialDate}"></th>
+            <th th:text="${financial.financialType}"></th>
+            <th th:text="${financial.statusIssue}"></th>
+            <th th:text="${financial.statusApp}"></th>
+            <!--            <button><a id="modify" th:href="@{/donation/}"></a></button>-->
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <button th:onclick="|location.href='@{/donation}'|">메인으로</button>
+    <button th:onclick="|window.history.back()|">뒤로가기</button>
+    <button th:onclick="|location.href='@{/donation/manager}'|">후원 관리[관리자 모드]</button>
+</div>
+
+</body>
+        </a>
+    </th:block>
+</th:block>
+</html>

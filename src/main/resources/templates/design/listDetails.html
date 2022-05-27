@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/html"
+      th:replace="~{layout::layout(~{::#main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>DesignListDeatils</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<a sec:authorize="isAuthenticated()">
+<body>
+<div id="main">
+
+    <h2>디자인 디테일</h2>
+    <h5><img width="100" height="100" th:src="@{|/static/images/${design.designFilePath}|}"></h5>
+    <h5 th:text="|이름 : ${design.designName}|"></h5>
+    <h5 th:text="|디자인 설명 : ${design.designInfo}|"></h5>
+    <h5 th:text="|카테고리 : ${design.category.categoryName}|"></h5>
+    <h5 th:text="|소재 : ${design.material.materialName}|"></h5>
+    <button type="submit" id="submit">삭제</button>
+</div>
+</body>
+</a>
+<script th:inline="javascript">
+    $(()=>{
+        $('#submit').on('click', ()=>{
+            var designPw = prompt('비밀번호를 입력하세요.');
+            document.write(designPw);
+            //window.location.reload
+        })
+    })
+</script>
+</html>

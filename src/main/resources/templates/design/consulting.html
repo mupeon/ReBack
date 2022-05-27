@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<!--      th:replace="~{layout::layout(~{::#main})}">-->
+
+<meta charset="UTF-8">
+<title>consutling</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <a sec:authorize="isAuthenticated()">
+    <h1 class="mt-4">컨설팅 신청 페이지</h1>
+    <br><br>
+    <form id="form" enctype="multipart/form-data">
+      <div class="wrap">
+
+        <div class="item-order">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">카테고리</span>
+            </div>
+            <select class="input-group-text" id="categoryCode" name="categoryCode">
+              <option>--</option>
+              <option th:each="category : ${categories}" th:value="${category.categoryCode}"
+                      th:text="${category.categoryName}">
+              </option>
+            </select>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">소재</span>
+            </div>
+            <select class="input-group-text" id="materialCode" name="materialCode">
+              <option>--</option>
+              <option th:each="material : ${materials}" th:value="${material.materialCode}"
+                      th:text="${material.materialName}">
+              </option>
+            </select>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">컨설팅명</span>
+            </div>
+            <input
+                    type="text"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="consultingName" id="consultingName"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">컨설팅 설명</span>
+            </div>
+            <textarea
+                    type="text"
+                    class="form-control"
+                    row="5"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="consultingInfo" id="consultingInfo"></textarea>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">암호설정</span>
+            </div>
+            <input
+                    type="password"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="ConsultingPw" id="ConsultingPw" placeholder="숫자 4자리"/>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">장소</span>
+            </div>
+            <input
+                    type="text"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="consultingPlace" id="consultingPlace"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">일자</span>
+            </div>
+            <input
+                    type="date"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="consultingDate" id="consultingDate"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">시작시간</span>
+            </div>
+            <input
+                    type="time"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="startingTimeString" id="startingTimeString"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">종료시간</span>
+            </div>
+            <input
+                    type="time"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="endTimeString" id="endTimeString"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">컨설팅 사진</span>
+            </div>
+            <input
+                    type="file"
+                    class="form-control"
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    name="file" id="file"
+            />
+          </div>
+
+
+          <button type="submit" id="uploadBtn" class="btn btn-primary btn-order">
+            등록
+          </button>
+        </div>
+      </div>
+    </form>
+    <a th:href="@{/design/consultingList}">
+      <button class="btn btn-primary btn-order">컨설팅 목록</button>
+    </a>
+    </body>
+    </a>
+    <script th:inline="javascript">
+      $(() => {
+        $('#uploadBtn').on('click', () => {
+          const data = {
+            consultingName: $('#consultingName').val(),
+            consultingInfo: $('#consultingInfo').val(),
+            ConsultingPw: $('#ConsultingPw').val(),
+            consultingPlace: $('#consultingPlace').val(),
+            consultingDate: $('#consultingDate').val(),
+            startingTimeString: $('#startingTimeString').val(),
+            endTimeString: $('#endTimeString').val(),
+
+
+            categoryCode: {
+              categoryCode: $('#categoryCode option:selected').val(),
+              categoryName: $('#categoryCode option:selected').text(),
+            },
+            materialCode: {
+              materialCode: $('#materialCode option:selected').val(),
+              materialName: $('#materialCode option:selected').text(),
+            },
+          }
+
+
+          const path = '/api/design/consulting';
+
+          const form = $('#form')[0];
+          const formData = new FormData(form);
+          formData.append('file', $('#file'));
+          formData.append('key', new Blob([JSON.stringify(data)], {type: "application/json"}));
+          $.ajax({
+            url: path,
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+          }).done(()=> {
+            alert("컨설팅 등록 완료");
+            window.location.href = '/design/consulting';
+          }).fail( (error)=> {
+            alert((error));
+          })
+        })
+      })
+
+    </script>
+  </th:block>
+</th:block>
+</html>

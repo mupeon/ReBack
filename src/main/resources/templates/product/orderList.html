@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<meta charset="UTF-8">
+<title>구매목록</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <a sec:authorize="isAuthenticated()">
+        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+        <h1>구매 내역</h1>
+        <table  class="table table-dark table-striped">
+            <thead>
+            <tr>
+                <th scope="col">상품명</th>
+                <th scope="col">상품사진</th>
+                <th scope="col">주문일자</th>
+                <th scope="col">주문코드</th>
+                <th scope="col">주문가격</th>
+                <th scope="col">주문수량</th>
+                <th scope="col">주문상태</th>
+                <th scope="col">환불신청</th>
+                <!--        <th scope="col">수신자 주소</th>-->
+                <!--        <th scope="col">수신자 연락처</th>-->
+
+            </tr>
+            </thead>
+            <div>
+                <tbody>
+                <tr th:each="list : ${orders}">
+                    <th id="productName" th:text="${list.productCode.getProductName()}"></th>  <!--상품명-->
+                    <th><img id="productFilePath" th:src="${list.productCode.getProductFilePath()}" width="150px" height="150px"></th> <!--상품사진-->
+                    <th id="payTime" th:text="${list.payTime}"></th> <!--주문일자-->
+                    <th id="ordersCode" th:text="${list.ordersCode}"></th> <!--주문코드-->
+                    <th id="payAmount" th:text="${list.payAmount}"></th> <!--주문가격-->
+                    <th id="ordersStock" th:text="${list.ordersStock}"></th> <!--주문수량-->
+                    <th id="ordersState" th:text="${list.ordersState}"></th> <!--주문상태-->
+                    <th scope="col"><button class="btn btn-primary btn-order" id="refund"><button><a th:href="@{/product/refund(id=${list.ordersCode})}">환불하기</a></button></th>
+
+
+                </tr>
+                </tbody>
+            </div>
+        </table>
+
+        </body>
+        </a>
+        <script th:inline="javascript">
+            $(()=>{
+                $('#refund').on('click',()=>{
+                    const data = {
+                        productName: $('#productName').val(),
+                        productFilePath :$('#productFilePath').val(),
+                        payTime:$('#payTime').val(),
+                        ordersCode :$('#ordersCode').val(),
+                        payAmount :$('#payAmount').val(),
+                        ordersStock :$('#ordersStock').val(),
+                        ordersState :$('#ordersState').val(),
+                    }
+                    const path = '/api/product/refund';
+
+                    $.ajax({
+                        url: path,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: json,
+
+                    }).done( ()=> {
+                        // window.location.href = '/product/manager';
+                    }).fail( (error)=> {
+                        alert(error);
+                    })
+                })
+
+            })
+        </script>
+    </th:block>
+</th:block>
+</html>
