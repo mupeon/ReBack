@@ -67,6 +67,8 @@ public class DonationController {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
+
+            model.addAttribute("financials", financialSupportRepository.findAll());
         }
         return "donation/clothingSponsor";
     }

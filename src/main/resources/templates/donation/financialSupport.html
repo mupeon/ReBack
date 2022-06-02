@@ -12,8 +12,9 @@
         <a sec:authorize="isAuthenticated()">
 <body>
 <div id="main">
+    <a type="text" id="memberCode1" th:text="|${principal.memberName}님 반가워요!|"> </a>
     <div>
-<!--        <a type="hidden" id="memberCode" th:text="${principal.memberCode}"></a>-->
+        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
     </div>
     <div>
         <label>후원 종류
@@ -32,6 +33,7 @@
             <input type="number" placeholder="숫자만 입력해 주세요" id="financialAmount"> 원
         </label>
     </div>
+
     <div>
         <label>후원 선택 날짜
             <input type="datetime-local" id="financialDate">

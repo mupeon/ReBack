@@ -32,6 +32,7 @@ public class DonationApiController<financialSupport> {
     }
     @PostMapping("/donation/FinancialSupport") //금전 후원
     public String FinancialSupport(@RequestBody FinancialSupport financialSupport){
+
         financialSupportRepository.save(financialSupport);
 
         return "donation/financialSupport";
