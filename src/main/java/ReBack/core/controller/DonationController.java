@@ -88,7 +88,7 @@ public class DonationController {
         return "donation/applicationSituation";
     }
 
-    @GetMapping("/donation/clothesManage")
+    @GetMapping("/donation/clothesManage") // 의류 후원 관리 페이지
     public String clothesManage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
         System.out.println("id값:" + id);
         if (principal != null) {
@@ -107,7 +107,7 @@ public class DonationController {
         return "donation/clothManage";
     }
 
-    @GetMapping("/donation/financialManage")
+    @GetMapping("/donation/financialManage") // 금전 후원 관리 페이지
     public String financialManage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
         System.out.println("id값:" + id);
         if (principal != null) {
@@ -126,7 +126,7 @@ public class DonationController {
         return "donation/financialManage";
     }
 
-    @GetMapping("/donation/manager")
+    @GetMapping("/donation/manager") // 후원 상세 보기(관리)
     public String applicationManager(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
@@ -155,7 +155,7 @@ public class DonationController {
 //        return "donation/financialPdf";
 //    }
 
-    @GetMapping("/donation/financialPdf")
+    @GetMapping("/donation/financialPdf") // 금전 후원 PDF
     public String financialPdf(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());

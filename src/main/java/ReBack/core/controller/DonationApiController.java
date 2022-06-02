@@ -37,7 +37,7 @@ public class DonationApiController<financialSupport> {
         return "donation/financialSupport";
     }
 
-    @PutMapping("/donation/update")
+    @PutMapping("/donation/update") // 후원 수정
     public void financialUpdate(@RequestBody FinancialSupport financialSupport) {
 
         System.out.println(financialSupport);
@@ -47,7 +47,7 @@ public class DonationApiController<financialSupport> {
         financialSupportRepository.save(financialSupport);
     }
 
-    @DeleteMapping("/donation/delete")
+    @DeleteMapping("/donation/delete") // 금전 후원 삭제
     public void financialDelete(@RequestBody FinancialSupport financialSupport) {
         Optional<FinancialSupport> deleteFinancialSupport = financialSupportRepository.findById(financialSupport.getFinancialSupportCode());
 
@@ -57,7 +57,7 @@ public class DonationApiController<financialSupport> {
         }
     }
 
-    @DeleteMapping("/donations/delete")
+    @DeleteMapping("/donations/delete") // 의류 후원 삭제
     public void clothDelete(@RequestBody ClothingSponsor clothingSponsor) {
         Optional<ClothingSponsor> deleteClothingSponsor = clothingSponsorRepository.findById(clothingSponsor.getClothingSponsorCode());
 
