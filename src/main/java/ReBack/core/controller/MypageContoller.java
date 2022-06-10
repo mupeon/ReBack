@@ -1,8 +1,11 @@
 package ReBack.core.controller;
 
+import ReBack.core.controller.request.AuthorRequest;
 import ReBack.core.data.Member;
 
+import ReBack.core.data.Role;
 import ReBack.core.repository.MemberRepository;
+import ReBack.core.repository.WriterInformationRepository;
 import ReBack.core.security.SecurityUser;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -24,15 +27,17 @@ public class MypageContoller {
     @Autowired
     private final MemberRepository memberRepository;
 
-    @GetMapping("/me/authorMypage")
-    public String authorMypage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
-        System.out.println("id값:" + id);
+    private final WriterInformationRepository writerInformationRepository;
+
+    @GetMapping("/me/authorMyPage")
+    public String authorMyPage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id, Role role) {
+        model.addAttribute("writerInformation", new AuthorRequest());
+        System.out.println(role);
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
 
             Member member = memberRepository.findById(id).orElse(null);
-            // ->  null값도 가져올 수 있으니 주의
 //            model.addAttribute("members", memberRepository.findAll());
             model.addAttribute("memberId", member.getMemberId());
             model.addAttribute("memberName", member.getMemberName());
@@ -46,11 +51,36 @@ public class MypageContoller {
             model.addAttribute("memberJoinDate", member.getMemberJoinDate());
             model.addAttribute("role", member.getRole());
         }
-        return "mypage/authorMypage";
+        return "myPage/authorMyPage";
+    }
+    @GetMapping("/me/adminMyPage")
+    public String adminMyPage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id, Role role) {
+        model.addAttribute("writerInformation", new AuthorRequest());
+        System.out.println(role);
+        if (principal != null) {
+            model.addAttribute("principal", principal.getMember());
+            model.addAttribute("role", principal.getMember().getRole().getDescription());
+
+            Member member = memberRepository.findById(id).orElse(null);
+//            model.addAttribute("members", memberRepository.findAll());
+            model.addAttribute("memberId", member.getMemberId());
+            model.addAttribute("memberName", member.getMemberName());
+//            model.addAttribute("password", member.getPassword());
+            model.addAttribute("memberEmail", member.getMemberEmail());
+            model.addAttribute("memberPhoneNumber", member.getMemberPhoneNumber());
+//            model.addAttribute("memberPostalCode", member.getMemberPostalCode());
+            model.addAttribute("memberAddress", member.getMemberAddress());
+//            model.addAttribute("memberPoint", member.getMemberPoint());
+//            model.addAttribute("memberBusinessNumber", member.getMemberBusinessNumber());
+            model.addAttribute("memberJoinDate", member.getMemberJoinDate());
+            model.addAttribute("role", member.getRole());
+        }
+        return "myPage/adminMyPage";
     }
 
 
-    @GetMapping("/me/comranyMyPage")
+
+    @GetMapping("/me/companyMyPage")
     public String comranyMyPage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
         System.out.println("id값:" + id);
         if (principal != null) {
@@ -72,11 +102,11 @@ public class MypageContoller {
             model.addAttribute("memberJoinDate", member.getMemberJoinDate());
             model.addAttribute("role", member.getRole());
         }
-        return "mypage/comranyMyPage";
+        return "myPage/companyMyPage";
     }
 
 
-    @GetMapping("/me/memberMypage")
+    @GetMapping("/me/memberMyPage")
     public String memberMypage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
         System.out.println("id값:" + id);
         if (principal != null) {
@@ -86,6 +116,7 @@ public class MypageContoller {
             Member member = memberRepository.findById(id).orElse(null);
             // ->  null값도 가져올 수 있으니 주의
 //            model.addAttribute("members", memberRepository.findAll());
+            model.addAttribute("memberCode", member.getMemberCode());
             model.addAttribute("memberId", member.getMemberId());
             model.addAttribute("memberName", member.getMemberName());
 //            model.addAttribute("password", member.getPassword());
@@ -98,7 +129,7 @@ public class MypageContoller {
             model.addAttribute("memberJoinDate", member.getMemberJoinDate());
             model.addAttribute("role", member.getRole());
         }
-        return "mypage/memberMypage";
+        return "myPage/memberMyPage";
     }
 
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+<title>환불신청</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+        <input type="hidden" id="refundStatus" th:value=1>
+
+        <table class="table table-dark table-striped">
+            <thead>
+            <tr>
+                <th scope="col">상품명</th>
+                <th scope="col">사진</th>
+                <th scope="col">결제금액</th>
+                <th scope="col">회원 이름</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="list :${refundList}">
+                <input type="hidden" id="refundCode" th:value="${list.refundCode}">
+                <th scope="col" th:text="${list.ordersCode.productCode.productName}"></th>
+                <th scope="col" ><img th:src="${list.ordersCode.productCode.productFilePath}" width="150px" height="150px"></th>
+                <th scope="col" th:text="${list.refundAmount}"></th>
+                <th scope="col" th:text="${list.ordersCode.memberCode.memberName}"></th>
+                <th>
+                    <a th:href="@{/product/refundDetail(refundCode=${list.refundCode})}"><button class="btn btn-primary">상세보기</button> </a>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+
+        </body>
+
+    </th:block>
+</th:block>
+</html>

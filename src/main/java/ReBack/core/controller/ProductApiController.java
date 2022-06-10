@@ -3,9 +3,12 @@ package ReBack.core.controller;
 import ReBack.core.data.OrderList;
 import ReBack.core.data.Orders;
 import ReBack.core.data.Product;
+import ReBack.core.data.Refund;
 import ReBack.core.repository.OrderListRepository;
 import ReBack.core.repository.OrdersRepository;
 import ReBack.core.repository.ProductRepository;
+import ReBack.core.repository.RefundRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+
+import static ReBack.core.data.RefundState.환불완료;
 
 @RestController
 @RequestMapping("/api/product")
@@ -26,6 +32,8 @@ public class ProductApiController {
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    RefundRepository refundRepository;
 //    CategoryRepository categoryRepository;
 //    MaterialRepository materialRepository;
 
@@ -35,7 +43,7 @@ public class ProductApiController {
     @PutMapping("/update") //상품 수정
     public void productUpdate(@RequestBody Product product) {
         System.out.println("수정api");
-        System.out.println(product.getProductFilePath() + " 사진경로") ;
+        System.out.println(product.getProductFilePath() + " 사진경로");
         Optional<Product> searchProduct = productRepository.findById(product.getProductCode());
 
         if (searchProduct.isPresent()) {
@@ -68,11 +76,11 @@ public class ProductApiController {
             fileName = "";
         } else {
             fileName = file.getOriginalFilename(); //
-            String filepath = request.getSession().getServletContext().getRealPath("") + "file\\" ; // webapps/file
+            String filepath = request.getSession().getServletContext().getRealPath("") + "file\\"; // webapps/file
             System.out.println("filepath  :    " + filepath);
             try {
 
-                file.transferTo(new File(filepath+fileName));
+                file.transferTo(new File(filepath + fileName));
                 System.out.println("업로드 성공");
                 product.setProductFileName(fileName);
                 product.setProductFilePath("/file/" + fileName);
@@ -86,8 +94,10 @@ public class ProductApiController {
         productRepository.save(product);
         return "redirect:/product/manager";
     }
+
     @PostMapping("/order") //상품 주문
-    public String orderProduct(@RequestBody Orders orders){
+    public String orderProduct(@RequestBody Orders orders) {
+
         Optional<Product> product = productRepository.findById(orders.getProductCode().getProductCode());
         Product product2 = product.get();
 
@@ -120,9 +130,41 @@ public class ProductApiController {
     }
 
     @PostMapping("/refund") //환불정보
-    public String refundProduct(@RequestBody Product product){
-        System.out.println(product);
+    public String refundProduct(@RequestBody Refund refund) {
+        refundRepository.save(refund);
 
-        return"/product/refund";
+//        System.out.println(ordersRepository.find2ByOrdersCode(refund.getOrdersCode().getOrdersCode()));
+        Optional<Orders> orders = ordersRepository.find2ByOrdersCode(refund.getOrdersCode().getOrdersCode());
+
+        System.out.println(orders.get().getRefundStatus());
+
+        orders.get().setRefundStatus(refund.getRefundStatus());
+
+        ordersRepository.save(orders.get());
+
+
+        return "/product/refund";
+    }
+
+    @PutMapping("/refundManager") //환불 완료 처리
+    public String refundManager(@RequestBody Refund refund) {
+        Optional<Refund> refund1 = refundRepository.findById(refund.getRefundCode());
+        refund.setRefundCount(refund1.get().getRefundCount());
+        refund.setRefundAmount(refund1.get().getRefundAmount());
+        refund.setRefundPoint(refund1.get().getRefundPoint());
+        refund.setRefundTime(refund1.get().getRefundTime());
+        refund.setOrdersCode(refund1.get().getOrdersCode());
+        refund.setRefundReason(refund1.get().getRefundReason());
+
+        refundRepository.save(refund);
+        if (refund.getRefundStatus() == 환불완료) {
+            Optional<Product> product = productRepository.findById(refund.getOrdersCode().getProductCode().getProductCode());
+            int changeStock = product.get().getProductStock() + refund.getOrdersCode().getOrdersStock();
+            product.get().setProductStock(changeStock);
+            productRepository.save(product.get());
+        } else {
+            System.out.println(refund.getRefundStatus());
+        }
+        return "redirect:/product/refundManager";
     }
 }

@@ -47,9 +47,6 @@ public class RegistryController {
         return "authorregistration";
     }
 
-
-
-
     @PostMapping("/registry")
     public String registry(@ModelAttribute RegistryRequest registryRequest) {
         Member member = Member.builder()
@@ -87,8 +84,6 @@ public class RegistryController {
         return "redirect:/login";
     }
 
-
-
     @PostMapping("/authorregistry")
     public String authorregistry(@ModelAttribute RegistryRequest authorRequest) {
         Member member = Member.builder()
@@ -103,8 +98,6 @@ public class RegistryController {
         return "redirect:/login";
     }
 
-
-
 //    @PostMapping("/mypage")
 //    public String mypage(@ModelAttribute RegistryRequest authorRequest) {
 //        Member member = Member.builder()
@@ -118,10 +111,6 @@ public class RegistryController {
 //
 //        return "mypage";
 //    }
-
-
-
-
 
     @ModelAttribute("roles")
     public Map<String, Role> roles() {

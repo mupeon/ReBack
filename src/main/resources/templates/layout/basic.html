@@ -96,19 +96,19 @@
                                     <button sec:authorize="!isAuthenticated()" class="btn btn-lg btn-dark">로그인</button>
                                 </a>
                                 <div sec:authorize="hasRole('ROLE_MEMBER')">
-                                    <a id="modify" th:href="@{/me/memberMypage(id=${principal.memberCode}, writer = ${principal.role})}" th:text="${principal.memberName}">마이페이지</a>
+                                    <a id="modify" th:href="@{/me/memberMyPage(id=${principal.memberCode}, writer = ${principal.role})}" th:text="${principal.memberName}">마이페이지</a>
                                 </div>
 
                                 <div sec:authorize="hasRole('ROLE_AUTHOR')">
-                                    <a id="modify1" th:href="@{/me/authorMypage(id=${principal.memberCode}, writer = ${principal.role})}" th:text="${principal.memberName}">마이페이지</a>
+                                    <a id="modify1" th:href="@{/me/authorMyPage(id=${principal.memberCode}, writer = ${principal.role})}" th:text="${principal.memberName}">마이페이지</a>
                                 </div>
 
                                 <div sec:authorize="hasRole('ROLE_COMPANY')">
-                                    <a id="modify2" th:href="@{/me/comranyMyPage(id=${principal.memberCode}, writer = ${principal.role})}" th:text="${principal.memberName}">마이페이지</a>
+                                    <a id="modify2" th:href="@{/me/companyMyPage(id=${principal.memberCode}, writer = ${principal.role})}" th:text="${principal.memberName}">마이페이지</a>
                                 </div>
 
                                 <div sec:authorize="hasRole('ROLE_ADMIN')">
-                                    <a id="modify3" th:href="@{/me/myPage(id=${principal.memberCode}, writer = ${principal.role})}" th:text="${principal.memberName}">마이페이지</a>
+                                    <a id="modify3" th:href="@{/me/adminMyPage(id=${principal.memberCode}, writer = ${principal.role})}" th:text="${principal.memberName}">마이페이지</a>
                                 </div>
                                 <a class="dropdown-item" th:href="@{/logout}">
                                     <button sec:authorize="isAuthenticated()" class="btn btn-danger btn-lg">로그아웃</button>
@@ -118,6 +118,7 @@
                     </ul>
                 </div>
             </nav>
+
 
             <div class="container-fluid">
                 <th:block th:replace="${content}"></th:block>

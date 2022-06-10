@@ -3,10 +3,12 @@ package ReBack.core.data;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @ToString
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,13 +26,19 @@ public class Refund {
     @Column(nullable = false)
     private int refundAmount;
 
-    @Column(nullable = false, length=1)
-    private int refundStatus;
+    @Column(nullable = false)
+    private RefundState refundStatus;
+
+    @Column(nullable = false)
+    private String refundReason;
 
     @Column(nullable = false)
     private int refundPoint;
 
-    @ManyToOne
-    @JoinColumn(name="order_list_code")
-    private OrderList orderList;
+    @Column(nullable = false)
+    private LocalDateTime refundTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="orders_code")
+    private Orders ordersCode;
 }

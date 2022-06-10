@@ -46,6 +46,9 @@ public class Orders {
     @Column(nullable = false, name="orders_delivery_status", length=1)
     private int deliveryStatus; // 배송상태
 
+    @Column(nullable = true)
+    private RefundState refundStatus;
+
     @Column(nullable = false, name="orders_delivery_company_information", length = 20)
     private String ordersDeliveryInfo; //배송회사 정보
 

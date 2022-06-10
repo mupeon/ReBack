@@ -1,8 +1,10 @@
 package ReBack.core.controller.request;
 
+import ReBack.core.data.Member;
 import ReBack.core.data.MemberHowJoin;
 import ReBack.core.data.MemberWithdrawal;
 import ReBack.core.data.Role;
+import ReBack.core.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,5 +28,11 @@ public class RegistryRequest {
         private LocalDateTime memberJoinDate;
         private boolean enabled;
 
+        private Long writerInformationCode;
+        private String writerLecturePlace;
+        private String availableStartTime;
+        private String availableFinishTime;
+        private String availableDay;
+
         private Role role = Role.ROLE_AUTHOR;
-    }
+}

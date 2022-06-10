@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <meta charset="UTF-8">
 <title>환불신청</title>
@@ -8,29 +8,80 @@
 
 <th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
     <th:block th:fragment="content">
-        <a sec:authorize="isAuthenticated()">
+        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+
+        <input type="hidden" id="ordersCode" th:value="${list.ordersCode}">
+        <input type="hidden" id="refundStatus" th:value=0>
+
         <table class="table table-dark table-striped">
             <thead>
             <tr>
-                <th scope="col">카테고리</th>
-                <th scope="col">소재</th>
                 <th scope="col">상품명</th>
                 <th scope="col">사진</th>
-                <th scope="col">상품정보</th>
-                <th scope="col">가격</th>
-                <th scope="col">수량</th>
+                <th scope="col">결제금액</th>
+                <th scope="col">주문수량</th>
+                <th scope="col">수신자 이름</th>
+                <th scope="col">수신자 전화번호</th>
+                <th scope="col">수신자 주소</th>
+                <th scope="col">환불사유</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             <tr>
-
-<!--              <th th:text="${orders.ordersCode}"></th>-->
+                <th id="ProductName" th:text="${list.getProductCode().getProductName()}"></th>
+                <th><img id="ProductFilePath" th:src="${list.getProductCode().getProductFilePath()}"  width="300px" height="300px"></th>
+                <th id="payAmount" th:text="${list.payAmount}"></th>
+                <th id="ordersStock" th:text="${list.ordersStock}"></th>
+                <th id="ordersReceiverName" th:text="${list.ordersReceiverName}"></th>
+                <th id="ordersPhoneNum" th:text="${list.ordersPhoneNum}" ></th>
+                <th id="ordersAddress" th:text="${list.ordersAddress}"></th>
+                <th ><textarea type="text" id="refundReason" placeholder="예) 단순변심"></textarea></th>
+                <th><button class="btn btn-primary" id="refund"><a>환불신청</a></button></th>
             </tr>
+
             </tbody>
         </table>
 
         </body>
-        </a>
+        <script th:inline="javascript">
+            $(() => {
+                $('#refund').on('click', () => {
+                    const refundReason=$('#refundReason').val();
+                    const   refundCount=$('#ordersStock').text();
+                    const  refundAmount=$('#payAmount').text();
+                    const   refundStatus=$('#refundStatus').val();
+                    // const   refundPoint=$('#').val();
+                    const   refundTime= new Date();
+                    const   ordersCode= $('#ordersCode').val();
+
+                    const json = JSON.stringify({
+                        refundCount,
+                        refundAmount,
+                        refundStatus,
+                        refundTime,
+                        refundReason,
+                        ordersCode:{
+                            ordersCode
+                        }
+                    })
+                    console.log(json)
+                    const path = '/api/product/refund';
+                    $.ajax({
+                        url: path,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: json,
+
+                    }).done( ()=> {
+                        alert('환불신청완료');
+                    }).fail( (error)=> {
+                        alert(error);
+                    })
+                })
+
+                })
+        </script>
     </th:block>
 </th:block>
 </html>

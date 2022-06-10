@@ -73,8 +73,6 @@ public class DonationController {
         return "donation/clothingSponsor";
     }
 
-
-
     @GetMapping("/donation/applicationSituation") // 후원 현황
     public String applicationSituation(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
         if (principal != null) {

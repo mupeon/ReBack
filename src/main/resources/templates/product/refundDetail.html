@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+<title>환불신청 상세보기</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <!--        <input type="hidden" id="ordersCode" th:value="${list.ordersCode}">-->
+        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+
+        <table class="table table-dark table-striped">
+            <thead>
+            <tr>
+                <th scope="col">상품명</th>
+                <th scope="col">사진</th>
+                <th scope="col">결제금액</th>
+                <th scope="col">환불상태</th>
+                <th scope="col">환불사유</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <input type="hidden" id="refundCode" th:value="${Detail.refundCode}">
+                <th scope="col" th:text="${Detail.ordersCode.productCode.productName}"></th>
+                <th scope="col" > <img th:src="${Detail.ordersCode.productCode.productFilePath}" width="150px" height="150px"></th>
+                <th scope="col" th:text="${Detail.ordersCode.payAmount}"></th>
+                <th scope="col" id="refundStatus" th:text="${Detail.refundStatus}"></th>
+                <th scope="col" th:text="${Detail.refundReason}"></th>
+                <th scope="col">
+                    <button class="btn btn-primary" type="submit" id="refundOk">환불처리</button>
+                    </br></br>
+                    <button class="btn btn-primary" type="submit" id="refundNo">환불거절</button>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+        </body>
+        <script th:inline="javascript">
+            $(() => {
+
+                if($('#refundStatus').text() == '환불완료'){
+                    console.log("환불완료")
+                    $('#refundOk').hide();
+                    $('#refundNo').hide();
+                }
+                else if($('#refundStatus').text() == '환불대기'){
+                    console.log("환불대기")
+                    $('#refundOk').show();
+                    $('#refundNo').show();
+
+                }
+                else{
+                    $('#refundOk').show();
+                    $('#refundNo').hide();
+                    console.log("환불거절")
+                }
+                $('#refundOk').on('click' ,() => {
+                    console.log("ok");
+                        const refundCode = $('#refundCode').val();
+                        const refundStatus = 1;
+                        console.log(refundCode, ":::::::", refundStatus)
+                        const path = '/api/product/refundManager'
+
+                        const json = JSON.stringify({
+                            refundStatus: refundStatus,
+                            refundCode: refundCode
+                        })
+
+                        alert(json)
+                        $.ajax({
+                            url: path,
+                            type: 'PUT',
+                            contentType: 'application/json',
+                            data: json,
+
+                        }).done(() => {
+                            alert("환불완료")
+                            location.reload();
+                        })
+
+                }),
+                $('#refundNo').on('click' ,() => {
+                    console.log("no");
+                    const refundCode = $('#refundCode').val();
+                    const refundStatus = 2;
+                    console.log(refundCode, ":::::::", refundStatus)
+                    const path = '/api/product/refundManager'
+
+                    const json = JSON.stringify({
+                        refundStatus: refundStatus,
+                        refundCode: refundCode
+                    })
+
+                    alert(json)
+                    $.ajax({
+                        url: path,
+                        type: 'PUT',
+                        contentType: 'application/json',
+                        data: json,
+
+                    }).done(() => {
+                        alert("거절")
+                        location.reload();
+                    })
+
+                })
+            })
+        </script>
+    </th:block>
+</th:block>
+</html>
+
+
