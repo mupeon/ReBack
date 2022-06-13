@@ -62,29 +62,30 @@
 <script th:inline="javascript">
     $(()=>{
         $('#submit').on('click',()=>{
-            const memberCode = $('#memberCode').val();
-            const financialAmount= $('#financialAmount').val();
-            const financialDate= $('#financialDate').val();
-            const financialType= $('#financialType').val();
-            const statusApp= $('#statusApp').val();
-            const statusIssue= $('#statusIssue').val();
+            const data= {
+                memberCode:{
+                    memberCode:$('#memberCode').val()
+                },
+
+                financialAmount: $('#financialAmount').val(),
+                financialDate: $('#financialData').val(),
+                financialType: $('#financialType').val(),
+                statusApp: $('#statusApp').val(),
+                statusIssue: $('#statusIssue').val()
+            }
 
             const path='/api/donation/FinancialSupport'
 
-            const json = JSON.stringify({
-                memberCode,
-                financialAmount,
-                financialDate,
-                financialType,
-                statusApp,
-                statusIssue
-            });
+            const form = $('#form')[0];
+            const formData = new FormData(form);
+            formData.append('key', new Blob([JSON.stringify(data)], {type: "application/json"}));
             // alert(json)
             $.ajax({
                 url:path,
                 type:'POST',
-                contentType:'application/json',
-                data:json
+                processData: false,
+                contentType: false,
+                data: formData,
             }).done((result)=>{
                 alert('후원신청이 완료되었습니다.')
                 window.location.href = '/donation';
@@ -117,6 +118,7 @@
                 }
             })
         })
+        // 기부 영수증?
         // $('#statusApp').on('click',()=>{
         //     function financialPdfOpen() {
         //         let val1 = "";
