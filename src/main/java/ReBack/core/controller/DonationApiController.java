@@ -2,12 +2,14 @@ package ReBack.core.controller;
 
 import ReBack.core.data.ClothingSponsor;
 import ReBack.core.data.FinancialSupport;
+import ReBack.core.data.Product;
 import ReBack.core.repository.ClothingSponsorRepository;
 import ReBack.core.repository.FinancialSupportRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -31,7 +33,7 @@ public class DonationApiController<financialSupport> {
         return "donation/clothingSponsor";
     }
     @PostMapping("/donation/FinancialSupport") //금전 후원
-    public String FinancialSupport(@RequestBody FinancialSupport financialSupport){
+    public String FinancialSupport(@Validated @RequestPart(value = "key") FinancialSupport financialSupport){
 
         financialSupportRepository.save(financialSupport);
 

@@ -11,11 +11,13 @@
 </head>
         <a sec:authorize="isAuthenticated()">
 <body>
-<div id="main">
-    <a type="text" id="memberCode1" th:text="|${principal.memberName}님 반가워요!|"> </a>
-    <div>
-        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
-    </div>
+
+    <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+
+<form id="form" enctype="multipart/form-data">
+    <div class="form-group">
+    <a type="text" id="memberName" th:text="|${principal.memberName}님 반가워요!|"> </a>
+
     <div>
         <label>후원 종류
             <select id="financialType">
@@ -54,7 +56,8 @@
     <button th:onclick="|location.href='@{/donation}'|">메인으로</button>
     <button th:onclick="|window.history.back()|">뒤로가기</button>
     </tr>
-</div>
+    </div>
+</form>
 </body>
         </a>
     </th:block>
@@ -63,18 +66,18 @@
     $(()=>{
         $('#submit').on('click',()=>{
             const data= {
-                memberCode:{
-                    memberCode:$('#memberCode').val()
-                },
-
                 financialAmount: $('#financialAmount').val(),
-                financialDate: $('#financialData').val(),
+                financialDate: $('#financialDate').val(),
                 financialType: $('#financialType').val(),
                 statusApp: $('#statusApp').val(),
-                statusIssue: $('#statusIssue').val()
+                statusIssue: $('#statusIssue').val(),
+
+                memberCode:{
+                    memberCode:$('#memberCode').val()
+                }
             }
 
-            const path='/api/donation/FinancialSupport'
+            const path='/api/donation/FinancialSupport';
 
             const form = $('#form')[0];
             const formData = new FormData(form);
@@ -86,38 +89,38 @@
                 processData: false,
                 contentType: false,
                 data: formData,
-            }).done((result)=>{
+            }).done(()=>{
                 alert('후원신청이 완료되었습니다.')
-                window.location.href = '/donation';
+                return '/donation';
             }).fail((error)=>{
                 alert(error+"error")
             })
         })
-        $('#statusApp').on('click', ()=> {
-            const financialAmount= $('#financialAmount').val();
-            const financialDate= $('#financialDate').val();
-            const financialType= $('#financialType').val();
-
-            const path='/donation/FinancialPdf'
-
-            const allData = { "financialAmount":financialAmount, "financialDate":financialDate, "financialType":financialType }
-
-            const json = JSON.stringify({
-                financialAmount,
-                financialDate,
-                financialType
-            });
-
-            $.ajax({
-                url: path,
-                type: 'GET',
-                data: allData,
-                dataType: 'html',
-                success: function (data) {
-                    $("#financialPdf").html(data);
-                }
-            })
-        })
+        // $('#statusApp').on('click', ()=> {
+        //     const financialAmount= $('#financialAmount').val();
+        //     const financialDate= $('#financialDate').val();
+        //     const financialType= $('#financialType').val();
+        //
+        //     const path='/donation/FinancialPdf'
+        //
+        //     const allData = { "financialAmount":financialAmount, "financialDate":financialDate, "financialType":financialType }
+        //
+        //     const json = JSON.stringify({
+        //         financialAmount,
+        //         financialDate,
+        //         financialType
+        //     });
+        //
+        //     $.ajax({
+        //         url: path,
+        //         type: 'GET',
+        //         data: allData,
+        //         dataType: 'html',
+        //         success: function (data) {
+        //             $("#financialPdf").html(data);
+        //         }
+        //     })
+        // })
         // 기부 영수증?
         // $('#statusApp').on('click',()=>{
         //     function financialPdfOpen() {
