@@ -46,10 +46,6 @@ public class Comment {
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name="order_list_code")
-    private OrderList orderList;
-
-    @ManyToOne
     @JoinColumn(name="bulletin_board_code")
     private BulletinBoard bulletinBoard;
 }

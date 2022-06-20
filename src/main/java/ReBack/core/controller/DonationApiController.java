@@ -27,14 +27,14 @@ public class DonationApiController<financialSupport> {
     private final FinancialSupportRepository financialSupportRepository;
 
     @PostMapping("/donation/clothingSponsor") //의류 후원
-    public String clothingSponsor(@RequestBody ClothingSponsor clothingSponsor){
+    public String clothingSponsor(@Validated @RequestPart(value = "key") ClothingSponsor clothingSponsor){
         clothingSponsorRepository.save(clothingSponsor);
 
         return "donation/clothingSponsor";
     }
+
     @PostMapping("/donation/FinancialSupport") //금전 후원
     public String FinancialSupport(@Validated @RequestPart(value = "key") FinancialSupport financialSupport){
-
         financialSupportRepository.save(financialSupport);
 
         return "donation/financialSupport";

@@ -11,11 +11,9 @@
 </head>
         <a sec:authorize="isAuthenticated()">
 <body>
-
+<div id="main">
     <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
 
-<form id="form" enctype="multipart/form-data">
-    <div class="form-group">
     <a type="text" id="memberName" th:text="|${principal.memberName}님 반가워요!|"> </a>
 
     <div>
@@ -57,7 +55,6 @@
     <button th:onclick="|window.history.back()|">뒤로가기</button>
     </tr>
     </div>
-</form>
 </body>
         </a>
     </th:block>
@@ -90,10 +87,10 @@
                 contentType: false,
                 data: formData,
             }).done(()=>{
-                alert('후원신청이 완료되었습니다.')
-                return '/donation';
+                window.location.href = '/donation';
+
             }).fail((error)=>{
-                alert(error+"error")
+                alert(error+"error");
             })
         })
         // $('#statusApp').on('click', ()=> {
@@ -113,7 +110,7 @@
         //
         //     $.ajax({
         //         url: path,
-        //         type: 'GET',
+        //         type: 'POST',
         //         data: allData,
         //         dataType: 'html',
         //         success: function (data) {

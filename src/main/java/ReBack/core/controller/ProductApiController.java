@@ -1,14 +1,11 @@
 package ReBack.core.controller;
 
-import ReBack.core.data.OrderList;
 import ReBack.core.data.Orders;
 import ReBack.core.data.Product;
 import ReBack.core.data.Refund;
-import ReBack.core.repository.OrderListRepository;
 import ReBack.core.repository.OrdersRepository;
 import ReBack.core.repository.ProductRepository;
 import ReBack.core.repository.RefundRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 import static ReBack.core.data.RefundState.환불완료;
@@ -37,8 +33,6 @@ public class ProductApiController {
 //    CategoryRepository categoryRepository;
 //    MaterialRepository materialRepository;
 
-    @Autowired
-    OrderListRepository orderListRepository;
 
     @PutMapping("/update") //상품 수정
     public void productUpdate(@RequestBody Product product) {
@@ -119,12 +113,6 @@ public class ProductApiController {
 
         System.out.println("저장후 orders  :::: " + orders2);
         System.out.println(orders2.getProductCode());
-        OrderList orderList = new OrderList();
-        orderList.setOrderListAmount(orders2.getOrdersStock());
-        orderList.setOrdersCode(orders2);
-        orderList.setProductCode(orders2.getProductCode());
-        System.out.println("최종 orderList" + orderList);
-        orderListRepository.save(orderList);
 
         return "ok";
     }

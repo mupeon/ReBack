@@ -13,7 +13,9 @@
         <a sec:authorize="isAuthenticated()">
 <body>
 <div id="main">
+    <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
 
+    <a type="text" id="memberName" th:text="|${principal.memberName}님 반가워요!|"> </a>
     <div>
         <label>의류량
             <input type="number" placeholder="숫자만 입력해 주세요" id="amount" > kg
@@ -47,31 +49,35 @@
 
 </body>
         </a>
+    </th:block>
+</th:block>
 <script th:inline="javascript">
     $(()=>{
         $('#submit').on('click',()=>{
-            const amount= $('#amount').val();
-            const pickupDate= $('#pickupDate').val();
-            const pickupArea= $('#pickupArea').val();
-            const appStatus= $('#appStatus').val();
-            const issueStatus= $('#issueStatus').val();
+            const data = {
+                amount: $('#amount').val(),
+                pickupDate: $('#pickupDate').val(),
+                pickupArea: $('#pickupArea').val(),
+                appStatus: $('#appStatus').val(),
+                issueStatus: $('#issueStatus').val(),
+
+                memberCode: {
+                    memberCode: $('#memberCode').val()
+                }
+            }
 
             const path='/api/donation/clothingSponsor'
 
-            const json = JSON.stringify({
-                amount,
-                pickupDate,
-                pickupArea,
-                appStatus,
-                issueStatus
-            });
-            alert(json)
+            const form = $('#form')[0];
+            const formData = new FormData(form);
+            formData.append('key', new Blob([JSON.stringify(data)],{type: 'application/json'}));
             $.ajax({
                 url:path,
                 type:'POST',
-                contentType:'application/json',
-                data:json
-            }).done((result)=>{
+                processData:false,
+                contentType:false,
+                data: formData,
+            }).done(()=>{
                 window.location.href = '/donation';
                 alert('ok')
             }).fail((error)=>{
@@ -80,6 +86,5 @@
         })
     })
 </script>
-    </th:block>
-</th:block>
+
 </html>

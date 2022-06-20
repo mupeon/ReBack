@@ -58,11 +58,11 @@ public class Orders {
     @Column(nullable = false, name="pay_amount", length = 20)
     private int payAmount; //결제 금액
 
-    @OneToMany(mappedBy = "ordersCode",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.PERSIST,
-            orphanRemoval = true)
-    private Set<OrderList> orderList = new HashSet<>();
+//    @OneToMany(mappedBy = "ordersCode",
+//            fetch = FetchType.LAZY,
+//            cascade = CascadeType.PERSIST,
+//            orphanRemoval = true)
+//    private Set<OrderList> orderList = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_code")
