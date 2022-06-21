@@ -1,6 +1,5 @@
 package ReBack.core.controller;
 
-import ReBack.core.data.Member;
 import ReBack.core.repository.MemberRepository;
 import ReBack.core.security.SecurityUser;
 import lombok.Getter;
@@ -25,8 +24,13 @@ public class MemberController {
     private final MemberRepository memberRepository;
 
     @GetMapping("/signupType")
-    public String signupType() {
-        return "signupType";
+    public String signupType(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
+        if (principal != null) {
+            model.addAttribute("principal", principal.getMember());
+            model.addAttribute("role", principal.getMember().getRole().getDescription());
+        }
+        return "member/signupType";
+
     }
 
 }

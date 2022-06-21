@@ -36,7 +36,7 @@ public class DesignApiController {
     private ConsultingServiceImpl consultingServiceImpl;
 
     @PostMapping("/design/addpost")
-    public String productAdd(@Validated @RequestPart(value = "key") DesignDTO designDTO,
+    public String designAdd(@Validated @RequestPart(value = "key") DesignDTO designDTO,
                              @RequestPart(value = "file") MultipartFile file,
                              HttpServletRequest request) {
 
@@ -73,7 +73,7 @@ public class DesignApiController {
 
 
     @PostMapping("/design/consulting")
-    public void productAdd(@Validated @RequestPart(value = "key") ConsultingDTO consultingDTO,
+    public void consultingAdd(@Validated @RequestPart(value = "key") ConsultingDTO consultingDTO,
                            @RequestPart(value = "file") MultipartFile file,
                            HttpServletRequest request) throws Exception {
 

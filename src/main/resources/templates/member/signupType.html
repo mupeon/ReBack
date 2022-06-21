@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+  <th:block th:fragment="content">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
@@ -12,4 +13,6 @@
   <a th:href="@{/companyregistry}"><button>업체</button></a>
 </div>
 </body>
+  </th:block>
+</th:block>
 </html>
