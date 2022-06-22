@@ -7,23 +7,16 @@ import ReBack.core.data.Refund;
 import ReBack.core.repository.*;
 import ReBack.core.security.SecurityUser;
 import ReBack.core.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
-@RequiredArgsConstructor
 @Controller
 public class ProductController {
 
@@ -43,23 +36,38 @@ public class ProductController {
     @Autowired
     RefundRepository refundRepository;
 
+    @GetMapping("/product/category")
+    public String selectCate(@AuthenticationPrincipal SecurityUser principal, Model model,
+                             @RequestParam(required = false) Long categoryCode) {
+        List<Product> selectProduct;
+
+        if(categoryCode == 0) {
+            selectProduct = productRepository.findAll();
+            System.out.println(selectProduct.size());
+            model.addAttribute("products", selectProduct);
+        } else {
+            selectProduct = productRepository.selectCate(categoryCode);
+            System.out.println(selectProduct.size());
+            model.addAttribute("products", selectProduct);
+        }
+
+        model.addAttribute("categorys", categoryRepository.findAll());
+
+        if (principal != null) {
+            model.addAttribute("principal", principal.getMember());
+            model.addAttribute("role", principal.getMember().getRole().getDescription());
+        }
+        return "product/productPage";
+    }
+
+
 
     @GetMapping("/product") //상품 조회 페이지 [모든사람]
-    public String ProductPage(@AuthenticationPrincipal SecurityUser principal, Model model, @PageableDefault(size = 5) Pageable pageable, @RequestParam(required = false, defaultValue = "0", value = "page") int page,
+    public String ProductPage(@AuthenticationPrincipal SecurityUser principal, Model model,
                               @RequestParam(required = false) Long id) {
 
-        System.out.println("RequestParam으로받은 page" + page);
-        page = 100;
-        Page<Product> listPage = productService.list(page);
-
-        int totalPage = 5;// 총 페이지수
-        System.out.println("토탈 페이지" + totalPage);
-        model.addAttribute("productlists", listPage.getContent());
-        model.addAttribute("totalPage", totalPage);
-
-//        List<Product> productList = (List<Product>) productRepository.findAll(pageable);
-        model.addAttribute("products", productRepository.findAll(pageable));
-        model.addAttribute("categorys", categoryRepository.findAll(pageable));
+        model.addAttribute("products", productRepository.findAll());
+        model.addAttribute("categorys", categoryRepository.findAll());
 
         System.out.println("id값:" + id);
         if (principal != null) {
@@ -71,8 +79,6 @@ public class ProductController {
 
     @GetMapping("/product/manager") // 상품 관리자 페이지 [관리자]
     public String productManager(@AuthenticationPrincipal SecurityUser principal, Model model,
-                                 @PageableDefault(size = 5) Pageable pageable,
-                                 @RequestParam(required = false, defaultValue = "0", value = "page") int page,
                                  @RequestParam(required = false) Member memberCode) {
 
         if (principal != null) {
@@ -80,22 +86,44 @@ public class ProductController {
             model.addAttribute("role", principal.getMember().getRole().getDescription());
         }
 
-        System.out.println("RequestParam으로받은 page" + page);
-        page = 100;
-        Page<Product> listPage = productService.list(page);
-
-        int totalPage = 7;// 총 페이지수
-        System.out.println("토탈 페이지" + totalPage);
-        model.addAttribute("productlists", listPage.getContent());
-        model.addAttribute("totalPage", totalPage);
 
 
         model.addAttribute("addproducts", productRepository.findByMemberCode(memberCode));
-        model.addAttribute("categorys", categoryRepository.findAll(pageable));
+//
+        model.addAttribute("categorys", categoryRepository.findAll());
 
         return "product/productManager";
     }
 
+    @GetMapping("/product/manager/category")
+    public String selectCate2(@AuthenticationPrincipal SecurityUser principal, Model model,
+                              @RequestParam(required = false) Member memberCode,
+                              @RequestParam(required = false) Long categoryCode) {
+
+        if (principal != null) {
+            model.addAttribute("principal", principal.getMember());
+            model.addAttribute("role", principal.getMember().getRole().getDescription());
+        }
+
+        System.out.println(memberCode.getMemberCode());
+        Long memberCode1= memberCode.getMemberCode();
+        List<Product> selectProduct;
+
+        if(categoryCode == 0) {
+            selectProduct = productRepository.findByMemberCode(memberCode);
+            System.out.println(selectProduct.size());
+            model.addAttribute("addproducts", selectProduct);
+        } else {
+            selectProduct = productRepository.selectCate2(categoryCode,memberCode1); //memberCode + categoryCode
+            System.out.println(selectProduct.size());
+            model.addAttribute("addproducts", selectProduct);
+        }
+
+        model.addAttribute("categorys", categoryRepository.findAll());
+
+
+        return "product/productManager";
+    }
 
     @GetMapping("/product/manage") //상품 관리 페이지 [수정 및 삭제] , [관리자]
     public String productManage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
@@ -233,5 +261,6 @@ public class ProductController {
         model.addAttribute("Detail",refund);
         return "/product/refundDetail";
     }
+
 
 }

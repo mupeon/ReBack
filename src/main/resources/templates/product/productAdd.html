@@ -108,7 +108,7 @@
                 </div>
             </div>
         </form>
-        <a th:href="@{/product/manager}">
+        <a th:href="@{/product/manager(memberCode=${principal.memberCode})}">
             <button class="btn btn-primary btn-order">돌아가기</button>
         </a>
 
@@ -151,7 +151,7 @@
                     contentType: false,
                     data: formData,
                 }).done(() => {
-                    window.location.href = '/product/manage';
+                    alert("상품 등록이 완료되었습니다");
 
                 }).fail((error) => {
                     alert((error));

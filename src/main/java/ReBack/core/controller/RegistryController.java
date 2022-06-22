@@ -42,7 +42,7 @@ public class RegistryController {
         return "member/registration";
     }
 
-        @GetMapping("/companyregistry")
+    @GetMapping("/companyregistry")
     public String companyregistryForm(Model model) {
         model.addAttribute("member", new RegistryRequest());
         return "member/cpregistration";
@@ -59,6 +59,7 @@ public class RegistryController {
 
     @PostMapping("/registry")
     public String registry(@ModelAttribute RegistryRequest registryRequest) {
+<<<<<<< Updated upstream
                 Member member = Member.builder()
                         .memberId(registryRequest.getMemberId())
                         .memberEmail(registryRequest.getMemberEmail())
@@ -71,8 +72,25 @@ public class RegistryController {
                         .role(registryRequest.getRole())
                         .build();
                 memberRepository.save(member);
+=======
+        Member member = Member.builder()
+                .memberId(registryRequest.getMemberId())
+                .memberEmail(registryRequest.getMemberEmail())
+                .memberName(registryRequest.getMemberName())
+                .memberPostalCode(registryRequest.getMemberPostalCode())
+                .memberPhoneNumber(registryRequest.getMemberPhoneNumber())
+                .memberAddress(registryRequest.getMemberAddress())
+//                .memberJoinDate(registryRequest.getMemberJoinDate())
+                .password(passwordEncoder.encode(registryRequest.getPassword()))
+                .role(registryRequest.getRole())
+                .build();
+        memberRepository.save(member);
+>>>>>>> Stashed changes
         return "redirect:/login";
             }
+
+
+
 
 
 
@@ -86,7 +104,7 @@ public class RegistryController {
                 .memberPostalCode(companyRequest.getMemberPostalCode())
                 .memberPhoneNumber(companyRequest.getMemberPhoneNumber())
                 .memberAddress(companyRequest.getMemberAddress())
-                .memberJoinDate(companyRequest.getMemberJoinDate())
+//                .memberJoinDate(companyRequest.getMemberJoinDate())
                 .memberBusinessNumber(companyRequest.getMemberBusinessNumber())
                 .password(passwordEncoder.encode(companyRequest.getPassword()))
                 .role(companyRequest.getRole())
@@ -111,6 +129,7 @@ public class RegistryController {
         memberRepository.save(member);
 
 
+<<<<<<< Updated upstream
         WriterInformation writerInformation = WriterInformation.builder()
                 .memberCode(member)
                 .writerLecturePlace(registryRequest.getWriterLecturePlace())
@@ -119,6 +138,16 @@ public class RegistryController {
                 .availableDay(registryRequest.getAvailableDay())
                 .build();
         writerInformationRepository.save(writerInformation);
+=======
+//        WriterInformation writerInformation = WriterInformation.builder()
+//                .memberCode(member)
+//                .writerLecturePlace(registryRequest.getWriterLecturePlace())
+//                .availableStartTime(registryRequest.getAvailableStartTime())
+//                .availableFinishTime(registryRequest.getAvailableFinishTime())
+//                .availableDay(registryRequest.getAvailableDay())
+//                .build();
+//        writerInformationRepository.save(writerInformation);
+>>>>>>> Stashed changes
         return "redirect:/login";
 
     }
@@ -129,7 +158,7 @@ public class RegistryController {
     @ModelAttribute("roles")
     public Map<String, Role> roles() {
         Map<String, Role> map = new LinkedHashMap<>();
-       map.put("동의", Role.ROLE_MEMBER);
+        map.put("동의", Role.ROLE_MEMBER);
         return map;
     }
 
@@ -143,7 +172,7 @@ public class RegistryController {
     @ModelAttribute("roles2")
     public Map<String, Role> roles2() {
         Map<String, Role> map = new LinkedHashMap<>();
-        map.put("동의", Role.ROLE_COMPANY);
+        map.put("동의", Role.ROLE_ADMIN);
         return map;
     }
 

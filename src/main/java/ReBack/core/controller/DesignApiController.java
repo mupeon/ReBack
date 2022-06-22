@@ -3,11 +3,13 @@ package ReBack.core.controller;
 import ReBack.core.dto.ConsultingDTO;
 import ReBack.core.dto.DesignDTO;
 import ReBack.core.repository.DesignRepository;
+import ReBack.core.security.SecurityUser;
 import ReBack.core.service.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,14 +39,16 @@ public class DesignApiController {
 
     @PostMapping("/design/addpost")
     public String designAdd(@Validated @RequestPart(value = "key") DesignDTO designDTO,
+<<<<<<< Updated upstream
                              @RequestPart(value = "file") MultipartFile file,
                              HttpServletRequest request) {
+=======
+                            @RequestPart(value = "file") MultipartFile file,
+                            @AuthenticationPrincipal SecurityUser principal,
+                            HttpServletRequest request) {
+>>>>>>> Stashed changes
 
 
-        String startingTime =request.getAttribute("startingTime").toString();
-        String endTime = request.getAttribute("endTime").toString();
-        System.out.println("startingTime = " + startingTime);
-        System.out.println("endTime = " + endTime);
         String fileName;
         if (file == null) {
             fileName = "";
@@ -67,7 +71,7 @@ public class DesignApiController {
             }
         }
 
-        designServiceImpl.save(designDTO);
+        designServiceImpl.save(designDTO, principal);
         return "redirect:/design/list";
     }
 

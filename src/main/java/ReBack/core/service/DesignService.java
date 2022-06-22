@@ -4,12 +4,16 @@ import ReBack.core.data.Design;
 import ReBack.core.dto.DesignDTO;
 import ReBack.core.dto.PageRequestDTO;
 import ReBack.core.dto.PageResultDTO;
+import ReBack.core.security.SecurityUser;
+
+import java.security.Principal;
+import java.util.List;
 
 public interface DesignService {
 //    Long register(DesignDTO dto);
 
     PageResultDTO<DesignDTO, Design> getList(PageRequestDTO requestDTO);
-    
+
     default Design dtoToEntity(DesignDTO dto){
         Design entity = Design.builder()
                 .designCode(dto.getDesignCode())
@@ -24,7 +28,7 @@ public interface DesignService {
                 .build();
         return entity;
     }
-    
+
     default DesignDTO entityToDto(Design entity) {
         DesignDTO dto = DesignDTO.builder()
                 .designCode(entity.getDesignCode())
@@ -41,7 +45,7 @@ public interface DesignService {
         return dto;
     }
 
-    Design save(DesignDTO designDTO);
+    Design save(DesignDTO designDTO, SecurityUser principal);
     void deleteDesign(Long designCode);
 
     DesignDTO read(Long  designCode);
@@ -50,4 +54,5 @@ public interface DesignService {
 
     void modify(DesignDTO dto);
 
+    public List<Design> getOwnList(PageRequestDTO requestDTO, SecurityUser principal);
 }

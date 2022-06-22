@@ -3,6 +3,7 @@ package ReBack.core.data;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +36,13 @@ public class FinancialSupport {
     @Column(name="receipt_request_status", length=15)
     private String statusApp;
 
+    @Column(nullable = false, name="pay_time")
+    private LocalDate payTime; // 결제시간
+
+    @Column(nullable = false, name="pay_amount", length = 20)
+    private int payAmount; //결제 금액
+
+
     @OneToMany(mappedBy = "financialSupportCode",
             fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST,
@@ -45,8 +53,5 @@ public class FinancialSupport {
     @ManyToOne
     @JoinColumn(name="member_code")
     private Member memberCode;
-
-    @ManyToOne
-    @JoinColumn(name="member_name")
-    private Member memberName;
+    
 }

@@ -1,6 +1,7 @@
 package ReBack.core.service;
 
 import ReBack.core.data.Design;
+import ReBack.core.data.Member;
 import ReBack.core.data.QDesign;
 import ReBack.core.dto.DesignDTO;
 import ReBack.core.dto.PageRequestDTO;
@@ -8,6 +9,8 @@ import ReBack.core.dto.PageResultDTO;
 import ReBack.core.repository.CategoryRepository;
 import ReBack.core.repository.DesignRepository;
 import ReBack.core.repository.MaterialRepository;
+import ReBack.core.repository.MemberRepository;
+import ReBack.core.security.SecurityUser;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -28,9 +33,8 @@ import java.util.function.Function;
 @Log4j2
 @RequiredArgsConstructor // 의존성 자동 주입
 public class DesignServiceImpl implements DesignService {
-
-    @Autowired
     private final DesignRepository repository;
+    private final MemberRepository memberRepository;
 
 //    @Override
 //    public Long register(DesignDTO dto) {
@@ -52,6 +56,15 @@ public class DesignServiceImpl implements DesignService {
     }
 
     @Override
+    public List<Design> getOwnList(PageRequestDTO requestDTO, SecurityUser principal) {
+        Member member = memberRepository.findById(principal.getMember().getMemberCode()).get();
+        List<Design> allByMember = repository.findByMember(member);
+        System.out.println("member = " + member.getMemberCode());
+        System.out.println("allByMember = " + allByMember);
+        return allByMember;
+    }
+
+    @Override
     public Design dtoToEntity(DesignDTO dto) {
 
         return DesignService.super.dtoToEntity(dto);
@@ -59,10 +72,11 @@ public class DesignServiceImpl implements DesignService {
     // 굳이 없어도 되는 메서드 책 다시 확인하기
 
     @Override
-    public Design save(DesignDTO designDTO) {
+    public Design save(DesignDTO designDTO, SecurityUser principal) {
+        designDTO.setMemberDTO(principal.getMember().toWriterDTO());
         Design design = designDTO.toDesign();
         Design saveDesign = repository.save(design);
-        System.out.println("saveDesign : " + saveDesign);
+        System.out.println("designDTO = " + designDTO.getMemberDTO().getMemberCode());
         return saveDesign;
     }
 

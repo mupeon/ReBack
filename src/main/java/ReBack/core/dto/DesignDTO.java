@@ -28,6 +28,7 @@ public class DesignDTO {
     private LocalDateTime regDate, modDate;
     private CategoryDTO categoryCode;
     private MaterialDTO materialCode;
+    private MemberDTO memberDTO;
 
     @Builder.Default
     private List<DesignFileDTO> FileDTOList = new ArrayList<>();
@@ -45,6 +46,7 @@ public class DesignDTO {
                 .designPw(this.designPw)
                 .category(this.categoryCode.toCategoryDTO())
                 .material(this.materialCode.toMaterialDTO())
+                .member(this.memberDTO.toMemberDTO())
                 .build();
     }
 }

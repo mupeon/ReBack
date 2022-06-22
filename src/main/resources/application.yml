@@ -22,7 +22,7 @@ spring:
     # 접속을 위한 드라이버
 #    driver-class-name: org.h2.Driver
 
-#    # springboot 2.4 부터는 username 꼭 있어야 함.
+    # springboot 2.4 부터는 username 꼭 있어야 함.
 #    username: sa
 
   jpa:

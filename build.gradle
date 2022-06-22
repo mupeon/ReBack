@@ -52,7 +52,7 @@ dependencies {
 	implementation 'com.oracle.database.security:osdt_core'
 
 	// DB 에러 해결하기 위한 것
-	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+//	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 
 
 	// h2 데이터베이스

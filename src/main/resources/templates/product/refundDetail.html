@@ -59,10 +59,10 @@
                     console.log("환불거절")
                 }
                 $('#refundOk').on('click' ,() => {
-                    console.log("ok");
+                    // console.log("ok");
                         const refundCode = $('#refundCode').val();
                         const refundStatus = 1;
-                        console.log(refundCode, ":::::::", refundStatus)
+                        // console.log(refundCode, ":::::::", refundStatus)
                         const path = '/api/product/refundManager'
 
                         const json = JSON.stringify({
@@ -70,7 +70,7 @@
                             refundCode: refundCode
                         })
 
-                        alert(json)
+                        // alert(json)
                         $.ajax({
                             url: path,
                             type: 'PUT',
@@ -84,10 +84,10 @@
 
                 }),
                 $('#refundNo').on('click' ,() => {
-                    console.log("no");
+                    // console.log("no");
                     const refundCode = $('#refundCode').val();
                     const refundStatus = 2;
-                    console.log(refundCode, ":::::::", refundStatus)
+                    // console.log(refundCode, ":::::::", refundStatus)
                     const path = '/api/product/refundManager'
 
                     const json = JSON.stringify({
@@ -95,7 +95,7 @@
                         refundCode: refundCode
                     })
 
-                    alert(json)
+                    // alert(json)
                     $.ajax({
                         url: path,
                         type: 'PUT',
@@ -103,7 +103,7 @@
                         data: json,
 
                     }).done(() => {
-                        alert("거절")
+                        alert("환불거절")
                         location.reload();
                     })
 

@@ -18,4 +18,11 @@ public class MemberDTO {
                 .memberName(this.memberName)
                 .build();
     }
+
+    public Member toWriterDTO() {
+        return Member.builder()
+                .memberCode(this.memberCode)
+                .memberName(this.memberName)
+                .build();
+    }
 }

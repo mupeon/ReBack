@@ -1,11 +1,18 @@
 package ReBack.core.controller;
 
+import ReBack.core.data.Lecture;
 import ReBack.core.data.WriterInformation;
 import ReBack.core.repository.LectureRepository;
 import ReBack.core.repository.WriterInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 
@@ -18,6 +25,22 @@ public class WriterProfileApiController {
 
     @Autowired
     LectureRepository lectureRepository;
+
+    @PutMapping("/update")
+    public void writerProfileUpdate1(@RequestBody WriterInformation writerInformation) {
+
+        writerInformationRepository.save(writerInformation);
+    }
+
+    @DeleteMapping("/delete")
+    public void productDelete1(@RequestBody WriterInformation writerInformation) {
+        Optional<WriterInformation> deleteWriterInformation = writerInformationRepository.findById(writerInformation.getWriterInformationCode());
+
+        if (deleteWriterInformation.isPresent()) {
+            writerInformationRepository.delete(writerInformation);
+        }
+
+    }
 
     @PutMapping("/writerprofile/update")
     public void writerProfileUpdate(@RequestBody WriterInformation writerInformation) {
@@ -34,32 +57,4 @@ public class WriterProfileApiController {
         }
 
     }
-
-//    @PostMapping("/add")
-//    public void writerInformationAdd(@Validated @RequestPart(value = "key") WriterInformation writerInformation,
-//                                     @RequestPart(value = "file") MultipartFile file,
-//                                     HttpServletRequest request) throws Exception {
-//        String fileName;
-////        if (file == null) {
-////            fileName = "";
-////        } else {
-////            fileName = file.getOriginalFilename(); //
-////            String filepath = request.getSession().getServletContext().getRealPath("") + "file\\" ; // webapps/file
-////            System.out.println("filepath  :    " + filepath);
-////            try {
-////
-////                file.transferTo(new File(filepath+fileName));
-////                System.out.println("업로드 성공");
-////                writerInformation.setWriterInformationFileName(fileName);
-////                writerInformation.setWriterInformationFilePath("/file/" + fileName);
-////
-////            } catch (IllegalStateException | IOException e) {
-////                System.out.println("실패");
-////                e.printStackTrace();
-////            }
-////        }
-//
-//        writerInformationRepository.save(writerInformation);
-//
-//    }
 }

@@ -1,17 +1,19 @@
 package ReBack.core.data;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 @Entity
     @ToString
     @Getter
+    @Setter
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
+@JsonAutoDetect
 public class Lecture {
     @SequenceGenerator(name = "lecture_generator",
             sequenceName = "lecture_seq",
@@ -39,7 +41,13 @@ public class Lecture {
     private String lecturePlace;
 
     @Column(nullable = false)
-    private LocalDateTime lectureDate;
+    private Date lectureDate;
+
+    @Column(nullable = false)
+    private String lectureFileName;
+
+    @Column(nullable = false)
+    private String lectureFilePath;
 
     @ManyToOne
     @JoinColumn(name="member_code")
@@ -52,4 +60,5 @@ public class Lecture {
     @ManyToOne
     @JoinColumn(name="material_code")
     private Material material;
+
 }

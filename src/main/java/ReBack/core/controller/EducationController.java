@@ -49,6 +49,7 @@ public class EducationController {
             model.addAttribute("role", principal.getMember().getRole().getDescription());
 
             model.addAttribute("info", writerInformationRepository.findAll());
+            model.addAttribute("lecture", lectureRepository.findAll());
         }
         return "/education/shareedu";}
 

@@ -6,14 +6,15 @@
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
     <th:block th:fragment="content">
-        <button class="btn btn-secondary" value="0" type="button">판매상품</button>
         <button class="btn btn-secondary" value="0" type="button"><a th:href="@{/product/refundManager(memberCode=${principal.memberCode})}">환불관리</a></button>
         <hr>
-        <h1>카테고리</h1>
-        <button class="btn btn-secondary" value="0" type="button">ALL</button>
+        <a th:href="@{/product/manager/category(categoryCode=0,memberCode=${principal.getMemberCode()})}">
+            <button class="btn btn-secondary" type="button">ALL</button>
+        </a>
         <th:block th:each="category : ${categorys}">
-            <button class="btn btn-secondary" th:text="${category.categoryName}" th:value="${category.categoryCode}"
-                    type="button"></button>
+            <a th:href="@{/product/manager/category(categoryCode=${category.categoryCode},memberCode=${principal.getMemberCode()})}">
+                <button class="btn btn-secondary" th:text="${category.categoryName}" th:value="${category.categoryCode}"></button></a>
+
         </th:block>
         <button class="btn btn-secondary"><a style="text-decoration: none;" th:href="@{/product/add}">상품등록</a></button>
         <table class="table table-dark table-striped">
@@ -41,22 +42,7 @@
             </tr>
             </tbody>
         </table>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
 
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link">이전</a></li>
-                        <li class="page-item" th:each="page:${#numbers.sequence(0,totalPage - 1)}">
-                            <a class="page-link" th:href="@{/product/manager(page=${pageStat.index},memberCode=${principal.memberCode})}"
-                               th:text="${pageStat.index + 1}"></a>
-                        </li>
-                        <li class="page-item"><a class="page-link">다음</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
 
     </th:block>
 </th:block>

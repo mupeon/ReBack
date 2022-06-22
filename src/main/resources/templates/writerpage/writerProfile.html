@@ -8,14 +8,26 @@
 <th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
 <th:block th:fragment="content">
     <a sec:authorize="isAuthenticated()">
-    <p>강사프로필</p>
+    <h2>강사프로필</h2>
+        <hr>
     <div th:each="i:${info}">
         <!--        <div th:text="${i.memberCode.memberName}"></div>-->
-        <div th:text="${i.writerLecturePlace}"></div>
-        <div th:text="${i.availableStartTime}"></div>
-        <div th:text="${i.availableFinishTime}"></div>
-        <div th:text="${i.availableDay}"></div>
-        <div th:text="${i.trainingTopic}"></div>
+        <div>
+            <h3>강사 활동 지역</h3>
+            <p th:text="${i.writerLecturePlace}"></p>
+        </div>
+        <div>
+            <h3>강사 활동 시간</h3>
+            <p th:text="${i.availableStartTime}+'부터'+${i.availableFinishTime}+'까지'"></p>
+        </div>
+        <div>
+            <h3>가능한 요일</h3>
+            <p th:text="${i.availableDay}"></p>
+        </div>
+        <div>
+            <h3>강의 주제</h3>
+            <p th:text="${i.trainingTopic}"></p>
+        </div>
         <div th:text="${i.trainingStatus}"></div>
         <div th:text="${i.feedbackStatus}"></div>
         <button><a th:href="@{/writerpage/writerprofilemanage(id=${i.writerInformationCode})}">수정하기</a></button>

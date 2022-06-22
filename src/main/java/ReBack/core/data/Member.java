@@ -1,8 +1,11 @@
 package ReBack.core.data;
 
+import ReBack.core.dto.MemberDTO;
+import ReBack.core.dto.MemberNameDTO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@ToString
 @Getter
 @Setter
 @Builder
@@ -61,7 +63,7 @@ public class Member {
     private  MemberType memberType;
 
     @Column
-    private LocalDateTime memberJoinDate;
+    private LocalDate memberJoinDate;
 
     @Column
     private boolean enabled;
@@ -100,6 +102,20 @@ public class Member {
 
     @PrePersist
     public void memberJoinDate(){
-        this.memberJoinDate=LocalDateTime.now();
+        this.memberJoinDate=LocalDate.now();
+    }
+
+    public MemberDTO toWriterDTO() {
+        return MemberDTO.builder()
+                .memberCode(this.memberCode)
+                .memberName(this.memberName)
+                .build();
+    }
+
+    public MemberNameDTO toNameDTO() {
+        return MemberNameDTO.builder()
+                .memberName(this.memberName)
+                .memberPhoneNumber(this.memberPhoneNumber)
+                .build();
     }
 }
