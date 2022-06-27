@@ -30,8 +30,6 @@ public class ProductApiController {
 
     @Autowired
     RefundRepository refundRepository;
-//    CategoryRepository categoryRepository;
-//    MaterialRepository materialRepository;
 
 
     @PutMapping("/update") //상품 수정
@@ -107,18 +105,25 @@ public class ProductApiController {
 
         productRepository.save(product2);
 
-        /*---------------------------------------------------------------------------------------*/
-        Optional<Orders> orders1 = ordersRepository.findById(orders.getOrdersCode());
-        Orders orders2 = orders1.get();
-
-        System.out.println("저장후 orders  :::: " + orders2);
-        System.out.println(orders2.getProductCode());
+//        /*---------------------------------------------------------------------------------------*/
+//        Optional<Orders> orders1 = ordersRepository.findById(orders.getOrdersCode());
+//        Orders orders2 = orders1.get();
+//
+//        System.out.println("저장후 orders  :::: " + orders2);
+//        System.out.println(orders2.getProductCode());
+//        OrderList orderList = new OrderList();
+//        orderList.setOrderListAmount(orders2.getOrdersStock());
+//        orderList.setOrdersCode(orders2);
+//        orderList.setProductCode(orders2.getProductCode());
+//        System.out.println("최종 orderList" + orderList);
+//        orderListRepository.save(orderList);
 
         return "ok";
     }
 
     @PostMapping("/refund") //환불정보
     public String refundProduct(@RequestBody Refund refund) {
+        System.out.println(refund);
         refundRepository.save(refund);
 
 //        System.out.println(ordersRepository.find2ByOrdersCode(refund.getOrdersCode().getOrdersCode()));
@@ -136,6 +141,7 @@ public class ProductApiController {
 
     @PutMapping("/refundManager") //환불 완료 처리
     public String refundManager(@RequestBody Refund refund) {
+        System.out.println(refund.getRefundStatus());
         Optional<Refund> refund1 = refundRepository.findById(refund.getRefundCode());
         refund.setRefundCount(refund1.get().getRefundCount());
         refund.setRefundAmount(refund1.get().getRefundAmount());
@@ -143,8 +149,15 @@ public class ProductApiController {
         refund.setRefundTime(refund1.get().getRefundTime());
         refund.setOrdersCode(refund1.get().getOrdersCode());
         refund.setRefundReason(refund1.get().getRefundReason());
-
+        System.out.println("환불상태"+refund.getRefundStatus());
         refundRepository.save(refund);
+        System.out.println("refund.getOrdersCode().getOrdersCode()"+refund.getOrdersCode().getOrdersCode());
+        Optional<Orders> orders = ordersRepository.findById(refund.getOrdersCode().getOrdersCode());
+        orders.get().setRefundStatus(refund.getRefundStatus());
+        System.out.println("ordersRepository :: "+orders.get());
+        ordersRepository.save(orders.get());
+
+
         if (refund.getRefundStatus() == 환불완료) {
             Optional<Product> product = productRepository.findById(refund.getOrdersCode().getProductCode().getProductCode());
             int changeStock = product.get().getProductStock() + refund.getOrdersCode().getOrdersStock();
@@ -155,4 +168,7 @@ public class ProductApiController {
         }
         return "redirect:/product/refundManager";
     }
+
+
+
 }

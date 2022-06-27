@@ -33,8 +33,8 @@ public class DonationApiController<financialSupport> {
         return "donation/clothingSponsor";
     }
 
-    @PostMapping("/donation/FinancialSupport") //금전 후원
-    public String FinancialSupport(@Validated @RequestPart(value = "key") FinancialSupport financialSupport){
+    @PostMapping("/donation/financialSupport") //금전 후원
+    public String FinancialSupport(@RequestBody FinancialSupport financialSupport){
         financialSupportRepository.save(financialSupport);
 
         return "donation/financialSupport";
@@ -45,7 +45,6 @@ public class DonationApiController<financialSupport> {
 
         System.out.println(financialSupport);
         System.out.println("수정 api");
-
 
         financialSupportRepository.save(financialSupport);
     }

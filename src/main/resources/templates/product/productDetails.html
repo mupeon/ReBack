@@ -200,7 +200,9 @@
 
                         $('#price').val((parseInt(productPrice * stock)))
                         console.log(stock + " :::::구매수량")
-                        // console.log((parseInt(totalPrice+producePrice))+" :::::총 금액")
+                        console.log($('#price').val())
+
+
 
                     } else {
                         alert("최대 주문 수량입니다.")
@@ -211,10 +213,13 @@
                 $('#sub').on('click', () => {
                     if (stock > 1) {
                         $('#stock').val(--stock);
-                        console.log(stock + " :::::구매수량")
-                        $('#price').val((parseInt(productPrice / stock)))
+                        // console.log(stock + " :::::구매수량")
+                        totalPrice = $('#price').val()
+                        $('#price').val((parseInt(totalPrice - productPrice)))
+                        // console.log(totalPrice - productPrice+ " :::::총금액")
 
-                        console.log(totalPrice + " :::::총 금액")
+
+
 
                     } else {
                         alert("최소 구매 수량은 1개 입니다.");

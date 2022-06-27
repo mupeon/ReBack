@@ -1,9 +1,12 @@
 package ReBack.core.data;
 
+import ReBack.core.dto.WriterInformationDTO;
+import ReBack.core.dto.WriterProfileDTO;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @ToString
@@ -21,13 +24,13 @@ public class WriterInformation {
     private Long writerInformationCode;
 
     @Column(length=200, name="writer_lecture_place")
-    private String writerLecturePlace;
+    private String writerLecturePlace; // 출강장소
 
     @Column
-    private String availableStartTime;
+    private LocalDateTime availableStartTime;
 
     @Column
-    private String availableFinishTime;
+    private LocalDateTime availableFinishTime;
 
     @Column(length=30)
     private String availableDay;
@@ -43,7 +46,35 @@ public class WriterInformation {
 
     @ManyToOne
     @JoinColumn(name="member_code")
-    private Member memberCode;
+    private Member writer;
+
+    @ManyToOne
+    @JoinColumn(name="category_code")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name="material_code")
+    private Material material;
 
 
+    public WriterInformationDTO toWriterInformation() {
+        return WriterInformationDTO.builder()
+                .writerLecturePlace(this.writerLecturePlace)
+                .availableStartTime(this.availableStartTime)
+                .availableFinishTime(this.availableFinishTime)
+                .availableDay(this.availableDay)
+                .writer(this.getWriter().toWriterDTO())
+                .categoryCode(this.getCategory().toCategoryDTO())
+                .materialCode(this.getMaterial().toMaterial())
+                .build();
+    }
+
+    public WriterProfileDTO toWriterProfileDTO(){
+        return WriterProfileDTO.builder()
+                .memberName(this.writer.toNameDTO())
+                .availableFinishTime(this.availableFinishTime)
+                .availableStartTime(this.availableStartTime)
+                .writerLecturePlace(this.writerLecturePlace)
+                .build();
+    }
 }

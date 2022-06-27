@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
@@ -25,26 +27,37 @@ public class WriterController {
     @Autowired
     LectureRepository lectureRepository;
 
-    @GetMapping("/writerpage/writerprofile")
-    public String writerprofile(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
+//    @GetMapping("/writerpage/writerprofile")
+//    public String writerprofile(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
+//        if (principal != null) {
+//            model.addAttribute("principal", principal.getMember());
+//            model.addAttribute("role", principal.getMember().getRole().getDescription());
+//
+//            model.addAttribute("info", writerInformationRepository.findAll());
+//        }
+//        return "writerpage/writerProfile";
+//    }
+
+    //    @GetMapping("/writerpage/lecturemanage")
+    //    public String lecturemanage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
+    //        if (principal != null) {
+    //            model.addAttribute("principal", principal.getMember());
+    //            model.addAttribute("role", principal.getMember().getRole().getDescription());
+    //
+    //            model.addAttribute("lecture", lectureRepository.findAll());
+    //        }
+    //        return "writerpage/lectureManage";
+    //    }
+
+    @RequestMapping(value="/writerpage/writerprofile", method= RequestMethod.GET)
+    public String writerprofile(@AuthenticationPrincipal SecurityUser principal, String memberCode, Model model) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
-
-            model.addAttribute("info", writerInformationRepository.findAll());
         }
+        model.addAttribute("memberCode", memberCode);
+        model.addAttribute("info", writerInformationRepository.findAll());
         return "writerpage/writerProfile";
-    }
-
-    @GetMapping("/writerpage/lecturemanage")
-    public String lecturemanage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
-        if (principal != null) {
-            model.addAttribute("principal", principal.getMember());
-            model.addAttribute("role", principal.getMember().getRole().getDescription());
-
-            model.addAttribute("lecture", lectureRepository.findAll());
-        }
-        return "writerpage/lectureManage";
     }
 
     @GetMapping("/writerpage/writerprofilemanage")

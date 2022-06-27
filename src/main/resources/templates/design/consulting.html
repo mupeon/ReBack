@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <!--      th:replace="~{layout::layout(~{::#main})}">-->
 
 <meta charset="UTF-8">
@@ -9,11 +9,24 @@
 
 <th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
   <th:block th:fragment="content">
-    <a sec:authorize="isAuthenticated()">
     <h1 class="mt-4">컨설팅 신청 페이지</h1>
     <br><br>
+    <body>
     <form id="form" enctype="multipart/form-data">
       <div class="wrap">
+        <input type="hidden" name="page" value="1">
+        <div class="input-group-prepend">
+          <select class="custom-select" name="type">
+            <option th:selected="${pageRequestDTO.type == null}">-------</option>
+            <option value="p" th:selected="${pageRequestDTO.type=='p'}">장소</option>
+          </select>
+        </div>
+        <div class="input-group-prepend">
+          <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+          <div class="input-group-append" id="button-addon4">
+            <button class="btn btn-outline-secondary btn-matching" type="button">매칭</button>
+          </div>
+        </div>
 
         <div class="item-order">
           <div class="input-group mb-3">
@@ -75,38 +88,75 @@
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text">장소</span>
+              <span class="input-group-text">신청 장소</span>
             </div>
-            <input
-                    type="text"
-                    class="form-control"
-                    aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default"
-                    name="consultingPlace" id="consultingPlace"
-            />
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">일자</span>
-            </div>
-            <input
-                    type="date"
-                    class="form-control"
-                    aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default"
-                    name="consultingDate" id="consultingDate"
-            />
+            <input type="text" id="sample6_postcode" placeholder="우편번호" disabled>
+            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+            <input type="text" id="sample6_address" placeholder="주소" size="50px" disabled><br>
+            <input type="text" id="sample6_detailAddress" placeholder="상세주소">
+            <input type="text" id="sample6_extraAddress" placeholder="참고항목">
+
+            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+            <script>
+              function sample6_execDaumPostcode() {
+                new daum.Postcode({
+                  oncomplete: function (data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var addr = ''; // 주소 변수
+                    var extraAddr = ''; // 참고항목 변수
+
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                      addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                      addr = data.jibunAddress;
+                    }
+
+                    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                    if (data.userSelectedType === 'R') {
+                      // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                      // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                      if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraAddr += data.bname;
+                      }
+                      // 건물명이 있고, 공동주택일 경우 추가한다.
+                      if (data.buildingName !== '' && data.apartment === 'Y') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                      }
+                      // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                      if (extraAddr !== '') {
+                        extraAddr = ' (' + extraAddr + ')';
+                      }
+                      // 조합된 참고항목을 해당 필드에 넣는다.
+                      document.getElementById("sample6_extraAddress").value = extraAddr;
+
+                    } else {
+                      document.getElementById("sample6_extraAddress").value = '';
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('sample6_postcode').value = data.zonecode;
+                    document.getElementById("sample6_address").value = addr;
+                    // 커서를 상세주소 필드로 이동한다.
+                    document.getElementById("sample6_detailAddress").focus();
+                  }
+                }).open();
+              }
+            </script>
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">시작시간</span>
             </div>
             <input
-                    type="time"
+                    type="datetime-local"
                     class="form-control"
                     aria-label="Default"
                     aria-describedby="inputGroup-sizing-default"
-                    name="startingTimeString" id="startingTimeString"
+                    name="startingTimeString" id="consultingTimeString"
             />
           </div>
           <div class="input-group mb-3">
@@ -114,7 +164,7 @@
               <span class="input-group-text">종료시간</span>
             </div>
             <input
-                    type="time"
+                    type="datetime-local"
                     class="form-control"
                     aria-label="Default"
                     aria-describedby="inputGroup-sizing-default"
@@ -133,27 +183,75 @@
                     name="file" id="file"
             />
           </div>
-
-
-          <button type="submit" id="uploadBtn" class="btn btn-primary btn-order">
-            등록
-          </button>
         </div>
       </div>
+
+      <!--                  <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">-->
+      <!--      <div class="input-group-append" id="button-addon4">-->
+      <!--        <button class="btn btn-outline-secondary btn-search" type="button">신청</button>-->
+      <!--      </div>-->
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend" id="writerList">
+          <span class="input-group-text">조건에 맞는 작가</span>
+        </div>
+
+
+      </div>
+
+      <button type="submit" id="uploadBtn" class="btn btn-primary btn-order">
+        등록
+      </button>
+
+
     </form>
-    <a th:href="@{/design/consultingList}">
-      <button class="btn btn-primary btn-order">컨설팅 목록</button>
-    </a>
+    <button id="matchingBtn" class="btn btn-primary btn-order">
+      작가매칭
+    </button>
+    <button type="button" id="pay">결제</button>
+
     </body>
-    </a>
+
     <script th:inline="javascript">
+
+
+
+
+      let writerName
+      let writerPhone
+      let userStart
+      let userEnd
+      let userPlace
+
+      function detailName(e) {
+        writerName = e.innerText;
+        console.log(writerName)
+      }
+
+      function detailPhone(e) {
+        writerPhone = e.innerText;
+        console.log(writerPhone)
+      }
+
+      function selection() {
+        console.log(userPlace)
+        console.log(userStart)
+        console.log(userEnd)
+        console.log(writerName)
+        alert("선택되었습니다.")
+      }
+
       $(() => {
+        $('#pay').on('click', () => {
+          alert('결제되었습니다.')
+        })
+
         $('#uploadBtn').on('click', () => {
           const data = {
             consultingName: $('#consultingName').val(),
             consultingInfo: $('#consultingInfo').val(),
             ConsultingPw: $('#ConsultingPw').val(),
-            consultingPlace: $('#consultingPlace').val(),
+            consultingPlace: $('#sample6_address').val() + " " + $('#sample6_detailAddress').val() + " " + $('#sample6_extraAddress').val(),
             consultingDate: $('#consultingDate').val(),
             startingTimeString: $('#startingTimeString').val(),
             endTimeString: $('#endTimeString').val(),
@@ -168,8 +266,6 @@
               materialName: $('#materialCode option:selected').text(),
             },
           }
-
-
           const path = '/api/design/consulting';
 
           const form = $('#form')[0];
@@ -179,18 +275,78 @@
           $.ajax({
             url: path,
             type: 'POST',
+            dataType: 'text',
+            contentType: "application/json",
+            data: json,
             processData: false,
             contentType: false,
             data: formData,
-          }).done(()=> {
+          }).done(() => {
             alert("컨설팅 등록 완료");
             window.location.href = '/design/consulting';
-          }).fail( (error)=> {
+          }).fail((error) => {
             alert((error));
           })
         })
-      })
 
+        $('#matchingBtn').on('click', () => {
+          const data = {
+            consultingPlace: $('#sample6_address').val(),
+            consultingDate: $('#consultingDate').val(),
+            consultingTimeString: $('#consultingTimeString').val(),
+            endTimeString: $('#endTimeString').val(),
+          }
+          console.log(typeof $('#consultingTimeString').val())
+          const path = '/api/design/matching';
+
+          new Promise((succ, fail) => {
+            $.ajax({
+              url: path,
+              type: 'POST',
+              data: JSON.stringify(data),
+              contentType: "application/json",
+              success: function (result) {
+                let startTime = [];
+                let finishTime = [];
+                let phoneNumber = [];
+                let name = [];
+
+                for (let i = 0; i < result.length; i++) {
+                  finishTime[i] = result[i].availableFinishTime
+                  startTime[i] = result[i].availableStartTime
+                  name[i] = result[i].memberName.memberName
+                  phoneNumber[i] = result[i].memberName.memberPhoneNumber
+
+                }
+
+                for (let i = 0; i < result.length; i++) {
+                  $('#writerList').append(
+                          '<div class="detail">' +
+                          '<span >시작시간' + startTime[i] + '</span><br>' +
+                          '<span>종료시간' + finishTime[i] + '</span><br>' + '이름' +
+                          '<span onclick="detailName(this)">' + name[i] + '</span><br>' + '전화번호' +
+                          '<span onclick="detailPhone(this)">' + phoneNumber[i] + '</span>' +
+                          '<button type="button" onclick="selection()">선택</button>' +
+                          '</div>'
+                  )
+                }
+                succ(result)
+              },
+              fail: function (result) {
+                console.log(result)
+                alert("실패")
+              }
+            });
+
+          }).then((arg) => {
+            userStart = $('#consultingTimeString').val()
+            userEnd = $('#endTimeString').val()
+            userPlace = $('#sample6_address').val() + " " + $('#sample6_detailAddress').val() + " " + $('#sample6_extraAddress').val()
+
+          })
+
+        })
+      })
     </script>
   </th:block>
 </th:block>

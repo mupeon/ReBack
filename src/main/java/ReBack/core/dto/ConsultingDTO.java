@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 public class ConsultingDTO {
     private Long consultingCode;
     private String consultingName;
+    private String consultingInfo;
 
     @Transient
     private String startingTimeString;
@@ -50,6 +51,7 @@ public class ConsultingDTO {
                 .startingTime(this.startingTime)
                 .endTime(this.endTime)
                 .consultingPlace(this.consultingPlace)
+                .consultingInfo(this.consultingInfo)
 //                .consultingDate(this.consultingDate.toString())
                 .fileName(this.fileName)
                 .filePath(this.filePath)

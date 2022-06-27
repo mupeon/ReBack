@@ -55,6 +55,9 @@ public class Consulting extends BaseEntity {
     @Column(length=200)
     private String consultingPlace;
 
+    @Column
+    private int consultingPrice;
+
     @ManyToOne(fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     private Member member;
 
@@ -74,10 +77,20 @@ public class Consulting extends BaseEntity {
                 .consultingCode(this.consultingCode)
                 .consultingName(this.consultingName)
                 .consultingPlace(this.consultingPlace)
+                .consultingInfo(this.consultingInfo)
+                .startingTime(this.startingTime)
+                .endTime(this.endTime)
+                .categoryCode(this.getCategory().toCategoryDTO())
+                .materialCode(this.getMaterial().toMaterial())
                 .build();
     }
 
     public void changeConsultingName(String consultingName) {
         this.consultingName = consultingName;
+    }
+
+
+    public void changeConsultingInfo(String consultingInfo) {
+        this.consultingInfo = consultingInfo;
     }
 }

@@ -3,6 +3,7 @@ package ReBack.core.data;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,7 +54,7 @@ public class Orders {
     private String ordersDeliveryInfo; //배송회사 정보
 
     @Column(nullable = false, name="pay_time")
-    private LocalDateTime payTime; // 결제시간
+    private LocalDate payTime; // 결제시간
 
     @Column(nullable = false, name="pay_amount", length = 20)
     private int payAmount; //결제 금액

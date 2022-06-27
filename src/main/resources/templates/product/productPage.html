@@ -12,12 +12,13 @@
 
 
         <hr>
-        <h1>카테고리</h1>
-
-        <button class="btn btn-secondary" value="0" type="button">ALL</button>
+        <a th:href="@{/product/category(categoryCode=0)}">
+            <button class="btn btn-secondary" type="button">ALL</button>
+        </a>
         <th:block th:each="category : ${categorys}">
-            <button class="btn btn-secondary" th:text="${category.categoryName}" th:value="${category.categoryCode}"
-                    type="button"></button>
+            <a th:href="@{/product/category(categoryCode=${category.categoryCode})}">
+                <button class="btn btn-secondary" th:text="${category.categoryName}" th:value="${category.categoryCode}"></button></a>
+
         </th:block>
         <table class="table table-dark table-striped">
             <thead>
@@ -38,34 +39,51 @@
                     <th><img th:src="${product.productFilePath}" width="150px" height="150px"></th>
                     <th th:text="${product.productPrice}"></th>
                     <th>
-                       <a th:href="@{/product/details(id=${product.productCode})}"> <button class="btn btn-primary">주문하기</button></a>
+                        <a th:href="@{/product/details(id=${product.productCode})}">
+                            <button class="btn btn-primary">주문하기</button>
+                        </a>
                     </th>
-<!--                    <button><a th:href="@{/product/orderlist/${product.productCode}}">주문하기</a></button>-->
+                    <!--                    <button><a th:href="@{/product/orderlist/${product.productCode}}">주문하기</a></button>-->
 
                 </tr>
                 </tbody>
             </div>
         </table>
         <hr>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link">이전</a></li>
-                        <li class="page-item" th:each="page:${#numbers.sequence(0,totalPage - 1)}">
-
-                            <a class="page-link" th:href="@{/product(page=${pageStat.index})}"
-                               th:text="${pageStat.index + 1}"></a>
-                        </li>
-                        <li class="page-item"><a class="page-link">다음</a></li>
-                    </ul>
-                </div>
-            </div>
+        <!--        <div class="container">-->
+        <!--            <div class="row">-->
+        <!--                <div class="col">-->
+        <!--                    <ul class="pagination">-->
+        <!--                        <li class="page-item"><a class="page-link">이전</a></li>-->
+        <!--                        <li class="page-item" th:each="page:${#numbers.sequence(0,totalPage - 1)}">-->
+        <!--                            <a class="page-link" th:href="@{product(page=${pageStat.index})}"-->
+        <!--                               th:text="${pageStat.index + 1}"></a>-->
+        <!--                        </li>-->
+        <!--                        <li class="page-item"><a class="page-link">다음</a></li>-->
+        <!--                    </ul>-->
+        <!--                </div>-->
+        <!--            </div>-->
 
 
         </div>
+        </body>
 
-
+        <!--        <script th:inline="javascript">-->
+        <!--            $(function () {-->
+        <!--                $("#cate button").on('click', function () {-->
+        <!--                    const categoryCode = $(this).val();-->
+        <!--                    const path = '/product/category';-->
+        <!--                    // /api/product-->
+        <!--                    $.ajax({-->
+        <!--                        url: path,-->
+        <!--                        type: "GET",-->
+        <!--                        data: {"categoryCode":categoryCode},-->
+        <!--                }).done((result) => {-->
+        <!--                    //location.replace("/selectPd");-->
+        <!--                    })-->
+        <!--                })-->
+        <!--            })-->
+        <!--        </script>-->
     </th:block>
 </th:block>
 

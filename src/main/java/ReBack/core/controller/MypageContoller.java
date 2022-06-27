@@ -75,7 +75,7 @@ public class MypageContoller {
             model.addAttribute("memberJoinDate", member.getMemberJoinDate());
             model.addAttribute("role", member.getRole());
         }
-        return "myPage/adminMyPage";
+        return "mypage/adminMyPage";
     }
 
 

@@ -16,8 +16,9 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
     Orders findByOrdersCode(Long ordersCode);
 
-    @Query("select DISTINCT o  from Orders o, Refund  r , Member  m, Product p " +
-            "where r.ordersCode.ordersCode = o.ordersCode and " +
+    @Query("select  o  from Orders o, Refund  r , Member  m, Product p " +
+            "where o.ordersCode = :ordersCode and " +
+            "r.ordersCode.ordersCode = o.ordersCode and  "+
             "o.memberCode.memberCode = m.memberCode and " +
             "o.productCode.productCode = p.productCode")
     Optional<Orders> find2ByOrdersCode(@Param("ordersCode") Long ordersCode);

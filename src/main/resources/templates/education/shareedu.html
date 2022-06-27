@@ -11,25 +11,35 @@
     ></script>
     <title>교육나눔</title>
 </head>
-        <a sec:authorize="isAuthenticated()">
+
 <body>
+    <th:block th:fragment="content">
+        <a sec:authorize="isAuthenticated()">
+            <hr>
+            <h1>강의목록</h1>
+            <table class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">강의제목</th>
+                    <th scope="col"></th>
+                    <th scope="col">사진</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
 
-<div id="main">
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="l : ${lecture}">
+                    <th th:text="${l.lectureName}"></th>
+                    <th><video autoplay controls loop muted poster="aaa" preload="bbb">
+                        <source th:src="${l.lectureFilePath}" width="150px" height="150px"></th>
+                    <th th:text="${l.lectureAvailability}"></th>
 
-
-
-<h1>강사 목록</h1>
-
-<div th:each="i:${info}">
-    <div th:text="${i.memberCode.memberName}"></div>
-    <div th:text="${i.trainingTopic}"></div>
-    <div th:text="${i.availableDay}"></div>
-    <div th:text="${i.writerLecturePlace}"></div>
-    <button><a th:href="@{'/education/shareedu/writerResult/'+${i.memberCode.memberCode}}">보기</a></button>
-</div>
-</div>
-</body>
+                </tr>
+                </tbody>
+            </table>
         </a>
     </th:block>
-</th:block>
+</body>
+
 </html>

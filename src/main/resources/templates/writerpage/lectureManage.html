@@ -1,20 +1,209 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>강의등록</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 </head>
 <body>
 <th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
     <th:block th:fragment="content">
-        <a sec:authorize="isAuthenticated()">
-        <h2>강의 관리</h2>
-        <div>
+            <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
 
-        </div>
-        <button type="submit">강의 업로드</button>
+            <form id="form" enctype="multipart/form-data">
+                <div class="wrap">
+                    <div>
+                    </div>
+                    <div class="product-desc">
+                        <h2>
+                            강의등록
+                        </h2>
+                    </div>
+                    <div class="item-order">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">카테고리</span>
+                            </div>
+                            <select class="input-group-text" id="categoryCode" name="categoryCode">
+                                <option>--</option>
+                                <option th:each="c : ${category}" th:value="${c.categoryCode}"
+                                        th:text="${c.categoryName}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">소재</span>
+                            </div>
+                            <select class="input-group-text" id="materialCode" name="materialCode">
+                                <option>--</option>
+                                <option th:each="m : ${material}" th:value="${m.materialCode}"
+                                        th:text="${m.materialName}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">신청가능여부</span>
+                            </div>
+                            <input
+                                    type="number"
+                                    class="form-control"
+                                    aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default"
+                                    name="lectureAvailability" id="lectureAvailability"
+                            />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">강의제목</span>
+                            </div>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default"
+                                    name="lectureName" id="lectureName"
+                            />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">교육인원</span>
+                            </div>
+                            <input
+                                    type="number"
+                                    class="form-control"
+                                    aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default"
+                                    name="lecturePersonnel" id="lecturePersonnel"
+                            />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">신청인원</span>
+                            </div>
+                            <input
+                                    type="number"
+                                    class="form-control"
+                                    aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default"
+                                    name="applicationNumber" id="applicationNumber"
+                            />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">최소인원</span>
+                            </div>
+                            <input
+                                    type="number"
+                                    class="form-control"
+                                    aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default"
+                                    name="minimumNumber" id="minimumNumber"
+                            />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">강의날짜</span>
+                            </div>
+                            <input
+                                    type="date"
+                                    class="form-control"
+                                    aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default"
+                                    name="lectureDate" id="lectureDate"
+                            />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">강의장소</span>
+                            </div>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default"
+                                    name="lecturePlace" id="lecturePlace"
+                            />
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">강의영상</span>
+                            </div>
+                            <input
+                                    type="file"
+                                    class="form-control"
+                                    aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default"
+                                    name="file" id="file"
+                            />
+                        </div>
+
+
+                        <button type="submit" id="submit" class="btn btn-primary btn-order">
+                            등록
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <a th:href="@{/writerpage/lecturelist}">
+                <button class="btn btn-primary btn-order">돌아가기</button>
+            </a>
         </a>
-    </th:block>
+</th:block>
+
+</body>
+<script th:inline="javascript">
+    $(() => {
+        $('#submit').on('click', () => {
+            const data = {
+                lectureName: $('#lectureName').val(),
+                applicationNumber: $('#applicationNumber').val(),
+                lectureAvailability: $('#lectureAvailability').val(),
+                lectureDate: $('#lectureDate').val(),
+                lecturePersonnel: $('#lecturePersonnel').val(),
+                lecturePlace: $('#lecturePlace').val(),
+                MinimumNumber: $('#MinimumNumber').val(),
+
+                categoryCode: {
+                    categoryCode: $('#categoryCode option:selected').val(),
+                    categoryName: $('#categoryCode option:selected').text(),
+                },
+                materialCode: {
+                    materialCode: $('#materialCode option:selected').val(),
+                    materialName: $('#materialCode option:selected').text(),
+                },
+                memberCode:{
+                    memberCode:$('#memberCode').val()
+                }
+            }
+
+            const path = '/api/lecture/add';
+
+            const form = $('#form')[0];
+            const formData = new FormData(form);
+            formData.append('file', $('#file'));
+            formData.append('key', new Blob([JSON.stringify(data)], {type: "application/json"}));
+            $.ajax({
+                url: path,
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+            }).done(() => {
+                window.location.href = '/writerpage/lecturelist';
+
+            }).fail((error) => {
+                alert((error));
+            })
+        })
+    })
+
+</script>
+
+</th:block>
 </th:block>
 </body>
 </html>

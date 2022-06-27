@@ -36,25 +36,26 @@ public class DesignController {
 //    private final ConsultingService consultingService;
 
     @GetMapping("/design/addpost")
-    public String designAddPost(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
+    public String designAddPost(Model model, @AuthenticationPrincipal SecurityUser principal, @RequestParam(required = false) Long id) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
-
-            model.addAttribute("categories", categoryRepository.findAll());
-            model.addAttribute("materials", materialRepository.findAll());
         }
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("materials", materialRepository.findAll());
+
         return "design/addpost";
     }
 
+
+
     @GetMapping("/design/list")
-    public String designList(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id, PageRequestDTO pageRequestDTO) {
+    public String designList(PageRequestDTO pageRequestDTO, Model model,  @AuthenticationPrincipal SecurityUser principal, @RequestParam(required = false) Long id) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
-
-            model.addAttribute("result", designService.getList(pageRequestDTO));
         }
+        model.addAttribute("result", designService.getList(pageRequestDTO));
         return "design/list";
     }
 
@@ -71,48 +72,46 @@ public class DesignController {
 //    }
 
 
+
     @GetMapping({"/design/read", "/design/modify"})
-    public void read(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id, long designCode, @ModelAttribute("requestDTO") PageRequestDTO requestDTO) {
+    public void read(long designCode, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model, @AuthenticationPrincipal SecurityUser principal, @RequestParam(required = false) Long id) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
-
-            System.out.println("requestDTO = " + requestDTO);
-            DesignDTO dto = designService.read(designCode);
-            System.out.println("dto = " + dto);
-            model.addAttribute("dto", dto);
         }
+        System.out.println("requestDTO = " + requestDTO);
+        DesignDTO dto = designService.read(designCode);
+        System.out.println("dto = " + dto);
+        model.addAttribute("dto", dto);
 
     }
 
     @PostMapping("/design/remove")
-    public String remove(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id, long designCode, RedirectAttributes redirectAttributes) {
+    public String remove(long designCode, RedirectAttributes redirectAttributes, Model model, @AuthenticationPrincipal SecurityUser principal, @RequestParam(required = false) Long id) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
-
-            designService.remove(designCode);
-            redirectAttributes.addFlashAttribute("msg", designCode);
         }
+        designService.remove(designCode);
+        redirectAttributes.addFlashAttribute("msg", designCode);
         return "redirect:/design/list";
     }
 
     @PostMapping("/design/modify")
-    public String modify(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id, DesignDTO dto, @ModelAttribute("requestDTO")
-                         PageRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
+    public String modify(DesignDTO dto, @ModelAttribute("requestDTO")
+            PageRequestDTO requestDTO, RedirectAttributes redirectAttributes, Model model, @AuthenticationPrincipal SecurityUser principal, @RequestParam(required = false) Long id) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
-
-            log.info("post modify....................");
-            log.info("dto:" + dto);
-            designService.modify(dto);
-
-            redirectAttributes.addAttribute("page", requestDTO.getPage());
-            redirectAttributes.addAttribute("type", requestDTO.getType());
-            redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
-            redirectAttributes.addAttribute("designCode", dto.getDesignCode());
         }
+        log.info("post modify....................");
+        log.info("dto:" + dto);
+        designService.modify(dto);
+
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("type", requestDTO.getType());
+        redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
+        redirectAttributes.addAttribute("designCode", dto.getDesignCode());
         return "redirect:/design/read";
     }
 }

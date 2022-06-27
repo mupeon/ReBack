@@ -1,38 +1,65 @@
 package ReBack.core.controller;
 
-
-import ReBack.core.controller.request.RegistryRequest;
 import ReBack.core.data.Member;
-import ReBack.core.data.Product;
 import ReBack.core.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
-import org.apache.maven.artifact.repository.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.Optional;
 
-
-@RequiredArgsConstructor
-@Controller
+@Getter
+@Setter
+@RestController
+@RequestMapping("/api/member")
 public class MemberApiController {
 
-    private final MemberRepository memberRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @PostMapping("/idCheck")
+    public String insertUser(@RequestBody Member member) {
+        System.out.println(member.getMemberId());
+        String inputId = member.getMemberId();
+        if (inputId == "" || inputId == null) {
+            return "ng";
+        }
+
+        Optional<Member> idCheck = memberRepository.findByMemberId(inputId);
+        if (idCheck.isPresent() == true) {
+            return "no";
+        } else {
+            return "ok";
+        }
+    }
+
+    @DeleteMapping("/memberDelete")
+    public void memberDelete(@RequestBody Member member) {
+        Optional<Member> deleteMember = memberRepository.findByMemberCode(member.getMemberCode());
+
+        if (deleteMember.isPresent()) {
+            System.out.println(deleteMember);
+            memberRepository.delete(member);
+        }
+
+    }
+
+    @PutMapping("/memberCorrection") //상품 수정
+    public void memberCorrection(@RequestBody Member member) {
+        System.out.println("수정api");
+        Optional<Member> memberCorrection = memberRepository.findById(member.getMemberCode());
+
+        if (memberCorrection.isPresent()) {
+            memberRepository.save(member);
+        }
 
 
-//    //고객 정보 삭제 처리 요청
-//    @RequestMapping("/delete.cu")
-//    public String delete(int id) {
-//        //선택한 고객 정보를 DB에서 삭제한 후
-//        service.customer_delete(id);
-//        //목록 화면으로 연결
-//        return "redirect:list.cu";
-//    }
-
-
+    }
 
 
 

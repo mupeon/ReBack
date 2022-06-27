@@ -21,7 +21,6 @@
         <thead>
         <tr>
             <th scope="col">의류후원코드</th>
-            <th scope="col">의류후원자</th>
             <th scope="col">의류량</th>
             <th scope="col">수거날짜</th>
             <th scope="col">수거지역</th>
@@ -39,6 +38,7 @@
             <th th:text="${cloth.pickupArea}"></th>
             <th th:text="${cloth.issueStatus}"></th>
             <th th:text="${cloth.appStatus}"></th>
+            <br>
             <th>
                 <button><a style="text-decoration-line: none;" id="modify"
                            th:href="@{/donation/clothesManage(id=${cloth.clothingSponsorCode})}">의류후원관리</a></button>
@@ -53,7 +53,6 @@
         <thead>
         <tr>
             <th scope="col">금전후원코드</th>
-            <th scope="col">금전후원자</th>
             <th scope="col">후원금액</th>
             <th scope="col">후원날짜</th>
             <th scope="col">후원유형</th>
@@ -71,6 +70,7 @@
             <th th:text="${financial.financialType}"></th>
             <th th:text="${financial.statusIssue}"></th>
             <th th:text="${financial.statusApp}"></th>
+            <br>
             <th>
                 <button><a style="text-decoration-line: none;" id="modify2"
                            th:href="@{/donation/financialManage(id=${financial.financialSupportCode})}">금전후원관리</a></button>

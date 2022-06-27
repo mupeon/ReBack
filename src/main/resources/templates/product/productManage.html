@@ -7,8 +7,9 @@
 <th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
     <th:block th:fragment="content">
 <h1>상품수정</h1>
-<input type="hidden" id="productCode" th:value="${productCode}">
-<table  class="table table-dark table-striped">
+<input type="hidden" id="productCode" th:value="${productCode}">principal
+        <input type="hidden" id="memberCode" th:value="${principal.getMemberCode()}">
+        <table  class="table table-dark table-striped">
     <thead>
     <tr>
         <th scope="col">카테고리</th>
@@ -62,7 +63,7 @@
 <div class="text-center">
     <button id="productModify" class="btn btn-outline-success" type="submit">상품수정</button>
     <button id="productDelete" class="btn btn-outline-success" type="submit">상품삭제</button>
-    <a type="button" class="btn btn-outline-success" th:href="@{/product/manager}">돌아가기</a>
+    <a type="button" class="btn btn-outline-success" th:href="@{/product/manager(memberCode=${principal.memberCode})}">돌아가기</a>
 </div>
 <!--</div>-->
 </body>
@@ -79,6 +80,7 @@
             const productFilePath = $('#productFilePath').val();
             const materialName = $('#categoryCode option:selected').text();
             const categoryName = $('#categoryCode option:selected').text();
+            const memberCode = $('#memberCode').val();
 
             const path = '/api/product/update';
             // alert(productFilePath);
@@ -108,7 +110,7 @@
 
             }).done( ()=> {
                 alert('상품이 수정되었습니다.');
-                window.location.href = '/product/manager';
+                window.location.href = '/product/manager?memberCode='+memberCode;
             }).fail( (error)=> {
                 alert(error);
             })
@@ -117,7 +119,7 @@
             $('#productDelete').on('click', () => {
                 const productCode = $('#productCode').val();
                 const path = '/api/product/delete';
-
+                const memberCode = $('#memberCode').val();
                 const json = JSON.stringify({
                     productCode
                 });
@@ -130,7 +132,7 @@
 
                 }).done( ()=> {
                     alert('상품이 삭제되었습니다.');
-                    window.location.href = '/product/manager';
+                    window.location.href = '/product/manager?memberCode='+memberCode;
                 }).fail( (error)=> {
                     alert((error));
                 })

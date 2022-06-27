@@ -1,51 +1,61 @@
 package ReBack.core.controller;
 
 
+import ReBack.core.controller.request.AuthorRequest;
 import ReBack.core.controller.request.RegistryRequest;
+import ReBack.core.data.Design;
 import ReBack.core.data.Member;
 import ReBack.core.data.Role;
+import ReBack.core.data.WriterInformation;
 import ReBack.core.repository.MemberRepository;
+import ReBack.core.repository.WriterInformationRepository;
+import ReBack.core.security.SecurityUser;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Getter
 @Setter
 @Slf4j
-@RequiredArgsConstructor
 @Controller
+@RequiredArgsConstructor
 public class RegistryController {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-
+    private final WriterInformationRepository writerInformationRepository;
     @GetMapping("/registry")
     public String registryForm(Model model) {
         model.addAttribute("member", new RegistryRequest());
-        return "registration";
+        return "member/registration";
     }
 
-        @GetMapping("/companyregistry")
+    @GetMapping("/companyregistry")
     public String companyregistryForm(Model model) {
         model.addAttribute("member", new RegistryRequest());
-        return "cpregistration";
+        return "member/cpregistration";
     }
 
     @GetMapping("/authorregistry")
     public String authorregistryForm(Model model) {
         model.addAttribute("member", new RegistryRequest());
-        return "authorregistration";
+
+        return "member/authorregistration";
     }
+
+
 
     @PostMapping("/registry")
     public String registry(@ModelAttribute RegistryRequest registryRequest) {
@@ -56,14 +66,16 @@ public class RegistryController {
                 .memberPostalCode(registryRequest.getMemberPostalCode())
                 .memberPhoneNumber(registryRequest.getMemberPhoneNumber())
                 .memberAddress(registryRequest.getMemberAddress())
-                .memberJoinDate(registryRequest.getMemberJoinDate())
+//                .memberJoinDate(registryRequest.getMemberJoinDate())
                 .password(passwordEncoder.encode(registryRequest.getPassword()))
                 .role(registryRequest.getRole())
                 .build();
         memberRepository.save(member);
-
         return "redirect:/login";
     }
+
+
+
 
     @PostMapping("/companyregistry")
     public String registry1(@ModelAttribute RegistryRequest companyRequest) {
@@ -74,7 +86,7 @@ public class RegistryController {
                 .memberPostalCode(companyRequest.getMemberPostalCode())
                 .memberPhoneNumber(companyRequest.getMemberPhoneNumber())
                 .memberAddress(companyRequest.getMemberAddress())
-                .memberJoinDate(companyRequest.getMemberJoinDate())
+//                .memberJoinDate(companyRequest.getMemberJoinDate())
                 .memberBusinessNumber(companyRequest.getMemberBusinessNumber())
                 .password(passwordEncoder.encode(companyRequest.getPassword()))
                 .role(companyRequest.getRole())
@@ -84,38 +96,40 @@ public class RegistryController {
         return "redirect:/login";
     }
 
+
+
+
     @PostMapping("/authorregistry")
-    public String authorregistry(@ModelAttribute RegistryRequest authorRequest) {
+    public String authorCalendar(@ModelAttribute RegistryRequest registryRequest) {
         Member member = Member.builder()
-                .memberId(authorRequest.getMemberId())
-                .memberEmail(authorRequest.getMemberEmail())
-                .memberName(authorRequest.getMemberName())
-                .password(passwordEncoder.encode(authorRequest.getPassword()))
-                .role(authorRequest.getRole())
+                .memberId(registryRequest.getMemberId())
+                .memberEmail(registryRequest.getMemberEmail())
+                .memberName(registryRequest.getMemberName())
+                .password(passwordEncoder.encode(registryRequest.getPassword()))
+                .role(registryRequest.getRole())
                 .build();
         memberRepository.save(member);
 
+
+//        WriterInformation writerInformation = WriterInformation.builder()
+//                .memberCode(member)
+//                .writerLecturePlace(registryRequest.getWriterLecturePlace())
+//                .availableStartTime(registryRequest.getAvailableStartTime())
+//                .availableFinishTime(registryRequest.getAvailableFinishTime())
+//                .availableDay(registryRequest.getAvailableDay())
+//                .build();
+//        writerInformationRepository.save(writerInformation);
         return "redirect:/login";
+
     }
 
-//    @PostMapping("/mypage")
-//    public String mypage(@ModelAttribute RegistryRequest authorRequest) {
-//        Member member = Member.builder()
-//                .memberId(authorRequest.getMemberId())
-//                .memberEmail(authorRequest.getMemberEmail())
-//                .memberName(authorRequest.getMemberName())
-//                .password(passwordEncoder.encode(authorRequest.getPassword()))
-//                .role(authorRequest.getRole())
-//                .build();
-//        memberRepository.save(member);
-//
-//        return "mypage";
-//    }
+
+
 
     @ModelAttribute("roles")
     public Map<String, Role> roles() {
         Map<String, Role> map = new LinkedHashMap<>();
-       map.put("동의", Role.ROLE_MEMBER);
+        map.put("동의", Role.ROLE_MEMBER);
         return map;
     }
 
@@ -129,7 +143,7 @@ public class RegistryController {
     @ModelAttribute("roles2")
     public Map<String, Role> roles2() {
         Map<String, Role> map = new LinkedHashMap<>();
-        map.put("동의", Role.ROLE_COMPANY);
+        map.put("동의", Role.ROLE_ADMIN);
         return map;
     }
 

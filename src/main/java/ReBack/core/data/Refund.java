@@ -3,6 +3,7 @@ package ReBack.core.data;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -36,7 +37,7 @@ public class Refund {
     private int refundPoint;
 
     @Column(nullable = false)
-    private LocalDateTime refundTime;
+    private LocalDate refundTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="orders_code")

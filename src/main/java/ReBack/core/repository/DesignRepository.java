@@ -1,10 +1,12 @@
 package ReBack.core.repository;
 
 import ReBack.core.data.Design;
+import ReBack.core.data.Member;
 import ReBack.core.data.Product;
 import org.hibernate.query.spi.QueryParameterBindingTypeResolver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -26,4 +28,8 @@ public interface DesignRepository extends JpaRepository<Design, Long>,
             " left outer join Reply r on r.design = d " +
             " where d.designCode = :designCode group by df")
     List<Object[]> getDesignWithAll(@Param("designCode") Long designCode);
+
+    List<Design> findByMember(Member member);
+
+
 }

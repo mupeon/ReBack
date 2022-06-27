@@ -54,7 +54,8 @@
                     // const   refundPoint=$('#').val();
                     const   refundTime= new Date();
                     const   ordersCode= $('#ordersCode').val();
-
+                    const memberCode = $('#memberCode').val();
+                    console.log("ordersCode"+ordersCode)
                     const json = JSON.stringify({
                         refundCount,
                         refundAmount,
@@ -75,12 +76,14 @@
 
                     }).done( ()=> {
                         alert('환불신청완료');
+                        window.location.href = '/product/orderlist?memberCode='+memberCode;
                     }).fail( (error)=> {
-                        alert(error);
+                        alert('신청불가');
+                        // window.location.href = '/product/orderlist?memberCode='+memberCode;
                     })
                 })
 
-                })
+            })
         </script>
     </th:block>
 </th:block>

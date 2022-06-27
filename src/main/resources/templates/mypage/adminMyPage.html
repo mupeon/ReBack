@@ -24,7 +24,7 @@
         <!--        <th scope="col">우편번호</th>-->
         <th scope="col">회원주소</th>
         <th scope="col">가입날짜</th>
-        <th scope="col">회원유형(ROLE)</th>
+<!--        <th scope="col">회원유형(ROLE)</th>-->
     </tr>
     </thead>
     <tbody>
@@ -39,22 +39,18 @@
         <!--        <th th:text="${memberPoint}"></th>-->
         <!--        <th th:text="${memberBusinessNumber}"></th>-->
         <th th:text="${memberJoinDate}"></th>
-        <th th:text="${role}"></th>
+<!--        <th th:text="${role}"></th>-->
     </tr>
     </tbody>
 </table>
 <hr>
 <button><a th:href="@{/mypage/writerprofile}">강사프로필 관리</a></button>
 <button><a th:href="@{/mypage/lecturemanage}">강의관리</a></button>
-<hr>
-<h1>구매 내역</h1>
-<a th:href="@{/product/orderlist(memberCode=${principal.memberCode})}">내역</a>
+
 <hr>
 <h1>상품 관리</h1>
 <a th:href="@{/product/manager(memberCode=${principal.memberCode})}">관리</a>
-<hr>
-<h1>환불 내역</h1>
-<a th:href="@{/product/refundlist(memberCode=${principal.memberCode})}">환불내역</a>
+
 <!--<table  class="table table-dark table-striped">-->
 <!--    <thead>-->
 <!--    <tr>-->
