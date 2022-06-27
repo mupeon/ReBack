@@ -54,7 +54,7 @@
 <script th:inline="javascript">
     $(()=>{
         $('#submit').on('click',()=>{
-            const data = {
+            const json = JSON.stringify ({
                 amount: $('#amount').val(),
                 pickupDate: $('#pickupDate').val(),
                 pickupArea: $('#pickupArea').val(),
@@ -64,19 +64,15 @@
                 memberCode: {
                     memberCode: $('#memberCode').val()
                 }
-            }
+            })
 
             const path='/api/donation/clothingSponsor'
 
-            const form = $('#form')[0];
-            const formData = new FormData(form);
-            formData.append('key', new Blob([JSON.stringify(data)],{type: 'application/json'}));
             $.ajax({
                 url:path,
                 type:'POST',
-                processData:false,
-                contentType:false,
-                data: formData,
+                contentType:'application/json',
+                data: json,
             }).done(()=>{
                 window.location.href = '/donation';
                 alert('ok')

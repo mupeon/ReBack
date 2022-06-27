@@ -29,7 +29,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="cloth :${clothes}">
+        <tr th:each="cloth :${cslist}">
             <th th:text="${cloth.clothingSponsorCode}" id="clothingSponsorCode" th:value="${cloth.clothingSponsorCode}"></th>
             <th>후원자</th>
             <!--<th th:text="${cloth.MemberCode}"></th>-->
@@ -61,7 +61,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="financial:${financials}">
+        <tr th:each="financial:${fslist}">
             <th th:text="${financial.financialSupportCode}" id="financialSupportCode" th:value="${financial.financialSupportCode}"></th>
 <!--            <th th:text="${financial.memberCode}"></th>-->
             <!--        <th th:text="${cloth.MemberCode}"></th>-->

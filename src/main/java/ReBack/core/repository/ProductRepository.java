@@ -12,6 +12,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByMemberCode(Member memberCode);
+
     @Query("select p from Product p where p.categoryCode.categoryCode =:categoryCode")
     List<Product> selectCate(@Param("categoryCode") Long categoryCode);
 

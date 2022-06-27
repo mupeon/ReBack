@@ -42,7 +42,7 @@ public class Member {
     private String memberPhoneNumber;
 
     @Column(length=10)
-    private int memberPostalCode;
+    private String memberPostalCode;
 
     @Column
     private String memberAddress;
@@ -73,7 +73,7 @@ public class Member {
 
     @Builder
     public Member(String memberId, String password, String memberName, boolean enabled, Role role,
-                  String memberPhoneNumber,int memberPostalCode,String memberAddress,int memberPoint,
+                  String memberPhoneNumber,String memberPostalCode,String memberAddress,int memberPoint,
                   MemberHowJoin memberHowJoin,MemberWithdrawal memberWithdrawal,
                   int memberBusinessNumber,String memberEmail, Long memberCode) {
 //        ,LocalDateTime memberJoinDate

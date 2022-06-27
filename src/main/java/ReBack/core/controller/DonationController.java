@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+import java.util.Optional;
+
 @Getter
 @Setter
 @Controller
@@ -67,8 +70,6 @@ public class DonationController {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
-
-            model.addAttribute("financials", financialSupportRepository.findAll());
         }
         return "donation/clothingSponsor";
     }
@@ -79,12 +80,11 @@ public class DonationController {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
 
+//            model.addAttribute("member", memberRepository.findAll());
 
-            model.addAttribute("member", memberRepository.findAll());
-            model.addAttribute("clothes", clothingSponsorRepository.findAll());
-//        model.addAttribute("member" ,memberRepository.findAll());
-            model.addAttribute("financials", financialSupportRepository.findAll());
+
         }
+
         return "donation/applicationSituation";
     }
 
@@ -108,11 +108,11 @@ public class DonationController {
     }
 
     @GetMapping("/donation/financialManage") // 금전 후원 관리 페이지
-    public String financialManage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
-        System.out.println("id값:" + id);
+    public String financialManage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false)  Long id) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
+
 
             FinancialSupport financialSupport = financialSupportRepository.findById(id).orElse(null);
             model.addAttribute("financial", financialSupportRepository.findAll());
@@ -127,15 +127,20 @@ public class DonationController {
     }
 
     @GetMapping("/donation/manager") // 후원 상세 보기(관리)
-    public String applicationManager(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
+    public String applicationManager(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Member memberCode) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
-
-        model.addAttribute("clothes", clothingSponsorRepository.findAll());
-        model.addAttribute("financials", financialSupportRepository.findAll());
-        System.out.println("id값:" + id);
         }
+        List<FinancialSupport> financialSupport = financialSupportRepository.findByMemberCode(memberCode);
+        List<ClothingSponsor> clothingSponsor = clothingSponsorRepository.findByMemberCode(memberCode);
+
+        System.out.println("financialSupport   "+financialSupport.size());
+        System.out.println("clothingSponsor   "+clothingSponsor.size());
+
+        model.addAttribute("fslist",financialSupport);
+        model.addAttribute("cslist",clothingSponsor);
+
         return "donation/applicationManager";
     }
 

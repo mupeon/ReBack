@@ -14,32 +14,32 @@
         <a sec:authorize="isAuthenticated()">
 <body>
 <div id="main">
-    <h2>의류 후원 현황</h2>
-    <table border="1px">
-        <thead>
-        <tr>
-            <th scope="col">의류후원코드</th>
-            <th scope="col">의류후원자</th>
-            <th scope="col">의류량</th>
-            <th scope="col">수거날짜</th>
-            <th scope="col">수거지역</th>
-            <th scope="col">기부영수증발행여부</th>
-            <th scope="col">기부영수증신청여부</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="cloth:${clothes}">
-            <th th:text="${cloth.clothingSponsorCode}"></th>
-            <th>후원자</th>
-            <!--<th th:text="${cloth.MemberCode}"></th>-->
-            <th th:text="${cloth.amount}"></th>
-            <th th:text="${cloth.pickupDate}"></th>
-            <th th:text="${cloth.pickupArea}"></th>
-            <th th:text="${cloth.issueStatus}"></th>
-            <th th:text="${cloth.appStatus}"></th>
-        </tr>
-        </tbody>
-    </table>
+<!--    <h2>의류 후원 현황</h2>-->
+<!--    <table border="1px">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">의류후원코드</th>-->
+<!--            <th scope="col">의류후원자</th>-->
+<!--            <th scope="col">의류량</th>-->
+<!--            <th scope="col">수거날짜</th>-->
+<!--            <th scope="col">수거지역</th>-->
+<!--            <th scope="col">기부영수증발행여부</th>-->
+<!--            <th scope="col">기부영수증신청여부</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="cloth:${clothes}">-->
+<!--            <th th:text="${cloth.clothingSponsorCode}"></th>-->
+<!--            <th>후원자</th>-->
+<!--            &lt;!&ndash;<th th:text="${cloth.MemberCode}"></th>&ndash;&gt;-->
+<!--            <th th:text="${cloth.amount}"></th>-->
+<!--            <th th:text="${cloth.pickupDate}"></th>-->
+<!--            <th th:text="${cloth.pickupArea}"></th>-->
+<!--            <th th:text="${cloth.issueStatus}"></th>-->
+<!--            <th th:text="${cloth.appStatus}"></th>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
     <h2>금전 후원 현황</h2>
     <table border="1px">
         <thead>

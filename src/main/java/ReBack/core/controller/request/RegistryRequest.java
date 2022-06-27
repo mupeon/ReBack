@@ -19,7 +19,7 @@ public class RegistryRequest {
         private String memberName;
         private String memberEmail;
         private String memberPhoneNumber;
-        private int memberPostalCode;
+        private String memberPostalCode;
         private String memberAddress;
         private int memberPoint;
         private MemberHowJoin memberHowJoin;
