@@ -40,13 +40,22 @@ public class DonationApiController<financialSupport> {
         return "donation/financialSupport";
     }
 
-    @PutMapping("/donation/update") // 후원 수정
+    @PutMapping("/donation/update") // 금전 후원 수정
     public void financialUpdate(@RequestBody FinancialSupport financialSupport) {
 
         System.out.println(financialSupport);
         System.out.println("수정 api");
 
         financialSupportRepository.save(financialSupport);
+    }
+
+    @PutMapping("/donations/update") // 의류 후원 수정
+    public void clothingUpdate(@RequestBody ClothingSponsor clothingSponsor) {
+
+        System.out.println(clothingSponsor);
+        System.out.println("수정 api");
+
+        clothingSponsorRepository.save(clothingSponsor);
     }
 
     @DeleteMapping("/donation/delete") // 금전 후원 삭제
