@@ -43,6 +43,6 @@ public class ClothingSponsor {
 
     @ManyToOne
     @JoinColumn(name="member_code")
-    private Member MemberCode;
+    private Member memberCode;
 
 }

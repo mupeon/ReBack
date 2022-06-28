@@ -35,11 +35,7 @@
         <input  type="hidden"  id="issueStatus" value="미발행">
     </div>
     <div>
-        <label>기부영수증신청여부
-            <button th:onclick="|location.href='@{/donation/pdf}'|">신청</button>
-            <button value="미신청" onclick="alert('미신청 시, 기부 영수증이 발급되지 않습니다.')">미신청</button>
-
-        </label>
+        <input type="hidden" id="appStatus" value="신청">
     </div>
     <button type="submit" id="submit"> 신청 </button>
     <hr>
@@ -53,20 +49,19 @@
 </th:block>
 <script th:inline="javascript">
     $(()=>{
-        $('#submit').on('click',()=>{
+        $('#submit').on('click', ()=>{
+            console.log($('#memberCode').val());
             const json = JSON.stringify ({
                 amount: $('#amount').val(),
                 pickupDate: $('#pickupDate').val(),
                 pickupArea: $('#pickupArea').val(),
                 appStatus: $('#appStatus').val(),
                 issueStatus: $('#issueStatus').val(),
-
                 memberCode: {
                     memberCode: $('#memberCode').val()
                 }
             })
-
-            const path='/api/donation/clothingSponsor'
+            const path='/api/donation/clothingSponsor';
 
             $.ajax({
                 url:path,
@@ -82,5 +77,4 @@
         })
     })
 </script>
-
 </html>
