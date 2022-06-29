@@ -144,31 +144,4 @@ public class DonationController {
         return "donation/applicationManager";
     }
 
-//    @GetMapping("/donation/financialPdf")
-//    public String financialPdf(Model model, @RequestParam(required = false) Long id){
-//        System.out.println("id값:" + id);
-//
-//        FinancialSupport financialSupport = financialSupportRepository.findById(id).orElse(null);
-//        model.addAttribute("financials",financialSupportRepository.findAll());
-//        model.addAttribute("financialSupportCodes", financialSupport.getFinancialSupportCode());
-//        model.addAttribute("financialDates", financialSupport.getFinancialDate());
-//        model.addAttribute("financialAmounts", financialSupport.getFinancialAmount());
-//        model.addAttribute("financialTypes", financialSupport.getFinancialType());
-//        model.addAttribute("statusIssues", financialSupport.getStatusIssue());
-//        model.addAttribute("statusApps", financialSupport.getStatusApp());
-//
-//        return "donation/financialPdf";
-//    }
-
-    @GetMapping("/donation/financialPdf") // 금전 후원 PDF
-    public String financialPdf(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
-        if (principal != null) {
-            model.addAttribute("principal", principal.getMember());
-            model.addAttribute("role", principal.getMember().getRole().getDescription());
-            model.addAttribute("financialsPdf", financialSupportRepository.findAll());
-        }
-        return "donation/financialPdf";
-    }
-
-
 }

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/html">
-<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
-    <th:block th:fragment="content">
 <head>
     <meta charset="UTF-8">
     <title>금전 후원 관리 페이지</title>
@@ -13,6 +11,9 @@
 </head>
         <a sec:authorize="isAuthenticated()">
 <body>
+<div id="financialManages">
+    <th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+        <th:block th:fragment="content">
 <h1>금전 후원 수정</h1>
 <input type="hidden" id="financialSupportCode" th:value="${financialSupportCode}">
 <table class="w3-table">
@@ -57,12 +58,32 @@
     <button id="applicationModify" class="btn btn-outline-success" type="submit">상품수정</button>
     <button id="financialDelete" class="btn btn-outline-success" type="submit">상품삭제</button>
     <a type="button" class="btn btn-outline-success" th:href="@{/donation/manager}">돌아가기</a>
+    <button id="submit" class="btn btn-outline-success" type="submit">PDF 만들기</button>
+</div>
+        </th:block>
+    </th:block>
+</div>
+<div id="financialPdf" style="display: none">
+    <div style="text-align: center">
+        <h1>금전 기부 영수증</h1>
+        <br>
+        <h2 type="text" id="memberName" th:text="|${principal.memberName}님 기부해 주셔서 감사합니다!|"> </h2>
+        <br><br>
+        후원금액<p id="amount"></p>
+        <br>
+        후원날짜<p id="date"></p>
+        <br>
+        </div>
 </div>
 </body>
         </a>
     </th:block>
 </th:block>
 <script th:inline="javascript">
+
+    let financialAmount = $('#financialAmount').val();
+    let financialDate = $('#financialDate').val();
+
     $(() => {
         $('#applicationModify').on('click', () => {
             const financialSupportCode = $('#financialSupportCode').val();
@@ -117,6 +138,24 @@
                     alert((error));
                 })
             })
+                    $('#submit').on('click', () => {
+                        console.log("PDF 만들기")
+                        $('#financialManages').hide();
+                        $('#financialPdf').show();
+                        document.getElementById('amount').innerHTML = financialAmount;
+                        document.getElementById('date').innerHTML = financialDate;
+
+                        const doc = new jsPDF({
+                            //orientation: "landscape",
+                            orientation: "portrait",
+                            format: "a4"
+                            //format: [4, 2]
+                        });
+
+                        doc.addHTML(document.body, function () {
+                            doc.save('금전기부영수증.pdf');
+                        });
+        })
     })
 </script>
 </html>
