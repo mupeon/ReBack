@@ -71,6 +71,7 @@ public class DonationController {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
         }
+
         return "donation/clothingSponsor";
     }
 
@@ -127,7 +128,8 @@ public class DonationController {
     }
 
     @GetMapping("/donation/manager") // 후원 상세 보기(관리)
-    public String applicationManager(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Member memberCode) {
+    public String applicationManager(@AuthenticationPrincipal SecurityUser principal, Model model,
+                                     @RequestParam(required = false) Member memberCode) {
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
@@ -143,5 +145,29 @@ public class DonationController {
 
         return "donation/applicationManager";
     }
+
+    @GetMapping("/donation/chart")
+    public String donationChart(@AuthenticationPrincipal SecurityUser principal, Model model,
+                                @RequestParam(required = false) Long id) {
+
+        if (principal != null) {
+            model.addAttribute("principal", principal.getMember());
+            model.addAttribute("role", principal.getMember().getRole().getDescription());
+        }
+
+        model.addAttribute("member", memberRepository.findAll());
+        model.addAttribute("cloths", clothingSponsorRepository.findAll());
+        model.addAttribute("financials", financialSupportRepository.findAll());
+
+        return "donation/donationChart";
+    }
+
+    @GetMapping("/donation/map")
+    public String map() {
+        System.out.println("지도 api 실행");
+
+        return "donation/donationMap";
+    }
+
 
 }
