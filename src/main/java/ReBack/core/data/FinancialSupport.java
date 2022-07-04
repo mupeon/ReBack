@@ -42,6 +42,11 @@ public class FinancialSupport {
     @Column(nullable = false, name="pay_amount", length = 20)
     private int payAmount; //결제 금액
 
+    @Column(name="birth", length=6) // 주민등록번호 앞자리 6자
+    private int birth;
+
+    @Column(name="birth1", length=1) // 주민등록번호 뒷자리 1자
+    private int birth1;
 
     @OneToMany(mappedBy = "financialSupportCode",
             fetch = FetchType.LAZY,

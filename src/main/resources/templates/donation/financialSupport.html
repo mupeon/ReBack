@@ -32,7 +32,7 @@
     </div>
     <div>
         <label>후원금액
-            <input  type="number" placeholder="숫자만 입력해 주세요" id="financialAmount"> 원
+            <input type="number" placeholder="숫자만 입력해 주세요" id="financialAmount"> 원
         </label>
     </div>
 
@@ -40,6 +40,12 @@
         <label>후원 선택 날짜
             <input type="datetime-local" id="financialDate">
             <input type="button" value="선택하기" onclick="alert('선택하신 날짜는 정기후원일 시 정기적으로 출금되는 날짜, 일시후원일 시 당일 출금되는 날짜입니다')">
+        </label>
+    </div>
+    <div>
+        <label>주민등록번호(생년월일, 앞자리 1자까지 입력)
+            <input type="text" id="birth" name="my_address1" value="" size="20" maxlength="6" pattern="[0-9]{6}" title="잘못입력하였습니다. 예)123456-1." required/> -
+            <input type="text" id="birth1" name="my_address2" value="" size="20" maxlength="1" pattern="[0-9]{1}" title="잘못입력하였습니다. 예)123456-1." onkeyup="my_address_check()" required/>
         </label>
     </div>
     <div>
@@ -58,6 +64,7 @@
         </a>
     </th:block>
 </th:block>
+
 <script th:inline="javascript">
     $(()=> {
         $('#submit').on('click', () => {
@@ -126,65 +133,6 @@
             })
         })
     })
-
-
-            // const form = $('#form')[0];
-            // const formData = new FormData(form);
-            // formData.append('key', new Blob([JSON.stringify(data)], {type: "application/json"}));
-            // alert(json)
-
-        // $('#statusApp').on('click', ()=> {
-        //     const financialAmount= $('#financialAmount').val();
-        //     const financialDate= $('#financialDate').val();
-        //     const financialType= $('#financialType').val();
-        //
-        //     const path='/donation/FinancialPdf'
-        //
-        //     const allData = { "financialAmount":financialAmount, "financialDate":financialDate, "financialType":financialType }
-        //
-        //     const json = JSON.stringify({
-        //         financialAmount,
-        //         financialDate,
-        //         financialType
-        //     });
-        //
-        //     $.ajax({
-        //         url: path,
-        //         type: 'POST',
-        //         data: allData,
-        //         dataType: 'html',
-        //         success: function (data) {
-        //             $("#financialPdf").html(data);
-        //         }
-        //     })
-        // })
-        // 기부 영수증?
-        // $('#statusApp').on('click',()=>{
-        //     function financialPdfOpen() {
-        //         let val1 = "";
-        //         let val2 = "";
-        //         let val3 = "";
-        //
-        //         val1 = $("#financialAmount").val();
-        //         val2 = $("#financialDate").val();
-        //         val3 = $("#financialType").val();
-        //
-        //         let allData = { "val1":val1, "val2":val2, "val3":val3 };
-        //
-        //         $.ajax({
-        //             url:"/donation/financialPdf",
-        //             type: 'GET',
-        //             data: allData,
-        //             dataType: 'html',
-        //             success:function(data){
-        //                 $("#financialPdf").html(data);
-        //             }
-        //         });
-        //     }
-        // })
-
-
-
 
 </script>
 </html>

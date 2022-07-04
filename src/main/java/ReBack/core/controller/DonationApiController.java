@@ -28,7 +28,6 @@ public class DonationApiController<financialSupport> {
     public String clothingSponsor(@RequestBody ClothingSponsor clothingSponsor){
         System.out.println(clothingSponsor.getMemberCode());
         clothingSponsorRepository.save(clothingSponsor);
-
         return "donation/clothingSponsor";
     }
 
