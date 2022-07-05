@@ -74,19 +74,6 @@ public class DonationController {
         return "donation/clothingSponsor";
     }
 
-    @GetMapping("/donation/applicationSituation") // 후원 현황
-    public String applicationSituation(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
-        if (principal != null) {
-            model.addAttribute("principal", principal.getMember());
-            model.addAttribute("role", principal.getMember().getRole().getDescription());
-
-//            model.addAttribute("member", memberRepository.findAll());
-
-
-        }
-
-        return "donation/applicationSituation";
-    }
 
     @GetMapping("/donation/clothesManage") // 의류 후원 관리 페이지
     public String clothesManage(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
@@ -144,23 +131,24 @@ public class DonationController {
         model.addAttribute("fslist",financialSupport);
         model.addAttribute("cslist",clothingSponsor);
 
+
         return "donation/applicationManager";
     }
 
     @GetMapping("/donation/chart")
-    public String donationChart(@AuthenticationPrincipal SecurityUser principal, Model model,
-                                @RequestParam(required = false) Long id) {
+    public String donationChart(@AuthenticationPrincipal SecurityUser principal, Model model) {
 
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
             model.addAttribute("role", principal.getMember().getRole().getDescription());
         }
 
-        FinancialSupport financialSupport = financialSupportRepository.findById(id).orElse(null);
-        model.addAttribute("member", memberRepository.findAll());
-        model.addAttribute("cloths", clothingSponsorRepository.findAll());
         model.addAttribute("financial", financialSupportRepository.findAll());
-        model.addAttribute("financialAmount", financialSupport.getFinancialAmount());
+        model.addAttribute("findex", financialSupportRepository.findAll().size());
+
+        model.addAttribute("clothes", clothingSponsorRepository.findAll());
+        model.addAttribute("cindex", clothingSponsorRepository.findAll().size());
+
 
         return "donation/donationChart";
     }
