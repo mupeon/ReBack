@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Getter
 @Setter
@@ -123,6 +122,8 @@ public class DonationController {
             model.addAttribute("financialType", financialSupport.getFinancialType());
             model.addAttribute("statusIssue", financialSupport.getStatusIssue());
             model.addAttribute("statusApp", financialSupport.getStatusApp());
+            model.addAttribute("birth", financialSupport.getBirth());
+            model.addAttribute("birth1", financialSupport.getBirth1());
         }
         return "donation/financialManage";
     }
@@ -155,19 +156,13 @@ public class DonationController {
             model.addAttribute("role", principal.getMember().getRole().getDescription());
         }
 
+        FinancialSupport financialSupport = financialSupportRepository.findById(id).orElse(null);
         model.addAttribute("member", memberRepository.findAll());
         model.addAttribute("cloths", clothingSponsorRepository.findAll());
-        model.addAttribute("financials", financialSupportRepository.findAll());
+        model.addAttribute("financial", financialSupportRepository.findAll());
+        model.addAttribute("financialAmount", financialSupport.getFinancialAmount());
 
         return "donation/donationChart";
     }
-
-    @GetMapping("/donation/map")
-    public String map() {
-        System.out.println("지도 api 실행");
-
-        return "donation/donationMap";
-    }
-
 
 }

@@ -26,6 +26,7 @@
         <th scope="col">후원금액</th>
         <th scope="col">후원날짜</th>
         <th scope="col">후원유형</th>
+        <th scope="col">후원자정보</th>
         <th scope="col">기부영수증발행여부</th>
         <th scope="col">기부영수증신청여부</th>
     </tr>
@@ -46,6 +47,10 @@
         </th>
         <th>
             <input type="text" id="financialType" th:value="${financialType}" >
+        </th>
+        <th>
+            <input type="text" id="birth" th:value="${birth}" >
+            <input type="text" id="birth1" th:value="${birth1}" >
         </th>
         <th>
             <input type="text" id="statusIssue" th:value="${statusIssue}"  disabled>
@@ -70,10 +75,15 @@
         <h1>금전 기부 영수증</h1>
         <br>
         <h2 type="text" id="memberName" th:text="|${principal.memberName}님 기부해 주셔서 감사합니다!|"> </h2>
-        <br><br>
-        후원금액<p id="amount"></p>
         <br>
-        후원날짜<p id="date"></p>
+        후원자 정보
+        <li style="display:flex; justify-content: center; align-items: center"> <p id="jNumber"></p> - <p id="jNumber1"></p></li>
+        <br>
+        후원 종류<p id="type"></p>
+        <br>
+        후원 금액<p id="amount"></p>
+        <br>
+        후원 날짜<p id="date"></p>
         <br>
         금전 후원을 해 주셔서 감사합니다!
         </div>
@@ -86,6 +96,9 @@
 
     let financialAmount = $('#financialAmount').val();
     let financialDate = $('#financialDate').val();
+    let financialType = $('#financialType').val();
+    let birth = $('#birth').val(); // 주민등록번호 앞자리
+    let birth1 = $('#birth1').val(); // 주민등록번호 뒷자리
 
     $(() => {
         $('#applicationModify').on('click', () => {
@@ -95,6 +108,8 @@
             const financialType = $('#financialType').val();
             const statusIssue = $('#statusIssue').val();
             const statusApp = $('#statusApp').val();
+            const birth = $('#birth').val();
+            const birth1 = $('#birth1').val;
 
             const path = '/api/donation/update';
 
@@ -105,6 +120,8 @@
                 financialType,
                 statusIssue,
                 statusApp,
+                birth,
+                birth1,
             });
 
             $.ajax({
@@ -147,6 +164,9 @@
                 $('#financialPdf').show();
                 document.getElementById('amount').innerHTML = financialAmount;
                 document.getElementById('date').innerHTML = financialDate;
+                document.getElementById('type').innerHTML = financialType;
+                document.getElementById('jNumber').innerHTML = birth;
+                document.getElementById('jNumber1').innerHTML = birth1;
 
                 const doc = new jsPDF({
                     //orientation: "landscape",

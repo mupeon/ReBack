@@ -43,10 +43,13 @@
         </label>
     </div>
     <div>
-        <label>주민등록번호(생년월일, 앞자리 1자까지 입력)
-            <input type="text" id="birth" name="my_address1" value="" size="20" maxlength="6" pattern="[0-9]{6}" title="잘못입력하였습니다. 예)123456-1." required/> -
-            <input type="text" id="birth1" name="my_address2" value="" size="20" maxlength="1" pattern="[0-9]{1}" title="잘못입력하였습니다. 예)123456-1." onkeyup="my_address_check()" required/>
-        </label>
+        <label>주민등록번호(생년월일, 앞자리 1자까지 입력) 예) [220705] - [1]
+            <br>
+            <input type="text" id="birth"
+                   size="20" maxlength="6" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" /> -
+            <input type="text" id="birth1"
+                   size="20" maxlength="1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+           </label>
     </div>
     <div>
         <input type="hidden" id="statusIssue" value="미발행">
@@ -110,7 +113,9 @@
                         payAmount: payAmount,
                         memberCode: {
                             memberCode: $('#memberCode').val()
-                        }
+                        },
+                        birth: $('#birth').val(),
+                        birth1: $('#birth1').val(),
                     })
                     $.ajax({
                         url: path,
