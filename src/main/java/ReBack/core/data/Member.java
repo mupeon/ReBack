@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Builder
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
@@ -35,6 +35,12 @@ public class Member {
     @Column(length=60)
     private String password;
 
+    @Column (length = 10)
+    private String summers;
+
+    @Column (length = 1)
+    private String gender;
+
     @Column(length=50)
     private String memberEmail;
 
@@ -50,8 +56,6 @@ public class Member {
     @Column(length=10)
     private int memberPoint;
 
-    @Column(length=20)
-    private MemberHowJoin memberHowJoin;
 
     @Column(length=30)
     private MemberWithdrawal memberWithdrawal;
@@ -71,12 +75,12 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+
     @Builder
     public Member(String memberId, String password, String memberName, boolean enabled, Role role,
                   String memberPhoneNumber,String memberPostalCode,String memberAddress,int memberPoint,
-                  MemberHowJoin memberHowJoin,MemberWithdrawal memberWithdrawal,
+                MemberWithdrawal memberWithdrawal,
                   int memberBusinessNumber,String memberEmail, Long memberCode) {
-//        ,LocalDateTime memberJoinDate
         this.memberCode = memberCode;
         this.memberId = memberId;
         this.memberName = memberName;
@@ -87,7 +91,7 @@ public class Member {
         this.memberPostalCode = memberPostalCode;
         this.memberAddress = memberAddress;
         this.memberPoint = memberPoint;
-        this.memberHowJoin = memberHowJoin;
+
         this.memberWithdrawal = memberWithdrawal;
         this.memberBusinessNumber = memberBusinessNumber;
         this.enabled = true;

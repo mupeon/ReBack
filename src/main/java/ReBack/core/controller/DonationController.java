@@ -145,9 +145,15 @@ public class DonationController {
 
         model.addAttribute("financial", financialSupportRepository.findAll());
         model.addAttribute("findex", financialSupportRepository.findAll().size());
+        model.addAttribute("findByType1", financialSupportRepository.findByType1().size());
+        model.addAttribute("findByType2", financialSupportRepository.findByType2().size());
 
         model.addAttribute("clothes", clothingSponsorRepository.findAll());
         model.addAttribute("cindex", clothingSponsorRepository.findAll().size());
+        model.addAttribute("findByArea1", clothingSponsorRepository.findByArea1().size());
+        model.addAttribute("findByArea2", clothingSponsorRepository.findByArea2().size());
+        model.addAttribute("findByArea3", clothingSponsorRepository.findByArea3().size());
+        model.addAttribute("findByArea4", clothingSponsorRepository.findByArea4().size());
 
 
         return "donation/donationChart";

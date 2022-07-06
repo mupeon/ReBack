@@ -3,7 +3,9 @@ package ReBack.core.data;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @ToString
@@ -21,25 +23,22 @@ public class Comment {
     private Long commentCode;
 
     @Column(length=100, nullable = false)
-    private String commentTitle;
+    private String commentTitle; //제목
 
     @Column(length=500, nullable = false)
-    private String commentContent;
+    private String commentContent; //내용
 
-    @Column(nullable = false, name="comment_writing_time")
-    private LocalDateTime writingTime;
+    @Column(nullable = false, name="comment_writing_date")
+    private LocalDate writingDate; //시간
 
     @Column(nullable = false, length=5)
-    private int commentViews;
+    private int commentViews; //조회수
 
     @Column(nullable = false, length=5, name="comment_recommended_number")
-    private int commentRecommend;
-
-    @Column(nullable = false, length=4)
-    private int commentPassword;
+    private int commentRecommend; //추천수
 
     @Column(nullable = false)
-    private int commentHoroscope;
+    private int commentHoroscope; //별점
 
     @ManyToOne
     @JoinColumn(name="member_code")

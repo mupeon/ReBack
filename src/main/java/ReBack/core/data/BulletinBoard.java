@@ -18,14 +18,14 @@ public class BulletinBoard {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bulletin_board_seq_generator")
     private Long bulletinBoardCode;
 
-    @Column(nullable = false, length=20)
-    private String bulletinBoardType;
+    @Column(nullable = false)
+    private BulletinBoardType bulletinBoardType;
 
-    @ManyToOne
-    @JoinColumn(name="member_code")
-    private Member member;
-
-    @ManyToOne
-    @JoinColumn(name="lecture_code")
-    private Lecture lecture;
+//    @ManyToOne
+//    @JoinColumn(name="member_code")
+//    private Member member;
+//
+//    @ManyToOne
+//    @JoinColumn(name="lecture_code")
+//    private Lecture lecture;
 }

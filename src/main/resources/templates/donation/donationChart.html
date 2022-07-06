@@ -17,7 +17,27 @@
                 <th:block th:fragment="content">
                     <input type="hidden" id="findex" th:value="${findex}">
                     <input type="hidden" id="cindex" th:value="${cindex}">
+                    <input type="hidden" id="findByType1" th:value="${findByType1}">
+                    <input type="hidden" id="findByType2" th:value="${findByType2}">
+                    <input type="hidden" id="findByArea1" th:value="${findByArea1}">
+                    <input type="hidden" id="findByArea2" th:value="${findByArea2}">
+                    <input type="hidden" id="findByArea3" th:value="${findByArea3}">
+                    <input type="hidden" id="findByArea4" th:value="${findByArea4}">
+
             <button th:onclick="|location.href='@{/donation}'|">후원메인으로</button>
+
+                    <div style="width: 500px; height: 500px;">
+                            <h1>후원 현황 차트</h1>
+                            <!--차트가 그려질 부분-->
+                            <canvas id="donationApplicationChart"></canvas>
+                        <br>
+                            <h1>금전 후원 종류별 차트</h1>
+                            <canvas id="financialTypeChart"></canvas>
+                        <br>
+                            <h1>의류 후원 지역별 차트</h1>
+                            <canvas id="clothAreaChart"></canvas>
+                            <br>
+                    </div>
                 </th:block>
             </th:block>
             </body>
@@ -51,10 +71,7 @@
 <!--            </div>-->
 <!--            </div>-->
 
-        <div style="width: 500px; height: 500px;">
-            <!--차트가 그려질 부분-->
-            <canvas id="myChart"></canvas>
-        </div>
+
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
 
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
@@ -63,17 +80,55 @@
 
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
             <script>
+                // 후원 유형별
                 let findex =$('#findex').val();
                 let cindex =$('#cindex').val();
-                var context = document.getElementById("myChart").getContext('2d');
-                var myChart = new Chart(context, {
+                var context = document.getElementById("donationApplicationChart").getContext('2d');
+                var donationApplicationChart = new Chart(context, {
                     type: 'bar',
                     data: {
-                        labels: ["금전 후원", "의류 후원"],
+                        labels: ['금전 후원', '의류 후원'],
                         datasets: [{
-
-
+                            labels: ["금전 후원", "의류 후원"],
                             data: [findex, cindex], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)'
+
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)'
+
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                });
+                console.log("data : : : ::  :: : "+donationApplicationChart)
+                console.log("data : : : ::  :: : "+donationApplicationChart.toString()) // 후원 현황 차트 script
+
+                // 금전 유형별
+                let findByType1 =$('#findByType1').val();
+                let findByType2 =$('#findByType2').val();
+                var context = document.getElementById("financialTypeChart").getContext('2d');
+                var financialTypeChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['정기 후원', '일시 후원'],
+                        datasets: [{
+                            labels: ["정기 후원", "일시 후원"],
+                            data: [findByType1, findByType2], //컨트롤러에서 모델로 받아온다.
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
                                 'rgba(54, 162, 235, 0.2)'
@@ -98,9 +153,50 @@
                         }
                     }
                 });
-                console.log("data : : : ::  :: : "+myChart)
-                console.log("data : : : ::  :: : "+myChart.toString())
+                console.log("data : : : ::  :: : "+financialTypeChart)
+                console.log("data : : : ::  :: : "+financialTypeChart.toString()) // 금전 유형 차트 script
+
+                // 의류 지역별
+                let findByArea1 =$('#findByArea1').val();
+                let findByArea2 =$('#findByArea2').val();
+                let findByArea3 =$('#findByArea3').val();
+                let findByArea4 =$('#findByArea4').val();
+                var context = document.getElementById("clothAreaChart").getContext('2d');
+                var clothAreaChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['대구', '서울', '부산', '대전'],
+                        datasets: [{
+                            labels: ['대구', '서울', '부산', '대전'],
+                            data: [findByArea1, findByArea2, findByArea3, findByArea4], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(18, 130, 68, 0.2)',
+                                'rgba(232, 202, 84, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(18, 130, 68, 1)',
+                                'rgba(232, 202, 84, 1)'
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
+                    }
+                });
+                console.log("data : : : ::  :: : "+clothAreaChart)
+                console.log("data : : : ::  :: : "+clothAreaChart.toString()) // 금전 유형 차트 script
+
             </script>
-
-
 </html>
