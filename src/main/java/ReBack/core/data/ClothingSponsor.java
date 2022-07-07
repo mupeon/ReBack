@@ -3,7 +3,9 @@ package ReBack.core.data;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +26,8 @@ public class ClothingSponsor {
     private int amount;
 
     @Column(nullable = false, name="clothing_sponsor_pickup_date")
-    private LocalDateTime pickupDate;
+    private String pickupDate ;
+//    = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
     @Column(nullable = false, name="clothing_sponsor_pickup_area", length = 20)
     private String pickupArea;

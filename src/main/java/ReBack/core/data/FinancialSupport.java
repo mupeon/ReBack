@@ -22,7 +22,7 @@ public class FinancialSupport {
     private Long financialSupportCode;
 
     @Column(nullable = false, name="financial_support_date")
-    private LocalDateTime financialDate;
+    private String financialDate;
 
     @Column(nullable = false, name="financial_support_amount")
     private int financialAmount;

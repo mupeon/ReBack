@@ -26,6 +26,8 @@ public interface ClothingSponsorRepository extends JpaRepository<ClothingSponsor
     @Query("select c from ClothingSponsor c where c.pickupArea like '대전%'")
     List<ClothingSponsor> findByArea4();
 
+    @Query("select c from ClothingSponsor c where c.pickupDate='22/01/%'")
+    List<ClothingSponsor> findByDate1();
 
 //    @Query("select ch from ClothingSponsor ch where ch.amount =:amount and ch.pickupDate=:pickupDate and pickupDate between DATE_SUB(NOW(), INTERVAL 7 DAY) and NOW() order by:pickupDate")
 //    List<Product> selectCate2(@Param("categoryCode") Long categoryCode, @Param("memberCode1") Long memberCode1);
