@@ -5,8 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@ToString
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,12 +21,18 @@ public class Cart {
     @Column(length=3, nullable = false)
     private int cartCount;
 
+    @Column(nullable = true)
+    private CheckState checkState;
+
+    @Column(nullable = false)
+    private OrdersState ordersState;
+
     @ManyToOne
     @JoinColumn(name="member_code")
-    private Member member;
+    private Member memberCode;
 
     @ManyToOne
     @JoinColumn(name="product_code")
-    private Product product;
+    private Product productCode;
 
 }

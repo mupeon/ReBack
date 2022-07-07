@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+<title>상품리뷰</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<style>
+
+    h1,
+    h5 {
+        display: inline;
+    }
+
+    .info {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .review {
+        text-align: center;
+    }
+
+    #myform fieldset {
+        display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+        border: 0; /* 필드셋 테두리 제거 */
+    }
+
+    #myform input[type=radio] {
+        display: none; /* 라디오박스 감춤 */
+    }
+
+    #myform label {
+        font-size: 3em; /* 이모지 크기 */
+        color: transparent; /* 기존 이모지 컬러 제거 */
+        text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
+    }
+
+    #myform label:hover {
+        text-shadow: 0 0 0 #ffc107; /* 마우스 호버 */
+    }
+
+    #myform label:hover ~ label {
+        text-shadow: 0 0 0 #ffc107; /* 마우스 호버 뒤에오는 이모지들 */
+    }
+
+    #myform fieldset {
+        display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+        direction: rtl; /* 이모지 순서 반전 */
+        border: 0; /* 필드셋 테두리 제거 */
+    }
+
+    #myform fieldset legend {
+        text-align: left;
+    }
+
+    #myform input[type=radio]:checked ~ label {
+        text-shadow: 0 0 0 #ffc107; /* 마우스 클릭 체크 */
+    }
+</style>
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <input type="hidden" id="member" th:value="${principal.memberCode}">
+        <input type="hidden" id="product" th:value="${product.productCode}">
+        <input type="hidden" id="commentTitle" th:value="${product.productName}">
+
+        <div class="container">
+            <div class="info">
+                <form id="form" enctype="multipart/form-data">
+                    <h1>상품리뷰</h1>
+                    <p>소중한 리뷰 작성 감사드립니다😊😊</p>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">상품명</span>
+                        </div>
+                        <input type="text" class="form-control"
+                               th:placeholder="${product.productName}" disabled>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">후기작성</span>
+                        </div>
+                        <textarea class="form-control" id="commentContent"
+                                  cols="30"
+                                  rows="5" placeholder="160자까지 입력할 수 있습니다."></textarea>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">후기사진</span>
+                        </div>
+                        <input type="file" class="form-control" name="file" id="file">
+                    </div>
+                    <div id="myform">
+                        <fieldset>
+                            <legend>별점</legend>
+                            <input type="radio" name="rating" value="5" id="star1"><label for="star1">⭐</label>
+                            <input type="radio" name="rating" value="4" id="star2"><label for="star2">⭐</label>
+                            <input type="radio" name="rating" value="3" id="star3"><label for="star3">⭐</label>
+                            <input type="radio" name="rating" value="2" id="star4"><label for="star4">⭐</label>
+                            <input type="radio" name="rating" value="1" id="star5"><label for="star5">⭐</label>
+                        </fieldset>
+                    </div>
+                    <div class="review">
+                        <button id="reviewOk" type="button" class="btn btn-primary">리뷰 작성완료</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            $(() => {
+                let commentHoroscope = 0
+                const writingDate = new Date(); //작성일자
+                const commentViews = 0; //조회수
+                const commentRecommend = 0; //추천수
+                const member = $('#member').val(); //맴버 객체
+                const bulletinBoard = 3; //게시글유형 객체
+                const product =$('#product').val(); //상품코드
+                $('#myform input').on('change', function () {
+                    console.log('별점 :: ' + $('input[name=rating]:checked', '#myform').val());
+                    commentHoroscope = $('input[name=rating]:checked', '#myform').val(); //별점
+                }),
+                    $('#reviewOk').on('click', () => {
+                        console.log(commentHoroscope + " :: commentHoroscope\n" +
+                            $('#commentTitle').val() + " :: commentTitle\n" +
+                            $('#commentContent').val() + " :: commentContent\n" +
+                            writingDate + " :: writingDate\n" +
+                            commentViews + " :: commentViews\n" +
+                            commentRecommend + " :: commentRecommend\n" +
+                            member + " :: member\n" +
+                            bulletinBoard + " :: bulletinBoard\n")
+
+                        const data = {
+                            commentTitle:$('#commentTitle').val(),
+                            commentContent:$('#commentContent').val(),
+                            writingDate:writingDate,
+                            commentViews:commentViews,
+                            commentRecommend:commentRecommend,
+                            commentHoroscope:commentHoroscope,
+                            bulletinBoard: {
+                                bulletinBoardCode: bulletinBoard
+                            },
+                            product: {
+                                productCode: product
+                            },
+                            member:{
+                                memberCode:member
+                            }
+                        }
+                        const path = '/api/product/reviews';
+                        const form = $('#form')[0];
+                        const formData = new FormData(form);
+                        formData.append('file', $('#file'));
+                        formData.append('key', new Blob([JSON.stringify(data)], {type: "application/json"}));
+                        $.ajax({
+                            url: path,
+                            type: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            success: function (data) {
+                                if(data == "ok"){
+                                    alert('후기작성완료')
+                                    window.location.href = '/product/orderlist?memberCode='+member;
+                                }
+                                else if(data == "no"){
+                                    alert('이미작성한 상품의 후기입니다')
+                                    window.location.href = '/product/orderlist?memberCode='+member;
+                                }
+                            }
+                        }).fail((error) => {
+                            alert((error));
+                        })
+                    });
+            })
+        </script>
+    </th:block>
+</th:block>
+</html>

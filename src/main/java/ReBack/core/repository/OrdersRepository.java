@@ -14,6 +14,12 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
     @Query("select o from Orders as o where o.memberCode = :memberCode") //회원이 구매한 구매목록
     List<Orders> find2ByMemberCode(@Param("memberCode")Member memberCode);
 
+    @Query("select o from Orders as o where o.memberCode.memberCode = :memberCode and o.productCode.productCode =:productCode") // 바로구매 -> 결제완료 페이지에 보이는 상품
+    List<Orders> findByBuy(@Param("memberCode")Long memberCode,@Param("productCode")Long productCode);
+
+    @Query("select o from Orders as o where o.memberCode.memberCode = :memberCode") // 장바구니 구매 -> 결제완료 페이지에 보이는 상품 [맴버 코드, 구매상태 0(Ture)인것]
+    List<Orders> findByCartBuy(@Param("memberCode")Long memberCode);
+
     Orders findByOrdersCode(Long ordersCode);
 
     @Query("select  o  from Orders o, Refund  r , Member  m, Product p " +

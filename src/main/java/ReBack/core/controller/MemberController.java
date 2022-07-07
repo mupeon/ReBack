@@ -1,5 +1,8 @@
 package ReBack.core.controller;
 
+import ReBack.core.controller.request.RegistryRequest;
+import ReBack.core.data.ClothingSponsor;
+import ReBack.core.data.Member;
 import ReBack.core.repository.MemberRepository;
 import ReBack.core.security.SecurityUser;
 import lombok.Getter;
@@ -31,6 +34,43 @@ public class MemberController {
         }
         return "member/signupType";
 
+    }
+
+    @GetMapping("author/authorTime")
+    public String authorTime(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
+        if (principal != null) {
+            model.addAttribute("principal", principal.getMember());
+            model.addAttribute("role", principal.getMember().getRole().getDescription());
+
+        }
+        return "member/authorTime";
+    }
+    @GetMapping("author/authorTimeDelete")
+    public String authorTimeDelete(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
+        if (principal != null) {
+            model.addAttribute("principal", principal.getMember());
+            model.addAttribute("role", principal.getMember().getRole().getDescription());
+
+        }
+        return "member/authorTimeDelete";
+    }
+
+
+    @GetMapping("member/memberCorrection")
+    public String memberCorrection(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Long id) {
+        if (principal != null) {
+            model.addAttribute("principal", principal.getMember());
+            model.addAttribute("role", principal.getMember().getRole().getDescription());
+
+            Member member = memberRepository.findById(id).orElse(null);
+            model.addAttribute("members", memberRepository.findAll());
+            model.addAttribute("memberName", member.getMemberName());
+            model.addAttribute("memberCode", member.getMemberCode());
+            model.addAttribute("memberId", member.getMemberId());
+//            model.addAttribute("password", member.getPassword());
+
+        }
+        return "mypage/memberCorrection";
     }
 
 }

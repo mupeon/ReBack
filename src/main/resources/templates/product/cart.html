@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+<title>장바구니</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+
+        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+        <div id="cart">
+        <div style="text-align: center">
+            <h1>장바구니 내역</h1>
+            <table style="margin:auto" class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">전체선택
+                        <br>
+                        <input type="checkbox"  name="checkList" id="check_All">
+                    </th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">상품사진</th>
+                    <th scope="col">상품가격</th>
+                    <th scope="col">수량</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <div>
+                    <tbody>
+                    <tr th:each="cartlist,index : ${cart}">
+                        <th scope="col">
+                            <input type="checkbox" class="chk" name="checkList" th:value="${cartlist.cartCount * cartlist.productCode.getProductPrice()}" th:id="${'box'+index.index}"/>
+                        </th>
+                        <th scope="col" th:id="${'productName'+index.index}" th:text="${cartlist.productCode.getProductName()}">상품명</th>
+                        <th><img id="productFilePath" th:src="${cartlist.productCode.getProductFilePath()}" width="150px" height="150px"></th> <!--상품사진-->
+                        <th scope="col"  th:text="${cartlist.productCode.getProductPrice()}"></th>
+                        <th scope="col" >
+                            <span>
+                                <button class="btn btn-light" type="submit" th:id="${'sub'+index.index}" >-</button>
+                            </span>
+                                <input type="text"  th:value="${cartlist.cartCount}"  th:id="${'stock'+index.index}"> <!--disabled-->
+                            <span>
+                                <button class="btn btn-light" type="submit" th:id="${'add'+index.index}">+</button>
+                             </span>
+                        </th>
+                        <th scope="col">
+                            <input type="text"  th:id="${'price'+index.index}" th:value="${cartlist.cartCount * cartlist.productCode.getProductPrice()}" disabled>원
+                        </th>
+                        <th scope="col">
+                            <button type="submit" th:id="${'updateDelete'+index.index}" class="btn btn-light">삭제</button>
+                        </th>
+                        <input type="hidden" th:id="${'productCode'+index.index}" th:value="${cartlist.productCode.getProductCode()}"> <!--장바구니 상품코드-->
+                        <input type="hidden" th:id="${'memberCode'+index.index}" th:value="${cartlist.memberCode.getMemberCode()}"> <!--장바구니 멤버코드-->
+                        <input type="hidden" th:id="${'cartCount'+index.index}" th:value="${cartlist.cartCount}"> <!--장바구니 상품갯수-->
+                        <input type="hidden" th:id="${'cartCode'+index.index}" th:value="${cartlist.cartCode}"> <!--장바구니 코드-->
+                        <input type="hidden" th:id="${'productPrice'+index.index}" th:value="${cartlist.productCode.getProductPrice()}">
+                        <input type="hidden"  th:id="${'productStock'+index.index}" th:value="${cartlist.productCode.getProductStock()}">
+                        <input type="hidden"  th:id="${'index'+index.index}" th:value="${index.index}">
+                    </tr>
+                    </tbody>
+                </div>
+            </table>
+        </div>
+        <div style="text-align: center">
+            <h2>총가격</h2>
+            <!--            <input type="text" id="cartPrice" th:value="${cartPrice.get()+'원'}"  disabled>-->
+            <input type="text" id="cartPrice" value=0 disabled> 원
+            <button class="btn btn-light" id="cartBuy"> 구매하기 </button>
+            <br>
+            <br>
+        </div>
+        </div>
+        </body>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            const index =/*[[${index}]]*/'default' -1;
+            console.log("index: " + index);
+            let a = 0;
+            let b=0;
+            let checkCode; //체크 상품 카트 코드
+            let checkPrice; //체크 상품 가격
+            let cartPrice = $('#cartPrice').val();
+            $(() => {
+                for (let i =0; i <= index-1; i++) {
+                    let productCode =$('#productCode'+i).val(); // 상품코드
+                    let productName =$('#productName'+i).text();
+                    let memberCode =$('#memberCode'+i).val(); // 멤버코드
+                    let cartCode =$('#cartCode'+i).val(); // 장바구니코드
+                    let memberCode1 =$('#memberCode').val(); // url에 적힐 멤버코드
+                    let productPrice =$('#productPrice'+i).val(); // 상품 테이블의 상품 갯수
+                    let stock =$('#stock'+i).val(); // +,- 되는 수량
+                    let productStock =$('#productStock').val();
+                    let price= $('#price'+i).val(); //각각 개별 상품의 총 가격 =(수량*상품가격)
+
+                    $('#add'+i).on('click', () => {
+                        if(stock != productStock) {
+                            $('#stock'+i).val(++stock);
+                            // console.log("총가격"+(productPrice*stock))
+                            // console.log("productPrice"+productPrice)
+                            // console.log("stock"+stock)
+                            price=productPrice*stock;
+                            $('#price'+i).val(parseInt(price))
+                            // $('#box'+i).val(parseInt(price))
+                            // console.log("price add :::" + price)
+                            // console.log("box val :::" + $('#box'+i).val())
+                            const path = '/api/product/cart/update';
+                            // alert(productFilePath);
+                            const json = JSON.stringify({
+                               cartCode,
+                                memberCode:{
+                                   memberCode
+                                },
+                                productCode:{
+                                   productCode
+                                },
+                                cartCount:stock
+                            });
+
+                            $.ajax({
+                                url: path,
+                                type: 'PUT',
+                                contentType: 'application/json',
+                                data: json,
+
+                            }).done( ()=> {
+                                window.location.href = '/product/cart?memberCode='+memberCode1;
+                            }).fail( (error)=> {
+                                alert(error);
+                            })
+                        }else {
+                            alert("최대 주문 수량입니다.")
+                        }
+
+                    }),
+                    //     totalPrice += price;
+                    // $('#totalPrice').val(totalPrice);
+                    // console.log("totalPrice :: "+ totalPrice)
+                    // $('#totalPrice').val(totalPrice);
+                    $('#sub'+i).on('click', () => {
+                            if (stock > 1) {
+                                $('#stock'+i).val(--stock);
+                                // console.log("총가격"+(productPrice*stock))
+                                // console.log("productPrice"+productPrice)
+                                // console.log("stock"+stock)
+                                price=price-productPrice;
+                                $('#price'+i).val(parseInt(price))
+                                // console.log("price sub :::" + price)
+                                const path = '/api/product/cart/update';
+                                // alert(productFilePath);
+                                const json = JSON.stringify({
+                                    cartCode,
+                                    memberCode:{
+                                        memberCode
+                                    },
+                                    productCode:{
+                                        productCode
+                                    },
+                                    cartCount:stock
+                                });
+
+                                $.ajax({
+                                    url: path,
+                                    type: 'PUT',
+                                    contentType: 'application/json',
+                                    data: json,
+
+                                }).done( ()=> {
+                                    window.location.href = '/product/cart?memberCode='+memberCode1;
+                                }).fail( (error)=> {
+                                    alert(error);
+                                })
+                            } else {
+                                alert("최소 구매 수량은 1개 입니다.");
+                                $('#stock'+i).val(1);
+                            }
+                        }),
+                    $('#updateDelete'+i).on('click', () => {
+                                    const path = '/api/product/cart/delete';
+                                    // alert(productFilePath);
+                                    const json = JSON.stringify({
+                                        cartCode,
+                                        memberCode:{
+                                            memberCode
+                                        },
+                                        productCode:{
+                                            productCode
+                                        },
+                                        cartCount:stock
+                                    });
+
+                                    $.ajax({
+                                        url: path,
+                                        type: 'DELETE',
+                                        contentType: 'application/json',
+                                        data: json,
+
+                                    }).done( ()=> {
+                                        alert("삭제완료");
+                                        window.location.href = '/product/cart?memberCode='+memberCode1;
+                                    }).fail( (error)=> {
+                                        alert(error);
+                                    })
+                            }),
+                    $('#check_All').on('click', () => { //전체 선택 or 해제
+                        if($('#check_All').is(':checked')) {
+                            $('.chk').prop('checked', true);
+                            console.log("전체선택"+$('input:checkbox[class=chk]').length)
+                            checkCode=$('#cartCode'+i).val(); //체크 상품 코드
+                            checkPrice=$('#box'+i).val() //체크 상품 가격
+                            console.log(" checkCode: " +checkCode+ " checkPrice : " +checkPrice );
+                            b=parseInt(b)+parseInt($('#box'+i).val());
+                            console.log("체크 o == i ::: "+i + " b: " +b)
+                            $('#cartPrice').val(b)
+                            const path= '/api/product/cart/checkState'
+                            const json = JSON.stringify(({
+                                cartCode:checkCode,
+                                checkState:0
+
+                            }));
+                            console.log(json)
+                            $.ajax({
+                                url: path,
+                                type: 'PUT',
+                                dataType: 'text',
+                                contentType: "application/json",
+                                data: json,
+                            }).done(() => {
+                                // alert("체크");
+                            })
+                                .fail((error) => {
+                                    alert((error));
+                                })
+
+                        }else{
+                            $('.chk').prop('checked', false);
+                            b=parseInt(b)-parseInt($('#box'+i).val());
+                            console.log("체크 x == i ::: "+i + " b: " +b)
+                            console.log("해제"+$('input:checkbox[class=chk]').length)
+                            $('#cartPrice').val(b)
+                            const path= '/api/product/cart/checkState'
+                            const json = JSON.stringify(({
+                                cartCode:checkCode,
+                                checkState:1
+
+                            }));
+                            console.log(json)
+                            $.ajax({
+                                url: path,
+                                type: 'PUT',
+                                dataType: 'text',
+                                contentType: "application/json",
+                                data: json,
+                            }).done(() => {
+                                // alert("해제");
+                            })
+                                .fail((error) => {
+                                    alert((error));
+                                })
+                        }
+                    }),
+                    $('#box'+i).on('click', () => { // 각각 개별로 전부를 선택하면 전체선택 체크 o 하나라도 풀리면 전체선택 x
+                        if($('#box'+i).is(':checked')){                         //체크 o = b에 값 +
+                            console.log("선택한 수" + $('input[class=chk]:checked').length)
+                            checkCode=$('#cartCode'+i).val(); //체크 상품 코드
+                            checkPrice=$('#box'+i).val() //체크 상품 가격
+                            console.log(" checkCode: " +checkCode+ " checkPrice : " +checkPrice );
+                            b=parseInt(b)+parseInt($('#box'+i).val());
+                            console.log("체크 o == i ::: "+i + " b: " +b)
+                            const path= '/api/product/cart/checkState'
+                            const json = JSON.stringify(({
+                                    cartCode:checkCode,
+                                    checkState:0
+
+                            }));
+                            console.log(json)
+                            $.ajax({
+                                url: path,
+                                type: 'PUT',
+                                dataType: 'text',
+                                contentType: "application/json",
+                                data: json,
+                            }).done(() => {
+                                // alert("체크");
+                            })
+                                .fail((error) => {
+                                    alert((error));
+                                })
+                        }
+                        //체크 x = b에 값 -
+                        else{
+                            console.log("선택한 수" + $('input[class=chk]:checked').length)
+                            b=parseInt(b)-parseInt($('#box'+i).val());
+                            console.log("체크 x == i ::: "+i + " b: " +b)
+                            const path= '/api/product/cart/checkState'
+                            const json = JSON.stringify(({
+                                cartCode:checkCode,
+                                checkState:1
+
+                            }));
+                            console.log(json)
+                            $.ajax({
+                                url: path,
+                                type: 'PUT',
+                                dataType: 'text',
+                                contentType: "application/json",
+                                data: json,
+                            }).done(() => {
+                                // alert("해제");
+                            })
+                                .fail((error) => {
+                                    alert((error));
+                                })
+                        }
+                        $('#cartPrice').val(b)
+                        if($('input[class=chk]:checked').length==$('.chk').length) {
+                            $('#check_All').prop('checked', true);
+                        }else{
+                            $('#check_All').prop('checked', false);
+                        }
+                    }),
+                    $('#cartBuy').on('click', () => {
+                        // $('#cart').hide();
+                        // $('#cartOrder').show();
+                        // if($('#cartPrice').val()==0){
+                        //    return  alert('Please select')
+                        // }
+                        if($('#box'+i).is(':checked')){
+                            console.log("총 가격 : " + $('#cartPrice').val());
+                            console.log("selected cartCode : " + checkCode )
+                            console.log("selected checkPrice : " + checkPrice )
+                            console.log("selected productName : " + productName )
+                            console.log("login memberCode  : " + $('#memberCode').val() )
+                            // $('#cart').hide();
+                            // $('#cartOrder').show();
+                            // document.getElementById('orderProductName').innerHTML = productName;
+                            const path= '/api/product/cart/buy'
+                            const json = JSON.stringify(({
+                                    cartCode:checkCode
+                            }));
+                            console.log(json)
+                            $.ajax({
+                                url: path,
+                                type: 'POST',
+                                dataType: 'text',
+                                contentType: "application/json",
+                                data: json,
+                            }).done(() => {
+                                window.location.href = '/product/cartBuy?memberCode=' + memberCode;
+                            })
+                                .fail((error) => {
+                                    alert((error));
+                                })
+                        }
+                    })
+                    // console.log("totalPrice"+totalPrice)
+                    // $('#totalPrice').val(parseInt(price))
+                }
+                $('#cartPrice').val(b)
+
+                for (let j =0; j <= index-1; j++) {
+                    console.log("각각의 가격: " +$('#box'+j).val())
+                    a=parseInt(a)+parseInt($('#box'+j).val());
+                    console.log("a"+a);
+                }
+            })
+
+            /*]]>*/
+        </script>
+    </th:block>
+</th:block>
+</html>

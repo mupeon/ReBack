@@ -7,39 +7,66 @@
       crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
 </head>
-<body>
-<th:block th:replace="~{/layout/admin::setContent(~{this::content})}">
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
     <th:block th:fragment="content">
+<body>
 <h1>마이페이지</h1>
 <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+
+<input type="hidden" id="Add1" th:value="${Add1}">
+<input type="hidden" id="Add2" th:value="${Add2}">
+<input type="hidden" id="Add3" th:value="${Add3}">
+<input type="hidden" id="Add4" th:value="${Add4}">
+<input type="hidden" id="Add5" th:value="${Add5}">
+<input type="hidden" id="Add6" th:value="${Add6}">
+<input type="hidden" id="Add7" th:value="${Add7}">
+<input type="hidden" id="Add8" th:value="${Add8}">
+<input type="hidden" id="Add9" th:value="${Add9}">
+<input type="hidden" id="Add10" th:value="${Add10}">
+<input type="hidden" id="Add11" th:value="${Add11}">
+<input type="hidden" id="Add12" th:value="${Add12}">
+<input type="hidden" id="Add13" th:value="${Add13}">
+<input type="hidden" id="Add14" th:value="${Add14}">
+<input type="hidden" id="Add15" th:value="${Add15}">
+<input type="hidden" id="Add16" th:value="${Add16}">
+
+
+<input type="hidden" id="Role1" th:value="${Role1}">
+<input type="hidden" id="Role2" th:value="${Role2}">
+<input type="hidden" id="Role3" th:value="${Role3}">
+
+<input type="hidden" id="Summers1" th:value="${Summers1}">
+<input type="hidden" id="Summers2" th:value="${Summers2}">
+<input type="hidden" id="Summers3" th:value="${Summers3}">
+<input type="hidden" id="Summers4" th:value="${Summers4}">
+<input type="hidden" id="Summers5" th:value="${Summers5}">
+<input type="hidden" id="Summers6" th:value="${Summers6}">
+<input type="hidden" id="Summers7" th:value="${Summers7}">
+<input type="hidden" id="Summers8" th:value="${Summers8}">
+
+
 <table border="1px">
     <thead>
     <tr>
         <th scope="col">회원이름</th>
         <th scope="col">회원아이디</th>
-        <!--        <th scope="col">비밀번호</th>-->
         <th scope="col">회원이메일</th>
         <th scope="col">회원전화번호</th>
-        <!--        <th scope="col">우편번호</th>-->
         <th scope="col">회원주소</th>
         <th scope="col">가입날짜</th>
-<!--        <th scope="col">회원유형(ROLE)</th>-->
     </tr>
     </thead>
     <tbody>
     <tr>
         <th th:text="${memberName}"></th>
         <th th:text="${memberId}"></th>
-        <!--        <th th:text="${password}" ></th>-->
         <th th:text="${memberEmail}"></th>
         <th th:text="${memberPhoneNumber}"></th>
-        <!--<th th:text="${memberPostalCode}"></th>-->
         <th th:text="${memberAddress}"></th>
-        <!--        <th th:text="${memberPoint}"></th>-->
-        <!--        <th th:text="${memberBusinessNumber}"></th>-->
         <th th:text="${memberJoinDate}"></th>
-<!--        <th th:text="${role}"></th>-->
     </tr>
     </tbody>
 </table>
@@ -48,103 +75,383 @@
 <button><a th:href="@{/mypage/lecturemanage}">강의관리</a></button>
 
 <hr>
+
+
+
 <h1>상품 관리</h1>
 <a th:href="@{/product/manager(memberCode=${principal.memberCode})}">관리</a>
 
-<!--<table  class="table table-dark table-striped">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th scope="col">상품명</th>-->
-<!--        <th scope="col">상품사진</th>-->
-<!--        <th scope="col">주문일자</th>-->
-<!--        <th scope="col">주문코드</th>-->
-<!--        <th scope="col">주문가격</th>-->
-<!--        <th scope="col">주문수량</th>-->
-<!--        <th scope="col">주문상태</th>-->
-<!--        &lt;!&ndash;        <th scope="col">수신자 주소</th>&ndash;&gt;-->
-<!--        &lt;!&ndash;        <th scope="col">수신자 연락처</th>&ndash;&gt;-->
+<br>
+<br>
+<hr>
 
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <div>-->
-<!--        <tbody>-->
-<!--        <tr th:each="list : ${orders}">-->
-<!--            <th th:text="${list.productCode.getProductName()}"></th>  &lt;!&ndash;상품명&ndash;&gt;-->
-<!--            <th><img th:src="${list.productCode.getProductFilePath()}" width="150px" height="150px"></th> &lt;!&ndash;상품사진&ndash;&gt;-->
-<!--            <th th:text="${list.payTime}"></th> &lt;!&ndash;주문일자&ndash;&gt;-->
-<!--            <th th:text="${list.ordersCode}"></th> &lt;!&ndash;주문코드&ndash;&gt;-->
-<!--            <th th:text="${list.payAmount}"></th> &lt;!&ndash;주문가격&ndash;&gt;-->
-<!--            <th th:text="${list.ordersStock}"></th> &lt;!&ndash;주문수량&ndash;&gt;-->
-<!--            <th th:text="${list.ordersState}"></th> &lt;!&ndash;주문상태&ndash;&gt;-->
+    <div style="width:400px; height:300px">
+        <canvas id="myChart" ></canvas>
+    </div>
+<div style="width:400px; height:300px">
+        <canvas id="myAdd" ></canvas>
+</div>
+<div style="width:400px; height:300px">
+        <canvas id="myRole" ></canvas>
+    </div>
 
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </div>-->
-<!--</table>-->
 <hr>
 <div class="text-center">
-    <!--    <button id="applicationModify" class="btn btn-outline-success" type="submit">상품수정</button>-->
-    <!--    <button id="financialDelete" class="btn btn-outline-success" type="submit">상품삭제</button>-->
     <a type="button" class="btn btn-outline-success" th:href="@{/}">메인으로</a>
 </div>
-    </th:block>
-</th:block>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+        let Role1 = $('#Role1').val();
+        let Role2 = $('#Role2').val();
+        let Role3 = $('#Role3').val();
+        var ctx = document.getElementById("myRole").getContext('2d');
+        var myRole = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["업체 회원", "작가 회원", "일반 회원"],
+                datasets: [{
+                    data: [Role1, Role2, Role3], //컨트롤러에서 모델로 받아온다.
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderWidth: 1
+                }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+        let Summers1 = $('#Summers1').val();
+        let Summers2 = $('#Summers2').val();
+        let Summers3 = $('#Summers3').val();
+        let Summers4 = $('#Summers4').val();
+        let Summers5 = $('#Summers5').val();
+        let Summers6 = $('#Summers6').val();
+        let Summers7 = $('#Summers7').val();
+        let Summers8 = $('#Summers8').val();
+
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["10대", "20대", "30대", "40대", "50대", "60대", "70대", "80대"],
+                datasets: [{
+                    data: [Summers1,Summers2,Summers3,Summers4,Summers5,Summers6,Summers7,Summers8], //컨트롤러에서 모델로 받아온다.
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+
+                    borderWidth: 1
+                }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+        let MemberJoinDate1 = $('#MemberJoinDate1').val();
+        let MemberJoinDate2 = $('#MemberJoinDate2').val();
+        let MemberJoinDate3 = $('#MemberJoinDate3').val();
+        let MemberJoinDate4 = $('#MemberJoinDate4').val();
+        let MemberJoinDate5 = $('#MemberJoinDate5').val();
+        let MemberJoinDate6 = $('#MemberJoinDate6').val();
+        let MemberJoinDate7 = $('#MemberJoinDate7').val();
+        let MemberJoinDate8 = $('#MemberJoinDate8').val();
+        let MemberJoinDate9 = $('#MemberJoinDate9').val();
+        let MemberJoinDate10 = $('#MemberJoinDate10').val();
+        let MemberJoinDate11 = $('#MemberJoinDate11').val();
+        let MemberJoinDate12 = $('#MemberJoinDate12').val();
+
+        var ctx = document.getElementById("").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월","11월", "12월"],
+                datasets: [{
+                    data: [MemberJoinDate1,MemberJoinDate2,MemberJoinDate3,MemberJoinDate4,
+                        MemberJoinDate5,MemberJoinDate6,MemberJoinDate7,MemberJoinDate8,
+                        MemberJoinDate9,MemberJoinDate10,MemberJoinDate11,MemberJoinDate12], //컨트롤러에서 모델로 받아온다.
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+
+                    ],
+
+                    borderWidth: 1
+                }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+
+
+
+
+        let Add1 = $('#Add1').val();
+    let Add2 = $('#Add2').val();
+        let Add3 = $('#Add3').val();
+        let Add4 = $('#Add4').val();
+        let Add5 = $('#Add5').val();
+        let Add6 = $('#Add6').val();
+        let Add7 = $('#Add7').val();
+        let Add8 = $('#Add8').val();
+        let Add9 = $('#Add9').val();
+        let Add10 = $('#Add10').val();
+        let Add11 = $('#Add11').val();
+        let Add12 = $('#Add12').val();
+        let Add13 = $('#Add13').val();
+        let Add14 = $('#Add14').val();
+        let Add15 = $('#Add15').val();
+        let Add16 = $('#Add16').val();
+
+    var ctx = document.getElementById("myAdd").getContext('2d');
+    var myAdd = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["서울", "부산", "대구", "인천", "광주", "대전",
+                "울산", "강원", "경기", "경남", "경북", "전남", "전북", "제주", "충남", "충북"],
+            datasets: [{
+                data: [Add1,Add2,Add3,Add4,Add5,Add6,Add7,Add8,Add9,
+                    Add10,Add11,Add12,Add13,Add14,Add15,Add16 ], //컨트롤러에서 모델로 받아온다.
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+
+                ],
+                borderWidth: 1
+            }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+</script>
 </body>
-<!--<script th:inline="javascript">-->
-<!--    $(() => {-->
-<!--        $('#applicationModify').on('click', () => {-->
-<!--            const financialSupportCode = $('#financialSupportCode').val();-->
-<!--            const financialAmount = $('#financialAmount').val();-->
-<!--            const financialDate = $('#financialDate').val();-->
-<!--            const financialType = $('#financialType').val();-->
-<!--            const statusIssue = $('#statusIssue').val();-->
-<!--            const statusApp = $('#statusApp').val();-->
-
-<!--            const path = '/api/donation/update';-->
-
-<!--            const json = JSON.stringify({-->
-<!--                financialSupportCode,-->
-<!--                financialAmount,-->
-<!--                financialDate,-->
-<!--                financialType,-->
-<!--                statusIssue,-->
-<!--                statusApp,-->
-<!--            });-->
-
-<!--            $.ajax({-->
-<!--                url: path,-->
-<!--                type: 'PUT',-->
-<!--                contentType: 'application/json',-->
-<!--                data: json,-->
-
-<!--            }).done(() => {-->
-<!--                alert('수정 완료');-->
-<!--                window.location.href = '/donation/manager';-->
-<!--            }).fail((error) => {-->
-<!--                alert(error);-->
-<!--            })-->
-<!--        }),-->
-<!--            $('#financialDelete').on('click', () => {-->
-<!--                const financialSupportCode = $('#financialSupportCode').val();-->
-<!--                const path = '/api/donation/delete';-->
-
-<!--                const json = JSON.stringify({-->
-<!--                    financialSupportCode-->
-<!--                });-->
-<!--                console.log(json);-->
-<!--                $.ajax({-->
-<!--                    url: path,-->
-<!--                    type: 'DELETE',-->
-<!--                    contentType: 'application/json',-->
-<!--                    data: json,-->
-
-<!--                }).done(() => {-->
-<!--                    alert('삭제 완료')-->
-<!--                    window.location.href = '/donation/manager';-->
-<!--                }).fail((error) => {-->
-<!--                    alert((error));-->
-<!--                })-->
-<!--            })-->
-<!--    })-->
-<!--</script>-->
+</th:block>
+</th:block>
 </html>

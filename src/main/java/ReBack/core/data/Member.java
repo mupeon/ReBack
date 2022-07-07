@@ -79,7 +79,7 @@ public class Member {
     @Builder
     public Member(String memberId, String password, String memberName, boolean enabled, Role role,
                   String memberPhoneNumber,String memberPostalCode,String memberAddress,int memberPoint,
-                MemberWithdrawal memberWithdrawal,
+                  MemberWithdrawal memberWithdrawal, LocalDate memberJoinDate,
                   int memberBusinessNumber,String memberEmail, Long memberCode) {
         this.memberCode = memberCode;
         this.memberId = memberId;
@@ -90,8 +90,8 @@ public class Member {
         this.memberPhoneNumber = memberPhoneNumber;
         this.memberPostalCode = memberPostalCode;
         this.memberAddress = memberAddress;
+        this.memberJoinDate = memberJoinDate;
         this.memberPoint = memberPoint;
-
         this.memberWithdrawal = memberWithdrawal;
         this.memberBusinessNumber = memberBusinessNumber;
         this.enabled = true;

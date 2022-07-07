@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <head>
+            <meta charset="UTF-8">
+            <title>마이페이지</title>
+        </head>
+        <a sec:authorize="isAuthenticated()">
+            <body>
+            <div id="main">
+                <p>마이페이지</p>
 
-</body>
+            </div>
+
+            </body>
+        </a>
+    </th:block>
+</th:block>
 </html>

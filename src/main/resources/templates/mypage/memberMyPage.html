@@ -28,6 +28,7 @@
 <!--                <th scope="col">회원유형(ROLE)</th>-->
             </tr>
             </thead>
+
             <tbody>
             <tr>
                 <th th:text="${memberName}"></th>
@@ -44,6 +45,10 @@
             </tr>
             </tbody>
         </table>
+        <h1>장바구니</h1>
+        <a th:href="@{/product/cart(memberCode=${principal.memberCode})}">장바구니</a>
+        <hr>
+        <button id="memberDelete" class="btn btn-outline-success" type="submit">회원삭제</button>
         <hr>
         <h1>구매 내역</h1>
         <a th:href="@{/product/orderlist(memberCode=${principal.memberCode})}">내역</a>
@@ -52,7 +57,8 @@
         <a th:href="@{/product/refundlist(memberCode=${principal.memberCode})}">환불내역</a>
         <div class="text-center">
             <!--    <button id="applicationModify" class="btn btn-outline-success" type="submit">상품수정</button>-->
-            <!--    <button id="financialDelete" class="btn btn-outline-success" type="submit">상품삭제</button>-->
+
+            <button><a style="text-decoration-line: none;" id="modify" th:href="@{/member/memberCorrection(id=${principal.memberCode})}">회원정보관리</a></button>
             <a type="button" class="btn btn-outline-success" th:href="@{/}">메인으로</a>
         </div>
 
@@ -63,61 +69,60 @@
         </a>
     </th:block>
 </th:block>
-<!--<script th:inline="javascript">-->
-<!--    $(() => {-->
-<!--        $('#applicationModify').on('click', () => {-->
-<!--            const financialSupportCode = $('#financialSupportCode').val();-->
-<!--            const financialAmount = $('#financialAmount').val();-->
-<!--            const financialDate = $('#financialDate').val();-->
-<!--            const financialType = $('#financialType').val();-->
-<!--            const statusIssue = $('#statusIssue').val();-->
-<!--            const statusApp = $('#statusApp').val();-->
+<script th:inline="javascript">
+    // $(() => {
+    //     $('#memberDelete').on('click', () => {
+    //         const financialSupportCode = $('#financialSupportCode').val();
+    //         const financialAmount = $('#financialAmount').val();
+    //         const financialDate = $('#financialDate').val();
+    //         const financialType = $('#financialType').val();
+    //         const statusIssue = $('#statusIssue').val();
+    //         const statusApp = $('#statusApp').val();
+    //
+    //         const path = '/api/donation/update';
+    //
+    //         const json = JSON.stringify({
+    //             financialSupportCode,
+    //             financialAmount,
+    //             financialDate,
+    //             financialType,
+    //             statusIssue,
+    //             statusApp,
+    //         });
+    //
+    //         $.ajax({
+    //             url: path,
+    //             type: 'PUT',
+    //             contentType: 'application/json',
+    //             data: json,
+    //
+    //         }).done(() => {
+    //             alert('수정 완료');
+    //             window.location.href = '/donation/manager';
+    //         }).fail((error) => {
+    //             alert(error);
+    //         })
+    //     }),
+            $('#memberDelete').on('click', () => {
+                const memberCode = $('#memberCode').val();
+                const path = '/api/member/memberDelete';
 
-<!--            const path = '/api/donation/update';-->
+                const json = JSON.stringify({
+                    memberCode
+                });
+                console.log(json);
+                $.ajax({
+                    url: path,
+                    type: 'DELETE',
+                    contentType: 'application/json',
+                    data: json,
 
-<!--            const json = JSON.stringify({-->
-<!--                financialSupportCode,-->
-<!--                financialAmount,-->
-<!--                financialDate,-->
-<!--                financialType,-->
-<!--                statusIssue,-->
-<!--                statusApp,-->
-<!--            });-->
-
-<!--            $.ajax({-->
-<!--                url: path,-->
-<!--                type: 'PUT',-->
-<!--                contentType: 'application/json',-->
-<!--                data: json,-->
-
-<!--            }).done(() => {-->
-<!--                alert('수정 완료');-->
-<!--                window.location.href = '/donation/manager';-->
-<!--            }).fail((error) => {-->
-<!--                alert(error);-->
-<!--            })-->
-<!--        }),-->
-<!--            $('#financialDelete').on('click', () => {-->
-<!--                const financialSupportCode = $('#financialSupportCode').val();-->
-<!--                const path = '/api/donation/delete';-->
-
-<!--                const json = JSON.stringify({-->
-<!--                    financialSupportCode-->
-<!--                });-->
-<!--                console.log(json);-->
-<!--                $.ajax({-->
-<!--                    url: path,-->
-<!--                    type: 'DELETE',-->
-<!--                    contentType: 'application/json',-->
-<!--                    data: json,-->
-
-<!--                }).done(() => {-->
-<!--                    alert('삭제 완료')-->
-<!--                    window.location.href = '/donation/manager';-->
-<!--                }).fail((error) => {-->
-<!--                    alert((error));-->
-<!--                })-->
-<!--            })-->
-<!--    })-->
-<!--</script>-->
+                }).done(() => {
+                    alert('삭제 완료')
+                    window.location.href = '/';
+                }).fail((error) => {
+                    alert((error));
+                })
+            })
+</script>
 </html>

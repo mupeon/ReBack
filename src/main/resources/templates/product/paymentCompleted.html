@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+<title>결제완료</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+
+        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+
+        <h1 style="text-align: center">결제가 완료되었습니다</h1>
+        <table style="margin:auto"  class="table table-dark table-striped">
+            <thead>
+            <tr>
+                <th scope="col">상품명</th>
+                <th scope="col">상품사진</th>
+                <th scope="col">상품가격</th>
+                <th scope="col">상품수량</th>
+                <th scope="col">수신자이름</th>
+                <th scope="col">배송지</th>
+                <th scope="col">요청사항</th>
+
+            </tr>
+            </thead>
+            <div>
+                <tbody>
+                <tr>
+                <tr th:each="list : ${order}">
+                    <th scope="col" th:text="${list.productCode.productName}">상품명</th>
+                    <th><img th:src="${list.productCode.productFilePath}" width="150px" height="150px"></th>
+                    <th scope="col" th:text="${list.payAmount}">상품가격</th>
+                    <th scope="col" th:text="${list.ordersStock}">상품수량</th>
+                    <th scope="col" th:text="${list.ordersReceiverName}">수신자이름</th>
+                    <th scope="col" th:text="${list.ordersAddress}">배송지</th>
+                    <th scope="col" th:text="${list.ordersRequest}">요청사항</th>
+                </tr>
+                </tbody>
+            </div>
+        </table>
+        <br>
+        <br>
+        <div style="text-align: center">
+            <a  th:href="@{/product/orderlist(memberCode=${principal.memberCode})}">
+                <button class="btn btn-light ">주문내역보기</button></a>
+            <a  th:href="@{/product}"><button class="btn btn-light ">쇼핑계속하기</button></a>
+            <a  th:href="@{/}"><button class="btn btn-light ">메인으로</button></a>
+        </div>
+
+        </body>
+
+    </th:block>
+</th:block>
+</html>

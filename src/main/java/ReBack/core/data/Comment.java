@@ -6,10 +6,13 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @ToString
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,9 +43,25 @@ public class Comment {
     @Column(nullable = false)
     private int commentHoroscope; //별점
 
+    @Column(nullable = true)
+    private String reviewFileName;
+
+    @Column(nullable = true)
+    private String reviewFilePath;
+
+    @OneToMany(mappedBy = "comment",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST,
+            orphanRemoval = true)
+    private Set<CommentFiles> commentFiles = new HashSet<>();
+
     @ManyToOne
     @JoinColumn(name="member_code")
     private Member member;
+
+    @ManyToOne
+    @JoinColumn(name="product_code")
+    private Product product;
 
     @ManyToOne
     @JoinColumn(name="bulletin_board_code")

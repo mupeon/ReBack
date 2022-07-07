@@ -21,8 +21,8 @@
         <th scope="col">주문코드</th>
         <th scope="col">주문가격</th>
         <th scope="col">주문수량</th>
-        <th scope="col">주문상태</th>
         <th scope="col">환불상태</th>
+        <th scope="col"></th>
         <th scope="col"></th>
 <!--        <th scope="col">수신자 주소</th>-->
 <!--        <th scope="col">수신자 연락처</th>-->
@@ -38,11 +38,10 @@
             <th id="ordersCode" th:text="${list.ordersCode}"></th> <!--주문코드-->
             <th id="payAmount" th:text="${list.payAmount}"></th> <!--주문가격-->
             <th id="ordersStock" th:text="${list.ordersStock}"></th> <!--주문수량-->
-            <th id="ordersState" th:text="${list.ordersState}"></th> <!--주문상태-->
             <th scope="col" id="refundStatus" th:text="${list.refundStatus}"></th>
-            <th scope="col"><a th:href="@{/product/refund(ordersCode=${list.ordersCode})}"><button class="btn btn-primary" id="refund">환불신청</button></a></th>
-
-
+            <th scope="col"><a th:href="@{/product/refund(ordersCode=${list.ordersCode})}"><button class="btn btn-light" id="refund">환불신청</button></a></th>
+            <th scope="col"><a th:href="@{/product/deliveryCheck(ordersCode=${list.ordersCode})}"><button class="btn btn-light" >배송조회</button></a></th>
+            <th scope="col"><a th:href="@{/product/review(productCode=${list.productCode.productCode})}"><button class="btn btn-light" >후기 작성하기</button></a></th>
         </tr>
         </tbody>
     </div>
@@ -57,7 +56,7 @@
                 } else if ($('#refundStatus').text() == '환불대기') {
                     console.log("환불대기")
                     $('#refund').hide();
-                } else {
+                } else if ($('#refundStatus').text() == '환불거절'){
                     $('#refund').hide();
                     console.log("환불거절")
                 }

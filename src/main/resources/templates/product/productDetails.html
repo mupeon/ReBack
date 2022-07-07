@@ -16,23 +16,72 @@
         crossorigin="anonymous" type="text/javascript"></script>
 <!-- 아임포트 -->
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js" type="text/javascript"></script>
+<style>
+
+    h1,
+    h5 {
+        display: inline;
+    }
+
+    .info {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .review {
+        text-align: center;
+    }
+
+    #myform fieldset {
+        display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+        border: 0; /* 필드셋 테두리 제거 */
+    }
+
+    #myform input[type=radio] {
+        display: none; /* 라디오박스 감춤 */
+    }
+
+    #myform label {
+        font-size: 3em; /* 이모지 크기 */
+        color: transparent; /* 기존 이모지 컬러 제거 */
+        text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
+    }
+
+    #myform label:hover {
+        text-shadow: 0 0 0 #ffc107; /* 마우스 호버 */
+    }
+
+    #myform label:hover ~ label {
+        text-shadow: 0 0 0 #ffc107; /* 마우스 호버 뒤에오는 이모지들 */
+    }
+
+    #myform fieldset {
+        display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+        direction: rtl; /* 이모지 순서 반전 */
+        border: 0; /* 필드셋 테두리 제거 */
+    }
+
+    #myform fieldset legend {
+        text-align: left;
+    }
+
+    /*#myform input[type=radio]:checked ~ label {*/
+    /*    text-shadow: 0 0 0 #ffc107; !* 마우스 클릭 체크 *!*/
+    /*}*/
+</style>
 <th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
     <th:block th:fragment="content">
         <div id="productDetail">
             <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
-
             <input type="hidden" id="product" th:value="${product}">
-
             <input type="hidden" id="productStock" th:value="${productStock}">
             <input type="hidden" id="productCode" th:value="${productCode}">
             <input type="hidden" id="categoryCode" th:value="${categoryCode}">
             <input type="hidden" id="categoryName" th:value="${categoryName}">
             <input type="hidden" id="materialCode" th:value="${materialCode}">
             <input type="hidden" id="materialName" th:value="${materialName}">
-
             <input type="hidden" id="productFileName" th:value="${productFileName}">
             <input type="hidden" id="productFilePath" th:value="${productFilePath}">
-
             <table class="table table-dark table-striped">
                 <thead>
                 <tr>
@@ -47,7 +96,6 @@
                 </thead>
                 <tbody>
                 <tr>
-
                     <th th:text="${categoryName}"></th>
                     <th th:text="${materialName}"></th>
                     <th th:text="${productName}" id="productName"></th>
@@ -72,104 +120,175 @@
                     <input type="text" th:value="${productPrice}" id="price" disabled>원
                 </label>
             </div>
-            <br>
-            <div>
-                <button class="btn btn-primary" id="order">바로구매</button>
-                <a>
-                    <button class="btn btn-primary">장바구니담기</button>
+            <div style="text-align: center">
+                <button class="btn btn-light" id="order">바로구매</button>
+                <button class="btn btn-light" id="cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                    장바구니에 추가
+                </button>
+                <a th:href="@{/product}">
+                    <button class="btn btn-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+                            <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/>
+                        </svg>
+                        뒤로가기
+                    </button>
                 </a>
             </div>
-        </div>
+            <br>
+<!--            <h1 th:text="${reviews.size()}"></h1>-->
+
+<!--            <div th:if="${reviews.size()}>=1">-->
+                <div class="reviews">
+                    <h2>상품후기</h2>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">제목</th>
+                            <th scope="col">작성자</th>
+                            <th scope="col">후기사진</th>
+                            <th scope="col">리뷰</th>
+                            <th scope="col">별점</th>
+<!--                            <th scope="col" style="text-align: center">별점</th>-->
+                        </tr>
+                        </thead>
+                        <tbody id="reviews-box">
+                        <tr th:each="review : ${reviews}">
+                            <td th:text="${review.getCommentTitle()}"></td>
+                            <td th:text="${review.getMember().memberName}"></td>
+                            <td>
+                                <img th:src="${review.getReviewFilePath()}" th:value="${review.getReviewFilePath()}" width="150px"
+                                     height="150px">
+                            </td>
+                            <td th:text="${review.getCommentContent()}"></td>
+                            <td th:text="${review.getCommentHoroscope()+'점'}"></td>
+<!--                            <td style="text-align: center">-->
+<!--&lt;!&ndash;                                th:text="${review.getCommentHoroscope()+'점'}"&ndash;&gt;-->
+<!--                                <div id="myform">-->
+<!--                                    <fieldset>-->
+<!--                                        <input type="radio" name="rating" value="5" id="star1"><label for="star1">⭐</label>-->
+<!--                                        <input type="radio" name="rating" value="4" id="star2"><label for="star2">⭐</label>-->
+<!--                                        <input type="radio" name="rating" value="3" id="star3"><label for="star3">⭐</label>-->
+<!--                                        <input type="radio" name="rating" value="2" id="star4"><label for="star4">⭐</label>-->
+<!--                                        <input type="radio" name="rating" value="1" id="star5"><label for="star5">⭐</label>-->
+<!--                                    </fieldset>-->
+<!--                                </div>-->
+<!--                            </td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <br>
+            <br>
+
+<!--            </div>-->
+<!--            <div th:unless = "${reviews.size()}<=1">-->
+<!--                <div class="reviews">-->
+<!--                    <h2>등록된 후기가 없습니다.</h2>-->
+<!--                </div>-->
+            </div>
+
+        </h1>
         <div id="orderlist" style="display: none">
             <h1>상품 구매</h1>
             총 주문 수량<p id="orderStock"></p>
-            <br>
+            <hr>
             총 주문 가격<p id="orderPrice"></p>
-            <br>
+            <hr>
             상품명<p id="orderProductName"></p>
-            <br>
+            <hr>
             상품정보<p id="orderProductInfo"></p>
-            <br>
+            <hr>
             상품사진<img id="productFilePath1" th:src="${productFilePath}" th:value="${productFilePath}" width="150px"
                      height="150px">
-            <br>
+            <hr>
             요청사항<textarea type="text" id="ordersRequest"></textarea>
-            <br>
+            <hr>
             수신자 주소
             <input type="text" id="sample6_postcode" placeholder="우편번호" disabled>
-            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-            <input type="text" id="sample6_address" placeholder="주소" size="50px" disabled><br>
+            <button class="btn btn-light" onclick="sample6_execDaumPostcode()">우편번호찾기</button>
+            <hr>
+            <input type="text" id="sample6_address" placeholder="주소" size="50px" disabled>
+            <br>
+            <br>
             <input type="text" id="sample6_detailAddress" placeholder="상세주소">
             <input type="text" id="sample6_extraAddress" placeholder="참고항목">
-
-            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-            <script>
-                function sample6_execDaumPostcode() {
-                    new daum.Postcode({
-                        oncomplete: function (data) {
-                            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                            var addr = ''; // 주소 변수
-                            var extraAddr = ''; // 참고항목 변수
-
-                            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                                addr = data.roadAddress;
-                            } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                                addr = data.jibunAddress;
-                            }
-
-                            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                            if (data.userSelectedType === 'R') {
-                                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                                    extraAddr += data.bname;
-                                }
-                                // 건물명이 있고, 공동주택일 경우 추가한다.
-                                if (data.buildingName !== '' && data.apartment === 'Y') {
-                                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                                }
-                                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                                if (extraAddr !== '') {
-                                    extraAddr = ' (' + extraAddr + ')';
-                                }
-                                // 조합된 참고항목을 해당 필드에 넣는다.
-                                document.getElementById("sample6_extraAddress").value = extraAddr;
-
-                            } else {
-                                document.getElementById("sample6_extraAddress").value = '';
-                            }
-
-                            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                            document.getElementById('sample6_postcode').value = data.zonecode;
-                            document.getElementById("sample6_address").value = addr;
-                            // 커서를 상세주소 필드로 이동한다.
-                            document.getElementById("sample6_detailAddress").focus();
-                        }
-                    }).open();
-                }
-            </script>
-            <br>
+            <hr>
             수신자 이름<input type="text" id="ordersReceiverName">
-            <br>
+            <hr>
             수신자 번호
             <select id="ordersPhoneNum1">
                 <option>010</option>
                 <option>011</option>
                 <option>016</option>
                 <option>017</option>
-            </select> - <input type="text" id="ordersPhoneNum2" size="3"> - <input type="text" id="ordersPhoneNum3"
-                                                                                   size="3">
-
+            </select> - <input type="text" id="ordersPhoneNum2" size="5"> - <input type="text" id="ordersPhoneNum3"
+                                                                                   size="5">
+            <hr>
             <br>
-            <button id="buy">구매하기</button>
-            <a type="button" th:href="@{/product}">돌아가기</a>
+            <button class="btn btn-light" id="buy">구매하기</button>
+            <a th:href="@{/product}">
+                <button class="btn btn-light">돌아가기</button>
+            </a>
         </div>
         </body>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script>
+            function sample6_execDaumPostcode() {
+                new daum.Postcode({
+                    oncomplete: function (data) {
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var addr = ''; // 주소 변수
+                        var extraAddr = ''; // 참고항목 변수
+
+                        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                            addr = data.roadAddress;
+                        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                            addr = data.jibunAddress;
+                        }
+
+                        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                        if (data.userSelectedType === 'R') {
+                            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                                extraAddr += data.bname;
+                            }
+                            // 건물명이 있고, 공동주택일 경우 추가한다.
+                            if (data.buildingName !== '' && data.apartment === 'Y') {
+                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                            }
+                            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                            if (extraAddr !== '') {
+                                extraAddr = ' (' + extraAddr + ')';
+                            }
+                            // 조합된 참고항목을 해당 필드에 넣는다.
+                            document.getElementById("sample6_extraAddress").value = extraAddr;
+
+                        } else {
+                            document.getElementById("sample6_extraAddress").value = '';
+                        }
+
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                        document.getElementById('sample6_postcode').value = data.zonecode;
+                        document.getElementById("sample6_address").value = addr;
+                        // 커서를 상세주소 필드로 이동한다.
+                        document.getElementById("sample6_detailAddress").focus();
+                    }
+                }).open();
+            }
+        </script>
+        <script>
+            // $('#myform').val(3);
+            // console.log($('#myform').val());
             // let product = $('#product').val();
             let memberCode = $('#memberCode').val();
             let productCode = $('#productCode').val();
@@ -203,7 +322,6 @@
                         console.log($('#price').val())
 
 
-
                     } else {
                         alert("최대 주문 수량입니다.")
 
@@ -217,8 +335,6 @@
                         totalPrice = $('#price').val()
                         $('#price').val((parseInt(totalPrice - productPrice)))
                         // console.log(totalPrice - productPrice+ " :::::총금액")
-
-
 
 
                     } else {
@@ -297,56 +413,97 @@
                             */
                         }, function (rsp) {
                             console.log(rsp);
-                            if (rsp.success) {
-                                var msg = '결제가 완료되었습니다.';
-                                // msg += '고유ID : ' + rsp.imp_uid;
-                                // msg += '상점 거래ID : ' + rsp.merchant_uid;
-                                // msg += '결제 금액 : ' + rsp.paid_amount;
-                                // msg += '카드 승인번호 : ' + rsp.apply_num;
-                                const path = "/api/product/order";
-                                const json = JSON.stringify(({
-                                    payTime,
-                                    payAmount,
-                                    ordersStock,
-                                    ordersRequest,
-                                    ordersPhoneNum,
-                                    ordersAddress,
-                                    ordersReceiverName,
-                                    deliveryStatus,
-                                    ordersDeliveryInfo,
-                                    ordersState,
-                                    productCode: {
-                                        productCode, // 기존 상품 코드
-                                    },
-                                    memberCode: {
-                                        memberCode
-                                    }
-                                }))
-                                $.ajax({
-                                    url: path,
-                                    type: 'POST',
-                                    dataType: 'text',
-                                    contentType: "application/json",
-                                    data: json,
-                                }).done(() => {
-                                    alert("구매완료");
-                                    window.location.href = '/product';
-                                }).fail((error) => {
-                                    alert((error));
-                                })
+
+                            // if (rsp.success) {
+                            var msg = '결제가 완료되었습니다.';
+                            // msg += '고유ID : ' + rsp.imp_uid;
+                            // msg += '상점 거래ID : ' + rsp.merchant_uid;
+                            // msg += '결제 금액 : ' + rsp.paid_amount;
+                            // msg += '카드 승인번호 : ' + rsp.apply_num;
+                            const path = "/api/product/order";
+                            const json = JSON.stringify(({
+                                payTime,
+                                payAmount,
+                                ordersStock,
+                                ordersRequest,
+                                ordersPhoneNum,
+                                ordersAddress,
+                                ordersReceiverName,
+                                deliveryStatus,
+                                ordersDeliveryInfo,
+                                ordersState,
+                                productCode: {
+                                    productCode, // 기존 상품 코드
+                                },
+                                memberCode: {
+                                    memberCode
+                                }
+                            }))
+                            $.ajax({
+                                url: path,
+                                type: 'POST',
+                                dataType: 'text',
+                                contentType: "application/json",
+                                data: json,
+                                success: function (data) {
+                                    window.location.href = '/product/paymentCompleted?productCode=' + productCode + '&memberCode=' + memberCode;
+                                }
+                            }).fail((error) => {
+                                alert((error));
+                            })
 
 
-                            } else {
-                                var msg = '결제에 실패하였습니다.';
-                                msg += '에러내용 : ' + rsp.error_msg;
-                            }
-                            alert(msg);
+                            // } else {
+                            //     var msg = '결제에 실패하였습니다.';
+                            //     msg += '에러내용 : ' + rsp.error_msg;
+                            // }
+                            // alert(msg);
                         })
 
                     });
                 });
 
             })
+
+        </script>
+        <script th:inline="javascript">
+            $('#cart').on('click', () => {
+                const memberCode = $('#memberCode').val();
+                const productCode = $('#productCode').val();
+                const cartCount = $('#stock').val();
+                const ordersState = 0;
+                const path = '/api/product/cart'
+                // alert("맴버"+memberCode+"상품"+productCode+"상품 갯수"+cartCount);
+                const json = JSON.stringify({
+                    memberCode: {
+                        memberCode
+                    },
+                    productCode: {
+                        productCode
+                    },
+                    cartCount,
+                    ordersState
+                });
+                $.ajax({
+                    url: path,
+                    type: 'POST',
+                    dataType: 'text',
+                    contentType: "application/json",
+                    data: json,
+                    success: function (data) {
+                        if (data == "exist") {
+                            alert("이미 담겨있는 상품입니다.");
+                        } else if (data == "save") {
+                            alert("장바구니에 상품이 담겼습니다.");
+                        } else {
+                            alert("error");
+                        }
+                        // window.location.href = '/product/paymentCompleted?ordersCode='+data;
+                    }
+                }).fail((error) => {
+                    alert((error));
+                })
+            });
 
         </script>
     </th:block>

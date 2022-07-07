@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <head>
+            <meta charset="UTF-8">
+            <title>회원가입</title>
+            <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+                    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+                    crossorigin="anonymous"></script>
+        </head>
+        <body>
+
+            <h2>회원 정보 수정</h2>
+            <input type="hidden" id="memberCode" th:value="${memberCode}">
+            <table class="w3-table">
+                <thead>
+                <tr>
+                    <th scope="col">회원 이름</th>
+                    <th scope="col">회원 아이디</th>
+<!--                    <th scope="col">회원 비밀번호</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>
+                        <input type="text" id="memberName" th:value="${memberName}">
+                    </th>
+                    <th>
+                        <input type="text" id="memberId" th:value="${memberId}" disabled>
+                    </th>
+<!--                    <th>-->
+<!--                        <input type="text" id="password" th:value="${password}">-->
+<!--                    </th>-->
+                </tr>
+                </tbody>
+<!--                <div class="mb-3">-->
+<!--                    <label for="memberId">아이디</label>-->
+<!--                    <input type="text" id="memberId" required maxlength="8">-->
+<!--                    <button class="btn btn-primary" id="idCheck">중복확인</button>-->
+<!--                    <span class="point"> * 아이디는 총 8자 영문또는 숫자포함 입력이 가능합니다.</span>-->
+<!--                </div>-->
+
+
+<!--                <div class="mb-3">-->
+<!--                    <label for="password">패스워드:-->
+<!--                        <input id="password" name="password" type="password"-->
+<!--                               required maxlength="15" autocomplete="off">-->
+<!--                        <span class="point"> * 비밀번호는 총 15자(영어 숫자 특수기호) 까지 입력이 가능합니다.</span>-->
+<!--                    </label>-->
+<!--                    <br/>-->
+<!--                    <label for="passwordCheck">패스워드 확인:   </label>-->
+<!--                    <input id="passwordCheck" name="memberPassword" type="password"-->
+<!--                           required maxlength="15" autocomplete="off">-->
+<!--                    <p id="ok" style="color:green;"></p>-->
+<!--                    <p id="ng" style="color:red;"></p>-->
+<!--                </div>-->
+
+<!--                <hr class="my-3">-->
+<!--                <div class="mb-3">-->
+<!--                    <input type="hidden" id="role" value="ROLE_MEMBER">-->
+<!--                </div>-->
+            </table>
+            <div class="text-center">
+                <button type="submit" id="singUp" class="btn btn-primary">회원 정보 수정</button>
+            </div>
+        </body>
+    </th:block>
+</th:block>
+
+<script th:inline="javascript">
+
+    $(() => {
+        $('#singUp').on('click', () => {
+            const memberId = $('#memberId').val();
+            // const password = $('#password').val();
+            const memberName = $('#memberName').val();
+            const memberCode = $('#memberCode').val();
+
+            // const pattern = new RegExp("^[a-zA-Z][0-9a-zA-Z]{4,7}$")
+            // const id = $("#memberId").val();
+            //
+            // const reg = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*.-]).{8,}$/;
+            // const pw = $("#password").val();
+
+            const path = '/api/member/memberCorrection';
+
+            const json = JSON.stringify({
+                memberId, memberName,memberCode //,password
+            })
+
+            // if (memberId == "" || password == "") {
+            //     alert('아이디와 비밀번호를 확인해주세요');
+            // }
+            //
+            // else if (false === pattern.test(id)) {
+            //     alert('5~8자의 영문, 숫자만 사용 가능 합니다.');
+            // }
+            // else if (false === reg.test(pw)) {
+            //     alert('비밀번호는 8자 이상이어야 하며, 숫자/소문자/특수문자를 모두 포함해야 합니다.');
+            // }
+            // else { }
+                console.log(memberId)
+                // console.log(password)
+                $.ajax({
+                    url: path,
+                    type: 'PUT',
+                    // dataType: 'text',
+                    contentType: "application/json",
+                    data: json,
+                    success: function (data) {
+                        if(data=="ok"){
+                            alert("회원수정완료")
+                            window.history.back()
+                        }else if(data=="no"){
+                            alert("회원수정실패")
+                        }
+                    }
+
+
+                })
+            })
+        })
+
+    //
+    // // 아이디 영문 체크
+    // const memberId = document.querySelector("#memberId")
+    // const idCheck = document.querySelector("#idCheck")
+    //
+    // console.log(memberId)
+    //
+    // const pattern = new RegExp("^[a-zA-Z][0-9a-zA-Z]{4,7}$")
+    // // const pattern = / /
+    // console.log(memberId.value)
+    // idCheck.addEventListener('click', function() {
+    //     if (pattern.test(memberId.value)) {
+    //         // document.getElementById('idok').innerHTML = ""
+    //         // document.getElementById('idng').innerHTML = ""
+    //         return;
+    //
+    //     } else {
+    //         alert("5~8자의 영문, 숫자만 사용 가능 합니다.");
+    //         memberId.value = ''
+    //         memberId.focus()
+    //     }
+    // })
+    //
+    //
+    // // 아이디 중복 확인
+    // $('#idCheck').click(function(e) {
+    //     e.preventDefault()
+    //     const memberId = $('#memberId').val();
+    //     const json = JSON.stringify({
+    //         memberId,
+    //     })
+    //     console.log("????????" + json)
+    //
+    //     $.ajax({
+    //         url: '/api/member/idCheck',
+    //         type: 'POST',
+    //         dataType: 'text',
+    //         contentType: "application/json",
+    //         data: json,
+    //         success: function (data) {
+    //             console.log("????????" + data)
+    //
+    //             if (data == "ng") {
+    //                 alert("아이디를 입력해주세요.");
+    //             } else {
+    //                 if (data == "no") {
+    //                     alert("이미 등록된 회원이 었습니다");
+    //
+    //                 } else if (data == "ok") {
+    //                     alert("사용가능한 아이디 입니다.");
+    //                 }
+    //             }
+    //         },
+    //     })
+    //
+    // })
+    //
+    // $(function () {
+    //     $('#passwordCheck').blur(function () {
+    //         if ($('#password').val() != $('#passwordCheck').val()) {
+    //             if ($('#passwordCheck').val() != '') {
+    //                 document.getElementById('ok').innerHTML = ""
+    //                 document.getElementById('ng').innerHTML = "동일한 비밀번호를 입력해 주세요"
+    //                 // alert("비밀번호가 일치하지 않습니다.");
+    //                 $('#passwordCheck').val('');
+    //                 $('#passwordCheck').focus();
+    //             }
+    //         } else {
+    //             document.getElementById('ng').innerHTML = ""
+    //             document.getElementById('ok').innerHTML = "동일한 비밀번호 입니다"
+    //         }
+    //     })
+    // });
+    //
+    //
+    // $(function () {
+    //
+    //     $('#passwordCheck').blur(function () {
+    //
+    //         const reg = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*.-]).{8,}$/;
+    //
+    //         const pw = $("#password").val();
+    //
+    //         if (false === reg.test(pw)) {
+    //             alert('비밀번호는 8자 이상이어야 하며, 숫자/소문자/특수문자를 모두 포함해야 합니다.');
+    //             return;
+    //         } else {
+    //             return;
+    //         }
+    //
+    //     })
+    // });
+
+
+</script>
+</html>

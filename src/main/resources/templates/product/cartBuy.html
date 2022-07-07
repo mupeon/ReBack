@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+<title>상품구매</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+
+        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+        <div id="orders" style="text-align: center">
+            <br>
+            <h2>수신자 정보</h2>
+            <br>
+            수신자 주소
+            <input type="text" id="sample6_postcode" placeholder="우편번호" disabled>
+            <button class="btn btn-primary" onclick="sample6_execDaumPostcode()">우편번호찾기</button>
+            <br>
+            <br>
+            <input type="text" id="sample6_address" placeholder="주소" size="50px" disabled>
+            <br>
+            <br>
+            <input type="text" id="sample6_detailAddress" placeholder="상세주소">
+            <input type="text" id="sample6_extraAddress" placeholder="참고항목">
+            <br>
+            <br>
+            수신자 이름<input type="text" id="ordersReceiverName">
+            <br>
+            <br>
+            수신자 번호
+            <select id="ordersPhoneNum1">
+                <option>010</option>
+                <option>011</option>
+                <option>016</option>
+                <option>017</option>
+            </select> - <input id="ordersPhoneNum2" type="text"  size="3"> - <input type="text" id="ordersPhoneNum3" size="3">
+            <br>
+            <br>
+            요청사항<textarea type="text" id="ordersRequest"></textarea>
+            <br>
+            <br>
+
+
+            <h2>상품 정보</h2>
+            <table border="1px" style="margin:auto">
+                <thead>
+                <tr>
+                    <th scope="col" width="150px">상품명</th>
+                    <th scope="col">사진</th>
+                    <th scope="col" width="150px">상품정보</th>
+                    <th scope="col" width="150px">가격(원)</th>
+                    <th scope="col" width="150px">구매수량</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <tr th:each="cartList,index : ${cart}">
+                    <th scope="col"  th:text="${cartList.productCode.productName}">상품명</th>
+                    <th scope="col"><img th:src="${cartList.getProductCode().getProductFilePath()}"
+                                         th:value="${cartList.getProductCode().getProductFilePath()}" width="150px"
+                                         height="150px"></th>
+                    <th scope="col" th:text="${cartList.productCode.productInfo}"></th>
+                    <th scope="col" th:text="${cartList.getProductCode().productPrice}+' 원'"></th>
+                    <th scope="col"  th:text="${cartList.getCartCount()}+'개'"></th>
+                    <input type="hidden" th:id="${'productCode'+index.index}" th:value="${cartList.getProductCode().productCode}">
+                    <input type="hidden" th:id="${'cartCode'+index.index}" th:value="${cartList.getCartCode()}">
+                    <input type="hidden" th:id="${'ordersStock'+index.index}" th:value="${cartList.getCartCount()}">
+                    <input type="hidden" th:id="${'payAmount'+index.index}" th:value="${cartList.getProductCode().productPrice}">
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <h3   th:text="'총 가격 : '+${CartPrice.get()} + '원'"></h3>
+            <input type="hidden" id="cartPrice" th:value="${CartPrice.get()}">
+
+            <br>
+            <br>
+            <button class="btn btn-primary" id="order">구매하기</button>
+            <a th:href="@{/product/cart(memberCode=${principal.memberCode})}">
+                <button class="btn btn-primary">돌아가기</button>
+            </a>
+        </div>
+        <div id="pay" style="text-align: center; display: none;">
+            <h1>결제가 완료되었습니다</h1>
+            <table style="margin:auto"  class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">상품명</th>
+                    <th scope="col">상품사진</th>
+                    <th scope="col">상품가격</th>
+                    <th scope="col">상품수량</th>
+                </tr>
+                </thead>
+                <div>
+                    <tbody>
+                    <tr th:each="cartList,index : ${cart}">
+                        <th scope="col"  th:text="${cartList.productCode.productName}">상품명</th>
+                        <th scope="col"><img th:src="${cartList.getProductCode().getProductFilePath()}"
+                                             th:value="${cartList.getProductCode().getProductFilePath()}" width="150px"
+                                             height="150px"></th>
+                        <th scope="col" th:text="${cartList.getProductCode().productPrice}+' 원'"></th>
+                        <th scope="col"  th:text="${cartList.getCartCount()}+'개'"></th>
+                        <input type="hidden" th:id="${'productCode'+index.index}" th:value="${cartList.getProductCode().productCode}">
+                        <input type="hidden" th:id="${'ordersStock'+index.index}" th:value="${cartList.getCartCount()}">
+                        <input type="hidden" th:id="${'payAmount'+index.index}" th:value="${cartList.getProductCode().productPrice}">
+                    </tr>
+                    </tbody>
+                </div>
+            </table>
+            <br>
+            <br>
+            <div style="text-align: center">
+                <a  th:href="@{/product/orderlist(memberCode=${principal.memberCode})}">
+                    <button class="btn btn-primary btn-order">주문내역보기</button></a>
+                <a  th:href="@{/product}"><button class="btn btn-primary btn-order">쇼핑계속하기</button></a>
+                <a  th:href="@{/}"><button class="btn btn-primary btn-order">메인으로</button></a>
+            </div>
+        </div>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script>
+            function sample6_execDaumPostcode() {
+                new daum.Postcode({
+                    oncomplete: function (data) {
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var addr = ''; // 주소 변수
+                        var extraAddr = ''; // 참고항목 변수
+
+                        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                            addr = data.roadAddress;
+                        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                            addr = data.jibunAddress;
+                        }
+
+                        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                        if (data.userSelectedType === 'R') {
+                            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                                extraAddr += data.bname;
+                            }
+                            // 건물명이 있고, 공동주택일 경우 추가한다.
+                            if (data.buildingName !== '' && data.apartment === 'Y') {
+                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                            }
+                            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                            if (extraAddr !== '') {
+                                extraAddr = ' (' + extraAddr + ')';
+                            }
+                            // 조합된 참고항목을 해당 필드에 넣는다.
+                            document.getElementById("sample6_extraAddress").value = extraAddr;
+
+                        } else {
+                            document.getElementById("sample6_extraAddress").value = '';
+                        }
+
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                        document.getElementById('sample6_postcode').value = data.zonecode;
+                        document.getElementById("sample6_address").value = addr;
+                        // 커서를 상세주소 필드로 이동한다.
+                        document.getElementById("sample6_detailAddress").focus();
+                    }
+                }).open();
+            }
+        </script>
+        <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js" type="text/javascript"></script>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            let index =/*[[${index}]]*/'default' -1;
+
+            $(() => {
+                $('#ordersPhoneNum2').on('keydown', (event) => {
+                    if (event.key >= 0 && event.key <= 9 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 45 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39) {
+                        console.log("ok")
+                        return true;
+                    }
+                    alert("숫자만입력해주세요")
+                    console.log("error")
+                    return false;
+                })
+                $('#ordersPhoneNum3').on('keydown', (event) => {
+                    if (event.key >= 0 && event.key <= 9 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 45 || event.keyCode == 46 || event.keyCode == 37 || event.keyCode == 39) {
+                        console.log("ok")
+                        return true;
+                    }
+                    alert("숫자만입력해주세요")
+                    console.log("error")
+                    return false;
+                })
+                $('#order').on('click', () => {
+                    const Amount = $('#cartPrice').val(); //결제 금액
+                    const ordersRequest = $('#ordersRequest').val();
+                    const ordersAddress = $('#sample6_address').val() + " " + $('#sample6_detailAddress').val() + " " + $('#sample6_extraAddress').val();
+                    const ordersReceiverName = $('#ordersReceiverName').val();
+                    const ordersPhoneNum = $('#ordersPhoneNum1').val() + $('#ordersPhoneNum2').val() + $('#ordersPhoneNum3').val();
+                    const postCode = $('#sample6_postcode').val();
+                    const ordersState = 1;
+                    const deliveryStatus = 1;
+                    const ordersDeliveryInfo = "쿠팡";
+                    const IMP = window.IMP; // 생략가능
+                    IMP.init('imp43994431');
+                    // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+                    // i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
+                    let requestPay = IMP.request_pay({
+                        pg: 'inicis', // version 1.1.0부터 지원.
+                        merchant_uid: 'merchant_' + new Date().getTime(),
+                        name: "productName",  //결제창에서 보여질 이름
+                        amount: Amount,  //가격
+                        // buyer_email: 'iamport@siot.do',
+                        buyer_name: ordersReceiverName,
+                        buyer_tel: ordersPhoneNum,
+                        buyer_addr: ordersAddress,
+                        buyer_postcode: postCode,
+                        m_redirect_url: 'https://www.yourdomain.com/payments/complete'
+                        /*
+                        모바일 결제시,
+                        결제가 끝나고 랜딩되는 URL을 지정
+                        (카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
+                        */
+                    }, function (rsp) {
+                        console.log(rsp);
+                        if (rsp.success) {
+                            for(let i = 0; i < index; i++) {
+                                const payTime = new Date();
+                                const payAmount =$('#payAmount'+i).val();
+                                const cartCode =$('#cartCode'+i).val();
+                                const ordersStock = $('#ordersStock'+i).val();
+                                const productCode = $('#productCode'+i).val();
+                                const memberCode = $('#memberCode').val();
+                                const payState = 1;
+
+                                console.log("productCode :: "+productCode);
+                                console.log("payAmount :: "+payAmount);
+                                console.log("ordersStock :: "+ordersStock);
+
+                                const path = "/api/product/cart/order";
+
+                                const json = JSON.stringify(({
+                                        payTime,
+                                        payAmount,
+                                        ordersStock,
+                                        ordersRequest,
+                                        ordersPhoneNum,
+                                        ordersAddress,
+                                        ordersReceiverName,
+                                        deliveryStatus,
+                                        ordersDeliveryInfo,
+                                        ordersState,
+                                        productCode:{
+                                            productCode, // 기존 상품 코드
+                                                    },
+                                        memberCode: {
+                                            memberCode}
+                                }))
+                                $.ajax({
+                                    url: path,
+                                    type: 'POST',
+                                    dataType: 'text',
+                                    contentType: "application/json",
+                                    data: json,
+                                }).done( () => {
+                                    $('#orders').hide();
+                                    $('#pay').show();
+                                }).fail((error) => {
+                                    alert((error));
+                                })
+                            }
+                        }else{
+                            console.log(rsp.success());
+                            alert('결제 실패.') ;
+                        }
+                    })
+
+
+                });
+
+            })
+            /*]]>*/
+        </script>
+    </th:block>
+</th:block>
+</body>
+</html>

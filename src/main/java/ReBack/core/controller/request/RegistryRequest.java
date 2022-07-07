@@ -25,13 +25,13 @@ public class RegistryRequest {
         private MemberHowJoin memberHowJoin;
         private MemberWithdrawal memberWithdrawal;
         private int memberBusinessNumber;
-        private LocalDateTime memberJoinDate;
+        //        private LocalDateTime memberJoinDate;
         private boolean enabled;
 
         private Long writerInformationCode;
         private String writerLecturePlace;
-        private String availableStartTime;
-        private String availableFinishTime;
+        private LocalDateTime availableStartTime;
+        private LocalDateTime availableFinishTime;
         private String availableDay;
 
         private Role role = Role.ROLE_AUTHOR;
