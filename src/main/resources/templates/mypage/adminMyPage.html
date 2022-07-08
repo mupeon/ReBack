@@ -87,11 +87,7 @@
 
     <div style="width:400px; height:300px">
         <canvas id="myChart" ></canvas>
-    </div>
-<div style="width:400px; height:300px">
         <canvas id="myAdd" ></canvas>
-</div>
-<div style="width:400px; height:300px">
         <canvas id="myRole" ></canvas>
     </div>
 
@@ -221,109 +217,103 @@
 
 
 
-
-
-
-
-
-
-        let MemberJoinDate1 = $('#MemberJoinDate1').val();
-        let MemberJoinDate2 = $('#MemberJoinDate2').val();
-        let MemberJoinDate3 = $('#MemberJoinDate3').val();
-        let MemberJoinDate4 = $('#MemberJoinDate4').val();
-        let MemberJoinDate5 = $('#MemberJoinDate5').val();
-        let MemberJoinDate6 = $('#MemberJoinDate6').val();
-        let MemberJoinDate7 = $('#MemberJoinDate7').val();
-        let MemberJoinDate8 = $('#MemberJoinDate8').val();
-        let MemberJoinDate9 = $('#MemberJoinDate9').val();
-        let MemberJoinDate10 = $('#MemberJoinDate10').val();
-        let MemberJoinDate11 = $('#MemberJoinDate11').val();
-        let MemberJoinDate12 = $('#MemberJoinDate12').val();
-
-        var ctx = document.getElementById("").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월","11월", "12월"],
-                datasets: [{
-                    data: [MemberJoinDate1,MemberJoinDate2,MemberJoinDate3,MemberJoinDate4,
-                        MemberJoinDate5,MemberJoinDate6,MemberJoinDate7,MemberJoinDate8,
-                        MemberJoinDate9,MemberJoinDate10,MemberJoinDate11,MemberJoinDate12], //컨트롤러에서 모델로 받아온다.
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-
-                    borderWidth: 1
-                }
-                ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                }
-            }
-        });
+        // let MemberJoinDate1 = $('#MemberJoinDate1').val();
+        // let MemberJoinDate2 = $('#MemberJoinDate2').val();
+        // let MemberJoinDate3 = $('#MemberJoinDate3').val();
+        // let MemberJoinDate4 = $('#MemberJoinDate4').val();
+        // let MemberJoinDate5 = $('#MemberJoinDate5').val();
+        // let MemberJoinDate6 = $('#MemberJoinDate6').val();
+        // let MemberJoinDate7 = $('#MemberJoinDate7').val();
+        // let MemberJoinDate8 = $('#MemberJoinDate8').val();
+        // let MemberJoinDate9 = $('#MemberJoinDate9').val();
+        // let MemberJoinDate10 = $('#MemberJoinDate10').val();
+        // let MemberJoinDate11 = $('#MemberJoinDate11').val();
+        // let MemberJoinDate12 = $('#MemberJoinDate12').val();
+        //
+        // var ctx = document.getElementById("").getContext('2d');
+        // var myChart = new Chart(ctx, {
+        //     type: 'bar',
+        //     data: {
+        //         labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월","11월", "12월"],
+        //         datasets: [{
+        //             data: [MemberJoinDate1,MemberJoinDate2,MemberJoinDate3,MemberJoinDate4,
+        //                 MemberJoinDate5,MemberJoinDate6,MemberJoinDate7,MemberJoinDate8,
+        //                 MemberJoinDate9,MemberJoinDate10,MemberJoinDate11,MemberJoinDate12], //컨트롤러에서 모델로 받아온다.
+        //             backgroundColor: [
+        //                 'rgba(255, 99, 132, 0.2)',
+        //                 'rgba(54, 162, 235, 0.2)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //             borderColor: [
+        //                 'rgba(255,99,132,1)',
+        //                 'rgba(54, 162, 235, 1)'
+        //
+        //             ],
+        //
+        //             borderWidth: 1
+        //         }
+        //         ]
+        //     },
+        //     options: {
+        //         scales: {
+        //             yAxes: [{
+        //                 ticks: {
+        //                     beginAtZero:true
+        //                 }
+        //             }]
+        //         }
+        //     }
+        // });
 
 
 
