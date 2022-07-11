@@ -45,18 +45,6 @@
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">신청가능여부</span>
-                            </div>
-                            <input
-                                    type="number"
-                                    class="form-control"
-                                    aria-label="Default"
-                                    aria-describedby="inputGroup-sizing-default"
-                                    name="lectureAvailability" id="lectureAvailability"
-                            />
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
                                 <span class="input-group-text">강의제목</span>
                             </div>
                             <input
@@ -64,70 +52,21 @@
                                     class="form-control"
                                     aria-label="Default"
                                     aria-describedby="inputGroup-sizing-default"
-                                    name="lectureName" id="lectureName"
+                                    name="shareeduName" id="shareeduName"
                             />
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">교육인원</span>
+                                <span class="input-group-text">수강료</span>
                             </div>
                             <input
                                     type="number"
                                     class="form-control"
                                     aria-label="Default"
                                     aria-describedby="inputGroup-sizing-default"
-                                    name="lecturePersonnel" id="lecturePersonnel"
+                                    name="shareeduPrice" id="shareeduPrice"
                             />
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">신청인원</span>
-                            </div>
-                            <input
-                                    type="number"
-                                    class="form-control"
-                                    aria-label="Default"
-                                    aria-describedby="inputGroup-sizing-default"
-                                    name="applicationNumber" id="applicationNumber"
-                            />
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">최소인원</span>
-                            </div>
-                            <input
-                                    type="number"
-                                    class="form-control"
-                                    aria-label="Default"
-                                    aria-describedby="inputGroup-sizing-default"
-                                    name="minimumNumber" id="minimumNumber"
-                            />
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">강의날짜</span>
-                            </div>
-                            <input
-                                    type="date"
-                                    class="form-control"
-                                    aria-label="Default"
-                                    aria-describedby="inputGroup-sizing-default"
-                                    name="lectureDate" id="lectureDate"
-                            />
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">강의장소</span>
-                            </div>
-                            <input
-                                    type="text"
-                                    class="form-control"
-                                    aria-label="Default"
-                                    aria-describedby="inputGroup-sizing-default"
-                                    name="lecturePlace" id="lecturePlace"
-                            />
-                        </div>
-
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">강의영상</span>
@@ -159,13 +98,8 @@
     $(() => {
         $('#submit').on('click', () => {
             const data = {
-                lectureName: $('#lectureName').val(),
-                applicationNumber: $('#applicationNumber').val(),
-                lectureAvailability: $('#lectureAvailability').val(),
-                lectureDate: $('#lectureDate').val(),
-                lecturePersonnel: $('#lecturePersonnel').val(),
-                lecturePlace: $('#lecturePlace').val(),
-                MinimumNumber: $('#MinimumNumber').val(),
+                shareeduName: $('#shareeduName').val(),
+                shareeduPrice: $('#shareeduPrice').val(),
 
                 categoryCode: {
                     categoryCode: $('#categoryCode option:selected').val(),

@@ -1,5 +1,6 @@
 package ReBack.core.repository;
 
+import ReBack.core.data.FinancialSupport;
 import ReBack.core.data.Member;
 import ReBack.core.data.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -119,4 +120,12 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 //    List<Member> findByMemberJoinDate11();
 //    @Query("select m from Member m where m.memberJoinDate like '22/12%'")
 //    List<Member> findByMemberJoinDate12();
+
+//    // 후원 쪽 Query
+//    @Query("select  f from Member m, FinancialSupport f where f.memberCode.memberCode = m.memberCode and f.memberCode.summers like '2013%' or f.memberCode.summers like '2012%' or f.memberCode.summers like '2011%' or f.memberCode.summers like '2010%' or f.memberCode.summers like '2009%' " +
+//            "or f.memberCode.summers like '2008%' or f.memberCode.summers like '2007%' or f.memberCode.summers like '2006%' or f.memberCode.summers like '2005%' or f.memberCode.summers like '2004%'")//10대
+//    List<Member> findByAge1();
+//    @Query("select m from Member m where m.summers like '1963%' or m.summers like '1962%' or m.summers like '1961%' or m.summers like '1960%' or m.summers like '1959%' " +
+//            "or m.summers like '1958%' or m.summers like '1957%' or m.summers like '1956%' or m.summers like '1955%' or m.summers like '1954%'")//60대
+//    List<Member> findBySummers6();
 }

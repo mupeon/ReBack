@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+<th:block th:fragment="content">
+<head>
+    <meta charset="UTF-8">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+    ></script>
+    <title>강의상세</title>
+</head>
+<body>
+<th:block th:fragment="content">
+    <a sec:authorize="isAuthenticated()">
+        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+        <input type="hidden" id="shareeduCode" th:value="${shareeduCode}">
+                <h2 th:text="${shareeduName}" id="shareeduName"></h2>
+                <video autoplay controls loop muted  preload="bbb">
+                    <source th:src="${shareeduFilePath}" width="150px" height="150px">
+                <p th:text="${shareeduPrice}" id="shareeduPurchasePrice"></p>
+                <button id="submit">강의구매</button>
+    </a>
+</th:block>
+</body>
+<script th:inline="javascript">
+    $(()=> {
+        $('#submit').on('click', () => {
+            const payTime = new Date(); //시간
+            const payAmount = $('#shareeduPurchasePrice').val() //가격
+
+            const IMP = window.IMP; // 생략가능
+            IMP.init('imp43994431');
+// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
+            let requestPay = IMP.request_pay({
+                pg: 'inicis', // version 1.1.0부터 지원.
+                merchant_uid: 'merchant_' + new Date().getTime(),
+                name: $('#shareeduName').val(),  //결제창에서 보여질 이름
+                amount: payAmount,  //가격
+                // buyer_email: 'iamport@siot.do',
+                buyer_name: $('#memberName').val(),
+                m_redirect_url: 'https://www.yourdomain.com/payments/complete'
+                /*
+                모바일 결제시,
+                결제가 끝나고 랜딩되는 URL을 지정
+                (카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
+                */
+            }, function (rsp) {
+                console.log(rsp);
+                if (rsp.success) {
+                    var msg = '결제가 완료되었습니다.';
+                    // msg += '고유ID : ' + rsp.imp_uid;
+                    // msg += '상점 거래ID : ' + rsp.merchant_uid;
+                    // msg += '결제 금액 : ' + rsp.paid_amount;
+                    // msg += '카드 승인번호 : ' + rsp.apply_num;
+                    const path = '/api/lecture/pay';
+                    const json = JSON.stringify({
+                        shareeduPurchasePrice: payAmount,
+                        shareeduPurchaseDate: payTime,
+                        memberCode: {
+                            memberCode: $('#memberCode').val()
+                        },
+                        shareeduCode: {
+                            shareeduCode: $('#memberShareeduCode').val()
+                        }
+                    })
+                    $.ajax({
+                        url: path,
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: json,
+                    }).done(() => {
+                        window.location.href = '/education/shareedu';
+
+                    }).fail((error) => {
+                        alert(error + "error");
+                    })
+
+
+                } else {
+                    var msg = '결제에 실패하였습니다.';
+                    msg += '에러내용 : ' + rsp.error_msg;
+                }
+                alert(msg);
+            })
+        })
+    })
+
+
+    // const form = $('#form')[0];
+    // const formData = new FormData(form);
+    // formData.append('key', new Blob([JSON.stringify(data)], {type: "application/json"}));
+    // alert(json)
+
+    // $('#statusApp').on('click', ()=> {
+    //     const financialAmount= $('#financialAmount').val();
+    //     const financialDate= $('#financialDate').val();
+    //     const financialType= $('#financialType').val();
+    //
+    //     const path='/donation/FinancialPdf'
+    //
+    //     const allData = { "financialAmount":financialAmount, "financialDate":financialDate, "financialType":financialType }
+    //
+    //     const json = JSON.stringify({
+    //         financialAmount,
+    //         financialDate,
+    //         financialType
+    //     });
+    //
+    //     $.ajax({
+    //         url: path,
+    //         type: 'POST',
+    //         data: allData,
+    //         dataType: 'html',
+    //         success: function (data) {
+    //             $("#financialPdf").html(data);
+    //         }
+    //     })
+    // })
+    // 기부 영수증?
+    // $('#statusApp').on('click',()=>{
+    //     function financialPdfOpen() {
+    //         let val1 = "";
+    //         let val2 = "";
+    //         let val3 = "";
+    //
+    //         val1 = $("#financialAmount").val();
+    //         val2 = $("#financialDate").val();
+    //         val3 = $("#financialType").val();
+    //
+    //         let allData = { "val1":val1, "val2":val2, "val3":val3 };
+    //
+    //         $.ajax({
+    //             url:"/donation/financialPdf",
+    //             type: 'GET',
+    //             data: allData,
+    //             dataType: 'html',
+    //             success:function(data){
+    //                 $("#financialPdf").html(data);
+    //             }
+    //         });
+    //     }
+    // })
+
+
+
+
+</script>
+</html>

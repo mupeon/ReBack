@@ -23,8 +23,18 @@
                     <input type="hidden" id="findByArea2" th:value="${findByArea2}">
                     <input type="hidden" id="findByArea3" th:value="${findByArea3}">
                     <input type="hidden" id="findByArea4" th:value="${findByArea4}">
+                    <input type="hidden" id="findByAge1" th:value="${findByAge1}">
+                    <input type="hidden" id="findByAge2" th:value="${findByAge2}">
+                    <input type="hidden" id="findByAge3" th:value="${findByAge3}">
+                    <input type="hidden" id="findByAge4" th:value="${findByAge4}">
+                    <input type="hidden" id="findByAge5" th:value="${findByAge5}">
+                    <input type="hidden" id="findByAge6" th:value="${findByAge6}">
+                    <input type="hidden" id="findByAge7" th:value="${findByAge7}">
+                    <input type="hidden" id="findByAge8" th:value="${findByAge8}">
+                    <input type="hidden" id="findByAgeAll" th:value="${findByAgeAll}">
 
-            <button th:onclick="|location.href='@{/donation}'|">후원메인으로</button>
+
+                    <button th:onclick="|location.href='@{/donation}'|">후원메인으로</button>
 
                     <div style="width: 500px; height: 500px;">
                             <h1>후원 현황 차트</h1>
@@ -44,7 +54,28 @@
                             <button type="submit" id="clothAreaShow">차트 보이기</button>
                             <button type="submit" id="clothAreaHide">차트 숨기기</button>
                             <canvas id="clothAreaChart"></canvas>
-                            <br>
+                        <br>
+                        <hr>
+                            <h1>금전 후원 연령별 차트</h1>
+                        <button type="submit" id="age10">10대</button>
+                        <button type="submit" id="age20">20대</button>
+                        <button type="submit" id="age30">30대</button>
+                        <button type="submit" id="age40">40대</button>
+                        <button type="submit" id="age50">50대</button>
+                        <button type="submit" id="age60">60대</button>
+                        <button type="submit" id="age70">70대</button>
+                        <button type="submit" id="age80">80대</button>
+                        <button type="submit" id="ageAll">전체</button>
+                            <button type="submit" id="financialAgeHide">차트 숨기기</button>
+                        <canvas id="financialAgeChart10"></canvas>
+                        <canvas id="financialAgeChart20"></canvas>
+                        <canvas id="financialAgeChart30"></canvas>
+                        <canvas id="financialAgeChart40"></canvas>
+                        <canvas id="financialAgeChart50"></canvas>
+                        <canvas id="financialAgeChart60"></canvas>
+                        <canvas id="financialAgeChart70"></canvas>
+                        <canvas id="financialAgeChart80"></canvas>
+                        <canvas id="financialAgeChartAll"></canvas>
                     </div>
                 </th:block>
             </th:block>
@@ -236,6 +267,435 @@
                 // 의류 후원 지역별 차트 숨기기
                 $('#clothAreaHide').on('click', () => {
                     $('#clothAreaChart').hide();
+                })
+
+                // 금전 후원 연령별 차트 보이기
+                $('#age10').on('click', () => { //10대
+                    $('#financialAgeChart10').show();
+                    $('#financialAgeChart20').hide();
+                    $('#financialAgeChart30').hide();
+                    $('#financialAgeChart40').hide();
+                    $('#financialAgeChart50').hide();
+                    $('#financialAgeChart60').hide();
+                    $('#financialAgeChart70').hide();
+                    $('#financialAgeChart80').hide();
+                    $('#financialAgeChartAll').hide();
+                    let findByAge1 = $('#findByAge1').val();
+                        console.log(findByAge1)
+                    var context = document.getElementById("financialAgeChart10").getContext('2d');
+                    var financialAgeChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['10대'],
+                            datasets: [{
+                                labels: ['10대'],
+                                data: [findByAge1], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    console.log("data : : : ::  :: : " + financialAgeChart)
+                    console.log("data : : : ::  :: : " + financialAgeChart.toString()) // 금전 유형 차트 script
+                })
+
+                $('#age20').on('click', () => { //10대
+                    $('#financialAgeChart10').hide();
+                    $('#financialAgeChart20').show();
+                    $('#financialAgeChart30').hide();
+                    $('#financialAgeChart40').hide();
+                    $('#financialAgeChart50').hide();
+                    $('#financialAgeChart60').hide();
+                    $('#financialAgeChart70').hide();
+                    $('#financialAgeChart80').hide();
+                    $('#financialAgeChartAll').hide();
+                    let findByAge2 = $('#findByAge2').val();
+                    console.log(findByAge2)
+                    var context = document.getElementById("financialAgeChart20").getContext('2d');
+                    var financialAgeChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['20대'],
+                            datasets: [{
+                                labels: ['20대'],
+                                data: [findByAge2], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(54, 162, 235, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(54, 162, 235, 1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    console.log("data : : : ::  :: : " + financialAgeChart)
+                    console.log("data : : : ::  :: : " + financialAgeChart.toString()) // 금전 유형 차트 script
+                })
+
+                $('#age30').on('click', () => { //10대
+                    $('#financialAgeChart10').hide();
+                    $('#financialAgeChart20').hide();
+                    $('#financialAgeChart30').show();
+                    $('#financialAgeChart40').hide();
+                    $('#financialAgeChart50').hide();
+                    $('#financialAgeChart60').hide();
+                    $('#financialAgeChart70').hide();
+                    $('#financialAgeChart80').hide();
+                    $('#financialAgeChartAll').hide();
+                    let findByAge3 = $('#findByAge3').val();
+                    console.log(findByAge3)
+                    var context = document.getElementById("financialAgeChart30").getContext('2d');
+                    var financialAgeChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['30대'],
+                            datasets: [{
+                                labels: ['30대'],
+                                data: [findByAge3], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(18, 130, 68, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(18, 130, 68, 1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    console.log("data : : : ::  :: : " + financialAgeChart)
+                    console.log("data : : : ::  :: : " + financialAgeChart.toString()) // 금전 유형 차트 script
+                })
+
+                $('#age40').on('click', () => { //10대
+                    $('#financialAgeChart10').hide();
+                    $('#financialAgeChart20').hide();
+                    $('#financialAgeChart30').hide();
+                    $('#financialAgeChart40').show();
+                    $('#financialAgeChart50').hide();
+                    $('#financialAgeChart60').hide();
+                    $('#financialAgeChart70').hide();
+                    $('#financialAgeChart80').hide();
+                    $('#financialAgeChartAll').hide();
+                    let findByAge4 = $('#findByAge4').val();
+                    console.log(findByAge4)
+                    var context = document.getElementById("financialAgeChart40").getContext('2d');
+                    var financialAgeChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['40대'],
+                            datasets: [{
+                                labels: ['40대'],
+                                data: [findByAge4], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(232, 202, 84, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(232, 202, 84, 1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    console.log("data : : : ::  :: : " + financialAgeChart)
+                    console.log("data : : : ::  :: : " + financialAgeChart.toString()) // 금전 유형 차트 script
+                })
+
+                $('#age50').on('click', () => { //10대
+                    $('#financialAgeChart10').hide();
+                    $('#financialAgeChart20').hide();
+                    $('#financialAgeChart30').hide();
+                    $('#financialAgeChart40').hide();
+                    $('#financialAgeChart50').show();
+                    $('#financialAgeChart60').hide();
+                    $('#financialAgeChart70').hide();
+                    $('#financialAgeChart80').hide();
+                    $('#financialAgeChartAll').hide();
+                    let findByAge5 = $('#findByAge5').val();
+                    console.log(findByAge5)
+                    var context = document.getElementById("financialAgeChart50").getContext('2d');
+                    var financialAgeChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['50대'],
+                            datasets: [{
+                                labels: ['50대'],
+                                data: [findByAge5], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(84,232,170,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgb(84,232,170,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    console.log("data : : : ::  :: : " + financialAgeChart)
+                    console.log("data : : : ::  :: : " + financialAgeChart.toString()) // 금전 유형 차트 script
+                })
+
+                $('#age60').on('click', () => { //10대
+                    $('#financialAgeChart10').hide();
+                    $('#financialAgeChart20').hide();
+                    $('#financialAgeChart30').hide();
+                    $('#financialAgeChart40').hide();
+                    $('#financialAgeChart50').hide();
+                    $('#financialAgeChart60').show();
+                    $('#financialAgeChart70').hide();
+                    $('#financialAgeChart80').hide();
+                    $('#financialAgeChartAll').hide();
+                    let findByAge6 = $('#findByAge6').val();
+                    console.log(findByAge6)
+                    var context = document.getElementById("financialAgeChart60").getContext('2d');
+                    var financialAgeChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['60대'],
+                            datasets: [{
+                                labels: ['60대'],
+                                data: [findByAge6], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(156,84,232,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(156,84,232,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    console.log("data : : : ::  :: : " + financialAgeChart)
+                    console.log("data : : : ::  :: : " + financialAgeChart.toString()) // 금전 유형 차트 script
+                })
+
+                $('#age70').on('click', () => { //10대
+                    $('#financialAgeChart10').hide();
+                    $('#financialAgeChart20').hide();
+                    $('#financialAgeChart30').hide();
+                    $('#financialAgeChart40').hide();
+                    $('#financialAgeChart50').hide();
+                    $('#financialAgeChart60').hide();
+                    $('#financialAgeChart70').show();
+                    $('#financialAgeChart80').hide();
+                    $('#financialAgeChartAll').hide();
+                    let findByAge7 = $('#findByAge7').val();
+                    console.log(findByAge7)
+                    var context = document.getElementById("financialAgeChart70").getContext('2d');
+                    var financialAgeChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['70대'],
+                            datasets: [{
+                                labels: ['70대'],
+                                data: [findByAge7], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(232,136,84,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(232,136,84,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    console.log("data : : : ::  :: : " + financialAgeChart)
+                    console.log("data : : : ::  :: : " + financialAgeChart.toString()) // 금전 유형 차트 script
+                })
+
+                $('#age80').on('click', () => { //10대
+                    $('#financialAgeChart10').hide();
+                    $('#financialAgeChart20').hide();
+                    $('#financialAgeChart30').hide();
+                    $('#financialAgeChart40').hide();
+                    $('#financialAgeChart50').hide();
+                    $('#financialAgeChart60').hide();
+                    $('#financialAgeChart70').hide();
+                    $('#financialAgeChart80').show();
+                    $('#financialAgeChartAll').hide();
+                    let findByAge8 = $('#findByAge8').val();
+                    console.log(findByAge8)
+                    var context = document.getElementById("financialAgeChart80").getContext('2d');
+                    var financialAgeChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['80대'],
+                            datasets: [{
+                                labels: ['80대'],
+                                data: [findByAge8], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(84,86,232,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(84,86,232,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    console.log("data : : : ::  :: : " + financialAgeChart)
+                    console.log("data : : : ::  :: : " + financialAgeChart.toString()) // 금전 유형 차트 script
+                })
+
+                $('#ageAll').on('click', () => { //10대
+                    $('#financialAgeChart10').hide();
+                    $('#financialAgeChart20').hide();
+                    $('#financialAgeChart30').hide();
+                    $('#financialAgeChart40').hide();
+                    $('#financialAgeChart50').hide();
+                    $('#financialAgeChart60').hide();
+                    $('#financialAgeChart70').hide();
+                    $('#financialAgeChart80').hide();
+                    $('#financialAgeChartAll').show();
+                    let findByAge1 = $('#findByAge1').val();
+                    let findByAge2 = $('#findByAge2').val();
+                    let findByAge3 = $('#findByAge3').val();
+                    let findByAge4 = $('#findByAge4').val();
+                    let findByAge5 = $('#findByAge5').val();
+                    let findByAge6 = $('#findByAge6').val();
+                    let findByAge7 = $('#findByAge7').val();
+                    let findByAge8 = $('#findByAge8').val();
+
+                    let findByAgeAll = $('#findByAgeAll').val();
+                    console.log(findByAgeAll)
+                    var context = document.getElementById("financialAgeChartAll").getContext('2d');
+                    var financialAgeChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['10대', '20대', '30대', '40대', '50대', '60대', '70대', '80대'],
+                            datasets: [{
+                                labels: ['10대', '20대', '30대', '40대', '50대', '60대', '70대', '80대'],
+                                data: [findByAge1, findByAge2, findByAge3, findByAge4, findByAge5,findByAge6,findByAge7, findByAge8 ], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(18, 130, 68, 0.2)',
+                                    'rgba(232, 202, 84, 0.2)',
+                                    'rgba(84,232,170,0.2)',
+                                    'rgba(156,84,232,0.2)',
+                                    'rgba(232,136,84,0.2)',
+                                    'rgba(84,86,232,0.2)'
+
+
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(18, 130, 68, 1)',
+                                    'rgba(232, 202, 84, 1)',
+                                    'rgba(84,232,170,1)',
+                                    'rgba(156,84,232,1)',
+                                    'rgba(232,136,84,1)',
+                                    'rgba(84,86,232,1)'
+
+
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    console.log("data : : : ::  :: : " + financialAgeChart)
+                    console.log("data : : : ::  :: : " + financialAgeChart.toString()) // 금전 유형 차트 script
+                })
+                // 금전 후원 연령별 차트 숨기기
+               $('#financialAgeHide').on('click', () => {
+                    $('#financialAgeChart').hide();
+
                 })
 
             })

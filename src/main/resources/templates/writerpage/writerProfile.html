@@ -10,8 +10,8 @@
     <a sec:authorize="isAuthenticated()">
     <h2>강사프로필</h2>
         <hr>
-    <div th:each="i:${info}">
-        <!--        <div th:text="${i.memberCode.memberName}"></div>-->
+    <div th:each="i:${info}" th:if="${principal.memberCode}==${i.memberCode}">
+                <div th:text="${i.memberCode.memberName}"></div>
         <div>
             <h3>강사 활동 지역</h3>
             <p th:text="${i.writerLecturePlace}"></p>

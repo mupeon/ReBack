@@ -136,7 +136,7 @@ public class DonationController {
     }
 
     @GetMapping("/donation/chart")
-    public String donationChart(@AuthenticationPrincipal SecurityUser principal, Model model) {
+    public String donationChart(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Member memberCode) {
 
         if (principal != null) {
             model.addAttribute("principal", principal.getMember());
@@ -154,6 +154,25 @@ public class DonationController {
         model.addAttribute("findByArea2", clothingSponsorRepository.findByArea2().size());
         model.addAttribute("findByArea3", clothingSponsorRepository.findByArea3().size());
         model.addAttribute("findByArea4", clothingSponsorRepository.findByArea4().size());
+
+        model.addAttribute("findByAge1", financialSupportRepository.findByAge1().size()); //10대
+        model.addAttribute("findByAge2", financialSupportRepository.findByAge2().size()); //10대
+        model.addAttribute("findByAge3", financialSupportRepository.findByAge3().size()); //10대
+        model.addAttribute("findByAge4", financialSupportRepository.findByAge4().size()); //10대
+        model.addAttribute("findByAge5", financialSupportRepository.findByAge5().size()); //10대
+        model.addAttribute("findByAge6", financialSupportRepository.findByAge6().size()); //10대
+        model.addAttribute("findByAge7", financialSupportRepository.findByAge7().size()); //10대
+        model.addAttribute("findByAge8", financialSupportRepository.findByAge8().size()); //10대
+//        model.addAttribute("findByAge80", financialSupportRepository.findByAge80().size()); //10대
+
+        model.addAttribute("findByAgeAll", financialSupportRepository.findByAgeAll().size()); //10대
+//        model.addAttribute("findByBirth2",financialSupportRepository.findByBirth2().size());
+//        model.addAttribute("findByBirth3",financialSupportRepository.findByBirth3().size());
+//        model.addAttribute("findByBirth4",financialSupportRepository.findByBirth4().size());
+//        model.addAttribute("findByBirth5",financialSupportRepository.findByBirth5().size());
+//        model.addAttribute("findByBirth6",financialSupportRepository.findByBirth6().size());
+//        model.addAttribute("findByBirth7",financialSupportRepository.findByBirth7().size());
+//        model.addAttribute("findByBirth8",financialSupportRepository.findByBirth8().size());
 
 
         return "donation/donationChart";
