@@ -9,30 +9,30 @@
 <th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
     <th:block th:fragment="content">
         <a sec:authorize="isAuthenticated()">
-        <h1>전체 디자인 목록 조회 게시판</h1>
-        <span>
+            <h1>전체 디자인 목록 조회 게시판</h1>
+            <span>
         <a th:href="@{/design/addpost}">
             <button type="button" class="btn btn-outline-primary">디자인 등록</button>
         </a>
         </span>
-        <form action="/design/list" method="get" id="searchForm">
-            <div class="input-group">
-                <input type="hidden" name="page" value="1">
-                <div class="input-group-prepend">
-                    <select class="custom-select" name="type">
-                        <option th:selected="${pageRequestDTO.type == null}">-------</option>
-                        <option value="n" th:selected="${pageRequestDTO.type=='n'}">이름</option>
-                        <option value="i" th:selected="${pageRequestDTO.type=='i'}">내용</option>
-                        <option value="ni" th:selected="${pageRequestDTO.type=='ni'}">이름+내용</option>
-                    </select>
+            <form action="/design/list" method="get" id="searchForm">
+                <div class="input-group">
+                    <input type="hidden" name="page" value="1">
+                    <div class="input-group-prepend">
+                        <select class="custom-select" name="type">
+                            <option th:selected="${pageRequestDTO.type == null}">-------</option>
+                            <option value="n" th:selected="${pageRequestDTO.type=='n'}">이름</option>
+                            <option value="i" th:selected="${pageRequestDTO.type=='i'}">내용</option>
+                            <option value="ni" th:selected="${pageRequestDTO.type=='ni'}">이름+내용</option>
+                        </select>
+                    </div>
+                    <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+                    <div class="input-group-append" id="button-addon4">
+                        <button class="btn btn-outline-secondary btn-search" type="button">검색</button>
+                        <button class="btn btn-outline-secondary btn-clear" type="button">지우기</button>
+                    </div>
                 </div>
-                <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
-                <div class="input-group-append" id="button-addon4">
-                    <button class="btn btn-outline-secondary btn-search" type="button">검색</button>
-                    <button class="btn btn-outline-secondary btn-clear" type="button">지우기</button>
-                </div>
-            </div>
-        </form>
+            </form>
         </a>
         <table class="table table-striped">
             <thead>
