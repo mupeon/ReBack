@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+<title>판매현황</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<th:block th:replace="~{/layout/company::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <!--        <input type="hidden" id="ordersCode" th:value="${list.ordersCode}">-->
+        <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+        <table class="table table-dark table-striped">
+            <thead style="text-align: center">
+            <tr>
+                <th scope="col">상품코드</th>
+                <th scope="col">상품명</th>
+                <th scope="col">사진</th>
+                <th scope="col">단가</th>
+                <th scope="col">구매자</th>
+            </tr>
+            </thead>
+            <tbody style="text-align: center">
+            <tr th:each="order : ${orders}">
+                <th scope="col" th:text="${order.productCode.productCode}"></th>
+                <th scope="col" th:text="${order.productCode.productName}"></th>
+                <th scope="col"><img th:src="${order.productCode.productFilePath}" width="150px" height="150px"></th>
+                <th scope="col" th:text="${order.productCode.productPrice}"></th>
+                <th scope="col" th:text="${order.memberCode.memberName}"></th>
+            </tr>
+            </tbody>
+        </table>
+        </body>
+    </th:block>
+</th:block>
+</html>

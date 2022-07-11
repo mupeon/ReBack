@@ -382,4 +382,33 @@ public class ProductController {
         return "/product/review";
     }
 
+    @GetMapping("/product/salesStatus") //판매현황 페이지
+    public String salesStatus(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Member memberCode) {
+        if (principal != null) {
+            model.addAttribute("principal", principal.getMember());
+            model.addAttribute("role", principal.getMember().getRole().getDescription());
+        }
+        List<Orders> orders = ordersRepository.findSales(memberCode);
+
+        System.out.println(orders.size());
+
+        model.addAttribute("orders",ordersRepository.findSales(memberCode));
+
+        return "/product/salesStatus";
+    }
+
+    @GetMapping("/product/productReviewStatus") //후기현황 페이지
+    public String productReviewStatus(@AuthenticationPrincipal SecurityUser principal, Model model, @RequestParam(required = false) Member memberCode) {
+        if (principal != null) {
+            model.addAttribute("principal", principal.getMember());
+            model.addAttribute("role", principal.getMember().getRole().getDescription());
+        }
+        List<Comment> comments = commentRepository.findProductReviewStatus(memberCode);
+
+        model.addAttribute("comments", comments);
+        model.addAttribute("index", comments.size());
+
+        return "/product/productReviewStatus";
+    }
+
 }

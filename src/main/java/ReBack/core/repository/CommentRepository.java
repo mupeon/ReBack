@@ -18,6 +18,10 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query("select c from Comment c where c.product.productCode =:product and c.bulletinBoard.bulletinBoardCode =3 order by c.commentHoroscope desc")
     List<Comment> findByReviews(@Param("product") Long product);
+
+    @Query("select c,p from Comment c,Product p where p.memberCode =:memberCode and c.product.productCode = p.productCode")
+    List<Comment> findProductReviewStatus(@Param("memberCode") Member memberCode);
+
 //
 //    @Query("select c,cf from Comment c,CommentFiles cf where c.product.productCode =:product and c.bulletinBoard.bulletinBoardCode =3 and cf.comment.commentCode=c.commentCode ")
 //    List<Comment> findByReviews(@Param("product") Long product);

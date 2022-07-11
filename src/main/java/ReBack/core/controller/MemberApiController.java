@@ -58,18 +58,17 @@ public class MemberApiController {
         if (idCheck.isPresent() == true) {
             System.out.println("idCheck");
             return "no";
-        } else if(emailCheck.isPresent() == true) {
+        } else if (emailCheck.isPresent() == true) {
             System.out.println("emailCheck");
             return "eino";
-        } else if(pnnCheck.isPresent() == true) {
+        } else if (pnnCheck.isPresent() == true) {
             System.out.println("pnnCheck");
             return "pnno";
-        }else if(member.getMemberId() =="" ||  member.getPassword() =="" ||
-                member.getMemberEmail() ==""  || member.getMemberName() == "" ||
-                member.getMemberPhoneNumber() ==""  || member.getMemberAddress()=="" || member.getMemberPostalCode() == ""){
+        } else if (member.getMemberId() == "" || member.getPassword() == "" ||
+                member.getMemberEmail() == "" || member.getMemberName() == "" ||
+                member.getMemberPhoneNumber() == "" || member.getMemberAddress() == "" || member.getMemberPostalCode() == "") {
             return "kkkk";
-        }
-        else {
+        } else {
             String encodedPassword = passwordEncoder.encode(member.getPassword());
             member.setPassword(encodedPassword);
             memberRepository.save(member);
@@ -78,14 +77,12 @@ public class MemberApiController {
     }
 
 
-
     @PostMapping("/saveG")
     public String saveG(@RequestBody WriterInformation writerInformation) {
         System.out.println(writerInformation.getWriter().getRole());
         writerInformationRepository.save(writerInformation);
         return "ok";
     }
-
 
 
     @DeleteMapping("/timeDelete")
@@ -98,6 +95,7 @@ public class MemberApiController {
         }
 
     }
+
 
     @DeleteMapping("/memberDelete")
     public void memberDelete(@RequestBody Member member) {
@@ -113,31 +111,56 @@ public class MemberApiController {
     @PutMapping("/memberCorrection")
     public String memberCorrection(@AuthenticationPrincipal SecurityUser principal,
                                    @RequestBody Member member) {
-        System.out.println("  getMemberCode   "+member.getMemberCode());
-        System.out.println("  getMemberName   "+member.getMemberName());
+        System.out.println("  getMemberCode   " + member.getMemberCode());
+        System.out.println("  getMemberName   " + member.getMemberName());
 
         Optional<Member> member1 = memberRepository.findById(member.getMemberCode());
-        System.out.println("getMemberCode getMemberCode getMemberCode"+member1.get().getMemberCode());
-        if(member1.get().getMemberCode() == member.getMemberCode()){
+        System.out.println("getMemberCode getMemberCode getMemberCode" + member1.get().getMemberCode());
+        if (member1.get().getMemberCode() == member.getMemberCode()) {
             member1.get().setMemberName(member.getMemberName());
             memberRepository.save(member1.get());
             return "ok";
-        }else{
+        } else {
             return "no";
         }
-//        if (member.getMemberId() == "" || member.getPassword() == "") {
-//            return "on";
-//        } else {
-//            String encodedPassword = passwordEncoder.encode(member.getPassword());
-//            member.setPassword(encodedPassword);
-//            member.setMemberId(member.getMemberId());
-//            memberRepository.save(member);
-//            return "ok";
-//        }
-//        memberRepository.save(member);
-//        return "ok";
+
     }
 
+    @PostMapping("/memberPwCorrection")
+    public String memberPwCorrection(@AuthenticationPrincipal SecurityUser principal, @RequestBody Member member) {
+        System.out.println(member.getMemberCode());
 
+        System.out.println(member.getPassword());
+
+        Optional<Member> member1 = memberRepository.findByMemberCode(member.getMemberCode());
+
+        System.out.println("로그인한 사용자 DB 비밀번호 :: "+member1.get().getPassword());
+
+        if (passwordEncoder.matches(member.getPassword(), member1.get().getPassword())) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }
+
+    @PutMapping("/memberPwssCorrection")
+    public String memberPwssCorrection(@AuthenticationPrincipal SecurityUser principal,
+                                       @RequestBody Member member) {
+        System.out.println(member.getPassword());
+        System.out.println(member.getMemberCode());
+        String encodedPassword = passwordEncoder.encode(member.getPassword());
+
+        Optional<Member> member1 = memberRepository.findByMemberCode(member.getMemberCode());
+        System.out.println("변경전 :: " + member1.get().getPassword());
+
+        member1.get().setPassword(encodedPassword);
+
+        System.out.println("변경후 :: " + member1.get().getPassword());
+
+        memberRepository.save(member1.get());
+
+        return "ok";
+
+    }
 
 }

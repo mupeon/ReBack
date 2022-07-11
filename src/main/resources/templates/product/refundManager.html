@@ -6,7 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+<th:block th:replace="~{/layout/company::setContent(~{this::content})}">
     <th:block th:fragment="content">
         <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
         <input type="hidden" id="refundStatus" th:value=1>
@@ -35,7 +35,9 @@
             </tr>
             </tbody>
         </table>
-
+        <a th:href="@{/me/companyMyPage(id=${principal.memberCode}, writer = ${principal.role})}">
+            <button class="btn btn-primary btn-order">돌아가기</button>
+        </a>
         </body>
 
     </th:block>

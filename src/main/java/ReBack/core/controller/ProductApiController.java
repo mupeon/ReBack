@@ -3,7 +3,6 @@ package ReBack.core.controller;
 import ReBack.core.data.*;
 import ReBack.core.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +13,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import static ReBack.core.data.RefundState.환불완료;
+import static ReBack.core.data.Role.ROLE_COMPANY;
 
 @RestController
 @RequestMapping("/api/product")
@@ -36,6 +36,9 @@ public class ProductApiController {
 
     @Autowired
     CommentFilesRepository commentFilesRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
     @PutMapping("/update") //상품 수정
     public void productUpdate(@RequestBody Product product) {
         System.out.println("수정api");
@@ -251,6 +254,7 @@ public class ProductApiController {
 
 
     }
+
     @PostMapping("/search") //
     public String search(@RequestBody Product product) {
 
@@ -258,6 +262,7 @@ public class ProductApiController {
         System.out.println("검색어 결과 : "+ productRepository.findBySearch(product.getProductName()).size());
         return product.getProductName();
     }
+
     @PostMapping("/reviews") //리뷰
     public String reviewsAdd(@Validated @RequestPart(value = "key") Comment comment, @RequestPart(value = "file") MultipartFile file, HttpServletRequest request) throws Exception {
 //        CommentFiles commentFiles = new CommentFiles();
@@ -302,6 +307,22 @@ public class ProductApiController {
             return "no";
         }
 
+    }
+
+    @DeleteMapping("/review/delete") //상품 삭제
+    public void deleteReview(@RequestBody Comment comment) {
+        System.out.println(comment);
+        Optional<Comment> comment1 = commentRepository.findById(comment.getCommentCode());
+        Optional<Member> member = memberRepository.findById(comment.getMember().getMemberCode());
+        System.out.println("Role :: "+member.get().getRole());
+        System.out.println("comment1 :: "+comment1.get().getCommentCode());
+        if (member.get().getRole() == ROLE_COMPANY){
+            System.out.println("삭제가능");
+            commentRepository.delete(comment1.get());
+        }else{
+            System.out.println("삭제불가능");
+
+        }
     }
 
 }

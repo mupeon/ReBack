@@ -29,12 +29,20 @@
                     <div style="width: 500px; height: 500px;">
                             <h1>후원 현황 차트</h1>
                             <!--차트가 그려질 부분-->
+                            <button type="submit" id="donationApplicationShow">차트 보이기</button>
+                            <button type="submit" id="donationApplicationHide">차트 숨기기</button>
                             <canvas id="donationApplicationChart"></canvas>
                         <br>
+                        <hr>
                             <h1>금전 후원 종류별 차트</h1>
+                            <button type="submit" id="financialTypeShow">차트 보이기</button>
+                            <button type="submit" id="financialTypeHide">차트 숨기기</button>
                             <canvas id="financialTypeChart"></canvas>
                         <br>
+                        <hr>
                             <h1>의류 후원 지역별 차트</h1>
+                            <button type="submit" id="clothAreaShow">차트 보이기</button>
+                            <button type="submit" id="clothAreaHide">차트 숨기기</button>
                             <canvas id="clothAreaChart"></canvas>
                             <br>
                     </div>
@@ -79,124 +87,158 @@
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
 
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-            <script>
-                // 후원 유형별
-                let findex =$('#findex').val();
-                let cindex =$('#cindex').val();
-                var context = document.getElementById("donationApplicationChart").getContext('2d');
-                var donationApplicationChart = new Chart(context, {
-                    type: 'bar',
-                    data: {
-                        labels: ['금전 후원', '의류 후원'],
-                        datasets: [{
-                            labels: ["금전 후원", "의류 후원"],
-                            data: [findex, cindex], //컨트롤러에서 모델로 받아온다.
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)'
 
-                            ],
-                            borderColor: [
-                                'rgba(255,99,132,1)',
-                                'rgba(54, 162, 235, 1)'
+        <script>
+            $(()=> {
+                // 후원 현황 차트 보이기
+                $('#donationApplicationShow').on('click', () => {
+                    $('#donationApplicationChart').show();
 
-                            ],
-                            borderWidth: 1
-                        }
-                        ]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero:true
+                    // 후원 유형별
+                    let findex =$('#findex').val();
+                    let cindex =$('#cindex').val();
+                    var context = document.getElementById("donationApplicationChart").getContext('2d');
+                    var donationApplicationChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['금전 후원', '의류 후원'],
+                            datasets: [{
+                                labels: ["금전 후원", "의류 후원"],
+                                data: [findex, cindex], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)'
+
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)'
+
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
                                     }
                                 }]
                             }
                         }
-                });
-                console.log("data : : : ::  :: : "+donationApplicationChart)
-                console.log("data : : : ::  :: : "+donationApplicationChart.toString()) // 후원 현황 차트 script
+                    });
+                    console.log("data : : : ::  :: : "+donationApplicationChart)
+                    console.log("data : : : ::  :: : "+donationApplicationChart.toString()) // 후원 현황 차트 script
 
-                // 금전 유형별
-                let findByType1 =$('#findByType1').val();
-                let findByType2 =$('#findByType2').val();
-                var context = document.getElementById("financialTypeChart").getContext('2d');
-                var financialTypeChart = new Chart(context, {
-                    type: 'bar',
-                    data: {
-                        labels: ['정기 후원', '일시 후원'],
-                        datasets: [{
-                            labels: ["정기 후원", "일시 후원"],
-                            data: [findByType1, findByType2], //컨트롤러에서 모델로 받아온다.
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)'
+                })
 
-                            ],
-                            borderColor: [
-                                'rgba(255,99,132,1)',
-                                'rgba(54, 162, 235, 1)'
+                // 후원 현황 차트 숨기기
+                $('#donationApplicationHide').on('click', () => {
+                    $('#donationApplicationChart').hide();
+                })
 
-                            ],
-                            borderWidth: 1
+                // 금전 후원 유형별 차트 보이기
+                $('#financialTypeShow').on('click', () => {
+                    $('#financialTypeChart').show();
+                    // 금전 유형별
+                    let findByType1 =$('#findByType1').val();
+                    let findByType2 =$('#findByType2').val();
+                    var context = document.getElementById("financialTypeChart").getContext('2d');
+                    var financialTypeChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['정기 후원', '일시 후원'],
+                            datasets: [{
+                                labels: ["정기 후원", "일시 후원"],
+                                data: [findByType1, findByType2], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)'
+
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)'
+
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
                         }
-                        ]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero:true
-                                }
-                            }]
-                        }
-                    }
-                });
-                console.log("data : : : ::  :: : "+financialTypeChart)
-                console.log("data : : : ::  :: : "+financialTypeChart.toString()) // 금전 유형 차트 script
+                    });
+                    console.log("data : : : ::  :: : "+financialTypeChart)
+                    console.log("data : : : ::  :: : "+financialTypeChart.toString()) // 금전 유형 차트 script
+                })
 
-                // 의류 지역별
-                let findByArea1 =$('#findByArea1').val();
-                let findByArea2 =$('#findByArea2').val();
-                let findByArea3 =$('#findByArea3').val();
-                let findByArea4 =$('#findByArea4').val();
-                var context = document.getElementById("clothAreaChart").getContext('2d');
-                var clothAreaChart = new Chart(context, {
-                    type: 'bar',
-                    data: {
-                        labels: ['대구', '서울', '부산', '대전'],
-                        datasets: [{
+                // 금전 후원 유형별 차트 숨기기
+                $('#financialTypeHide').on('click', () => {
+                    $('#financialTypeChart').hide();
+                })
+
+                // 의류 후원 지역별 차트 보이기
+                $('#clothAreaShow').on('click', () => {
+                    $('#clothAreaChart').show();
+                    // 의류 지역별
+                    let findByArea1 =$('#findByArea1').val();
+                    let findByArea2 =$('#findByArea2').val();
+                    let findByArea3 =$('#findByArea3').val();
+                    let findByArea4 =$('#findByArea4').val();
+                    var context = document.getElementById("clothAreaChart").getContext('2d');
+                    var clothAreaChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
                             labels: ['대구', '서울', '부산', '대전'],
-                            data: [findByArea1, findByArea2, findByArea3, findByArea4], //컨트롤러에서 모델로 받아온다.
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(18, 130, 68, 0.2)',
-                                'rgba(232, 202, 84, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255,99,132,1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(18, 130, 68, 1)',
-                                'rgba(232, 202, 84, 1)'
-                            ],
-                            borderWidth: 1
+                            datasets: [{
+                                labels: ['대구', '서울', '부산', '대전'],
+                                data: [findByArea1, findByArea2, findByArea3, findByArea4], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(18, 130, 68, 0.2)',
+                                    'rgba(232, 202, 84, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(18, 130, 68, 1)',
+                                    'rgba(232, 202, 84, 1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
                         }
-                        ]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero:true
-                                }
-                            }]
-                        }
-                    }
-                });
-                console.log("data : : : ::  :: : "+clothAreaChart)
-                console.log("data : : : ::  :: : "+clothAreaChart.toString()) // 금전 유형 차트 script
+                    });
+                    console.log("data : : : ::  :: : " + clothAreaChart)
+                    console.log("data : : : ::  :: : " + clothAreaChart.toString()) // 금전 유형 차트 script
 
-            </script>
+                })
+
+                // 의류 후원 지역별 차트 숨기기
+                $('#clothAreaHide').on('click', () => {
+                    $('#clothAreaChart').hide();
+                })
+
+            })
+
+        </script>
 </html>

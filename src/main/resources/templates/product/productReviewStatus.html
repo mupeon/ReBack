@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품후기관리</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<style>
+
+  h1,
+  h5 {
+    display: inline;
+  }
+
+  .info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .review {
+    text-align: center;
+  }
+
+  #myform fieldset {
+    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    border: 0; /* 필드셋 테두리 제거 */
+  }
+
+  #myform input[type=radio] {
+    display: none; /* 라디오박스 감춤 */
+  }
+
+  #myform label {
+    font-size: 3em; /* 이모지 크기 */
+    color: transparent; /* 기존 이모지 컬러 제거 */
+    text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
+  }
+
+  #myform label:hover {
+    text-shadow: 0 0 0 #ffc107; /* 마우스 호버 */
+  }
+
+  #myform label:hover ~ label {
+    text-shadow: 0 0 0 #ffc107; /* 마우스 호버 뒤에오는 이모지들 */
+  }
+
+  #myform fieldset {
+    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+    direction: rtl; /* 이모지 순서 반전 */
+    border: 0; /* 필드셋 테두리 제거 */
+  }
+
+  #myform fieldset legend {
+    text-align: left;
+  }
+
+  /*#myform input[type=radio]:checked ~ label {*/
+  /*    text-shadow: 0 0 0 #ffc107; !* 마우스 클릭 체크 *!*/
+  /*}*/
+</style>
+</head>
+<th:block th:replace="~{/layout/company::setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <input type="hidden" id="memberCode" th:value="${principal.memberCode}">
+    <div class="reviews">
+      <h2>상품후기</h2>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">제목</th>
+          <th scope="col">작성자</th>
+          <th scope="col">후기사진</th>
+          <th scope="col">리뷰</th>
+          <th scope="col">별점</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody id="reviews-box">
+        <tr th:each="review,index : ${comments}">
+          <th scope="col" th:text="${review.getCommentTitle()}">제목</th>
+          <th scope="col" th:text="${review.getMember().memberName}">작성자</th>
+          <th scope="col"> <img th:src="${review.reviewFilePath}" width="150px" height="150px"></th>
+          <th scope="col" th:text="${review.getCommentContent()}">리뷰</th>
+          <th scope="col" th:text="${review.getCommentHoroscope()+'점'}">별점</th>
+          <th scope="col">
+            <button class="btn btn-primary" th:id="${'del'+index.index}"  th:value="${index.index}">삭제하기</button>
+          </th>
+          <input type="hidden" th:id="${'reviewCode'+index.index}" th:value="${review.commentCode}" >
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    </body>
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      const index =/*[[${index}]]*/'default';
+      console.log("index: " + index);
+      $(() => {
+
+        for (let i =0; i <= index -1; i++) {
+          let memberCode = $('#memberCode').val();
+          let commentCode = $('#reviewCode'+i).val();
+          $('#del'+i).on('click', () => {
+            console.log("memberCode"+memberCode+"\n\n")
+            console.log("commentCode"+commentCode)
+            const path = '/api/product/review/delete';
+            const json = JSON.stringify({
+              commentCode: commentCode,
+                member:{
+                  memberCode: memberCode,
+                }
+            });
+
+            $.ajax({
+              url: path,
+              type: 'DELETE',
+              contentType: 'application/json',
+              data: json,
+
+            }).done( ()=> {
+              alert("삭제완료");
+              window.location.href = '/product/productReviewStatus?memberCode='+memberCode;
+            }).fail( (error)=> {
+              alert(error);
+            })
+          })
+        }
+      })
+      /*]]>*/
+    </script>
+  </th:block>
+</th:block>
+</html>

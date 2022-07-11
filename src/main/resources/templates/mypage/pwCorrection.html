@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <head>
+            <meta charset="UTF-8">
+            <title>비밀번호 수정</title>
+            <input type="hidden" id="memberCode" th:value="${memberCode}">
+        </head>
+        <a sec:authorize="isAuthenticated()">
+            <body>
+            <div class="mb-3">
+                <label for="password">패스워드:
+                    <input id="password" name="password" type="password"
+                           required maxlength="15" autocomplete="off">
+                    <span class="point"> * 비밀번호는 총 15자(영어 숫자 특수기호) 까지 입력이 가능합니다.</span>
+                </label>
+                <br/>
+                <label for="passwordCheck">패스워드 확인:   </label>
+                <input id="passwordCheck" name="memberPassword" type="password"
+                       required maxlength="15" autocomplete="off">
+                <p id="ok" style="color:green;"></p>
+                <p id="ng" style="color:red;"></p>
+            </div>
+            <div class="text-center">
+                <button type="submit" id="singUp2" class="btn btn-primary">비밀번호 변경</button>
+            </div>
+            </body>
+        </a>
+    </th:block>
+</th:block>
+<script>
+    $(() => {
+        $('#singUp2').on('click', () => {
+            const password = $('#password').val();
+            const memberCode = $('#memberCode').val();
+
+            const path = '/api/member/memberPwssCorrection';
+
+            const json = JSON.stringify({
+                password,memberCode
+            })
+
+            $.ajax({
+                url: path,
+                type: 'PUT',
+                contentType: "application/json",
+                data: json,
+                success: function (data) {
+                    if (data == "ok") {
+                        alert("비밀번호 수정 완료")
+                    } else if (data == "no") {
+                        alert("비밀번호 수정 실패")
+                    }
+                }
+
+            })
+
+        })
+    })
+
+
+    $(function () {
+        $('#passwordCheck').blur(function () {
+            if ($('#password').val() != $('#passwordCheck').val()) {
+                if ($('#passwordCheck').val() != '') {
+                    document.getElementById('ok').innerHTML = ""
+                    document.getElementById('ng').innerHTML = "동일한 비밀번호를 입력해 주세요"
+                    // alert("비밀번호가 일치하지 않습니다.");
+                    $('#passwordCheck').val('');
+                    $('#passwordCheck').focus();
+                }
+            } else {
+                document.getElementById('ng').innerHTML = ""
+                document.getElementById('ok').innerHTML = "동일한 비밀번호 입니다"
+            }
+        })
+    });
+
+
+    $(function () {
+
+        $('#passwordCheck').blur(function () {
+
+            const reg = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*.-]).{8,}$/;
+
+            const pw = $("#password").val();
+
+            if (false === reg.test(pw)) {
+                alert('비밀번호는 8자 이상이어야 하며, 숫자/소문자/특수문자를 모두 포함해야 합니다.');
+                return;
+            } else {
+                return;
+            }
+
+        })
+    });
+
+</script>
+</html>

@@ -29,4 +29,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
             "o.productCode.productCode = p.productCode")
     Optional<Orders> find2ByOrdersCode(@Param("ordersCode") Long ordersCode);
 
+    @Query("select o,p from Orders o,Product p where p.memberCode=:memberCode and o.productCode.productCode = p.productCode") // 업체가 올린 상품중 orders테이블에 담긴 상품
+    List<Orders> findSales(@Param("memberCode")Member memberCode);
+
 }
