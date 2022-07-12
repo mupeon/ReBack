@@ -156,24 +156,29 @@ public class DonationController {
         model.addAttribute("findByArea4", clothingSponsorRepository.findByArea4().size());
 
         model.addAttribute("findByAge1", financialSupportRepository.findByAge1().size()); //10대
-        model.addAttribute("findByAge2", financialSupportRepository.findByAge2().size()); //10대
-        model.addAttribute("findByAge3", financialSupportRepository.findByAge3().size()); //10대
-        model.addAttribute("findByAge4", financialSupportRepository.findByAge4().size()); //10대
-        model.addAttribute("findByAge5", financialSupportRepository.findByAge5().size()); //10대
-        model.addAttribute("findByAge6", financialSupportRepository.findByAge6().size()); //10대
-        model.addAttribute("findByAge7", financialSupportRepository.findByAge7().size()); //10대
-        model.addAttribute("findByAge8", financialSupportRepository.findByAge8().size()); //10대
-//        model.addAttribute("findByAge80", financialSupportRepository.findByAge80().size()); //10대
+        model.addAttribute("findByAge2", financialSupportRepository.findByAge2().size()); //20대
+        model.addAttribute("findByAge3", financialSupportRepository.findByAge3().size()); //30대
+        model.addAttribute("findByAge4", financialSupportRepository.findByAge4().size()); //40대
+        model.addAttribute("findByAge5", financialSupportRepository.findByAge5().size()); //50대
+        model.addAttribute("findByAge6", financialSupportRepository.findByAge6().size()); //60대
+        model.addAttribute("findByAge7", financialSupportRepository.findByAge7().size()); //70대
+        model.addAttribute("findByAge8", financialSupportRepository.findByAge8().size()); //80대
 
-        model.addAttribute("findByAgeAll", financialSupportRepository.findByAgeAll().size()); //10대
-//        model.addAttribute("findByBirth2",financialSupportRepository.findByBirth2().size());
-//        model.addAttribute("findByBirth3",financialSupportRepository.findByBirth3().size());
-//        model.addAttribute("findByBirth4",financialSupportRepository.findByBirth4().size());
-//        model.addAttribute("findByBirth5",financialSupportRepository.findByBirth5().size());
-//        model.addAttribute("findByBirth6",financialSupportRepository.findByBirth6().size());
-//        model.addAttribute("findByBirth7",financialSupportRepository.findByBirth7().size());
-//        model.addAttribute("findByBirth8",financialSupportRepository.findByBirth8().size());
+        model.addAttribute("findByAgeAll", financialSupportRepository.findByAgeAll().size()); //전체 연령
 
+        model.addAttribute("findByMonth1", financialSupportRepository.findByMonth1().size()); // 1월
+        model.addAttribute("findByMonth2", financialSupportRepository.findByMonth2().size()); // 2월
+        model.addAttribute("findByMonth3", financialSupportRepository.findByMonth3().size()); // 3월
+        model.addAttribute("findByMonth4", financialSupportRepository.findByMonth4().size()); // 4월
+        model.addAttribute("findByMonth5", financialSupportRepository.findByMonth5().size()); // 5월
+        model.addAttribute("findByMonth6", financialSupportRepository.findByMonth6().size()); // 6월
+        model.addAttribute("findByMonth7", financialSupportRepository.findByMonth7().size()); // 7월
+        model.addAttribute("findByMonth8", financialSupportRepository.findByMonth8().size()); // 8월
+        model.addAttribute("findByMonth9", financialSupportRepository.findByMonth9().size()); // 9월
+        model.addAttribute("findByMonth10", financialSupportRepository.findByMonth10().size()); // 10월
+        model.addAttribute("findByMonth11", financialSupportRepository.findByMonth11().size()); // 11월
+        model.addAttribute("findByMonth12", financialSupportRepository.findByMonth12().size()); // 12월
+        model.addAttribute("findByMonthAll", financialSupportRepository.findByMonthAll().size()); // 전체 월
 
         return "donation/donationChart";
     }

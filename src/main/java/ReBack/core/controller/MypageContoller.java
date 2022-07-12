@@ -116,6 +116,7 @@ public class MypageContoller {
         model.addAttribute("Summers6",memberRepository.findBySummers6().size());
         model.addAttribute("Summers7",memberRepository.findBySummers7().size());
         model.addAttribute("Summers8",memberRepository.findBySummers8().size());
+        model.addAttribute("SummersAll",memberRepository.findBySummersAll().size());
 
 
 //        model.addAttribute("MemberJoinDate1",memberRepository.findByMemberJoinDate1().size());

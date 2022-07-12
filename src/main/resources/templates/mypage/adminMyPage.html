@@ -85,9 +85,39 @@
 <hr>
 
     <div style="width:400px; height:300px">
-        <canvas id="myChart" ></canvas>
-        <canvas id="myAdd" ></canvas>
-        <canvas id="myRole" ></canvas>
+        <h1>회원 유형별 차트</h1>
+        <button type="submit" id="myRoleShow">차트 보이기</button>
+        <button type="submit" id="myRoleHide">차트 숨기기</button>
+        <canvas id="myRole"></canvas>
+        <br>
+        <hr>
+        <h1>지역 차트</h1>
+        <button type="submit" id="myAddShow">차트 보이기</button>
+        <button type="submit" id="myAddHide">차트 숨기기</button>
+        <canvas id="myAdd"></canvas>
+        <br>
+        <hr>
+        <h1>회원 연령별 차트</h1>
+        <button type="submit" id="age10">10대</button>
+        <button type="submit" id="age20">20대</button>
+        <button type="submit" id="age30">30대</button>
+        <button type="submit" id="age40">40대</button>
+        <button type="submit" id="age50">50대</button>
+        <button type="submit" id="age60">60대</button>
+        <button type="submit" id="age70">70대</button>
+        <button type="submit" id="age80">80대</button>
+        <button type="submit" id="ageAll">전체</button>
+        <button type="submit" id="AgeHide">차트 숨기기</button>
+        <canvas id="ageChart10"></canvas>
+        <canvas id="ageChart20"></canvas>
+        <canvas id="ageChart30"></canvas>
+        <canvas id="ageChart40"></canvas>
+        <canvas id="ageChart50"></canvas>
+        <canvas id="ageChart60"></canvas>
+        <canvas id="ageChart70"></canvas>
+        <canvas id="ageChart80"></canvas>
+        <canvas id="ageChartAll"></canvas>
+
     </div>
 
 <hr>
@@ -102,118 +132,565 @@
 
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
-        let Role1 = $('#Role1').val();
-        let Role2 = $('#Role2').val();
-        let Role3 = $('#Role3').val();
-        var ctx = document.getElementById("myRole").getContext('2d');
-        var myRole = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["업체 회원", "작가 회원", "일반 회원"],
-                datasets: [{
-                    data: [Role1, Role2, Role3], //컨트롤러에서 모델로 받아온다.
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
+        $(()=>{
+            // 회원 유형별 차트 보이기
+            $('#myRoleShow').on('click', () => {
+                $('#myRole').show();
 
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
+                // 회원 유형별 차트
+                let Role1 = $('#Role1').val();
+                let Role2 = $('#Role2').val();
+                let Role3 = $('#Role3').val();
+                var ctx = document.getElementById("myRole").getContext('2d');
+                var myRole = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["업체 회원", "작가 회원", "일반 회원"],
+                        datasets: [{
+                            data: [Role1, Role2, Role3], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)'
 
-                    ],borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)'
 
-                    ],
-                    borderWidth: 1
-                }
-                ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
+                            ],
+                            borderWidth: 1
                         }
-                    }]
-                }
-            }
-        });
-
-
-        let Summers1 = $('#Summers1').val();
-        let Summers2 = $('#Summers2').val();
-        let Summers3 = $('#Summers3').val();
-        let Summers4 = $('#Summers4').val();
-        let Summers5 = $('#Summers5').val();
-        let Summers6 = $('#Summers6').val();
-        let Summers7 = $('#Summers7').val();
-        let Summers8 = $('#Summers8').val();
-
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["10대", "20대", "30대", "40대", "50대", "60대", "70대", "80대"],
-                datasets: [{
-                    data: [Summers1,Summers2,Summers3,Summers4,Summers5,Summers6,Summers7,Summers8], //컨트롤러에서 모델로 받아온다.
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)'
-
-                    ],
-
-                    borderWidth: 1
-                }
-                ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
                         }
-                    }]
-                }
-            }
-        });
+                    }
+                });
+            })
 
+            // 회원 유형별 숨기기
+            $('#myRoleHide').on('click', () => {
+                $('#myRole').hide();
+            })
+
+            // 회원 지역별 차트 보이기
+            $('#myAddShow').on('click', () => {
+                $('#myAdd').show();
+                // 회원 지역별 차트
+                let Add1 = $('#Add1').val();
+                let Add2 = $('#Add2').val();
+                let Add3 = $('#Add3').val();
+                let Add4 = $('#Add4').val();
+                let Add5 = $('#Add5').val();
+                let Add6 = $('#Add6').val();
+                let Add7 = $('#Add7').val();
+                let Add8 = $('#Add8').val();
+                let Add9 = $('#Add9').val();
+                let Add10 = $('#Add10').val();
+                let Add11 = $('#Add11').val();
+                let Add12 = $('#Add12').val();
+                let Add13 = $('#Add13').val();
+                let Add14 = $('#Add14').val();
+                let Add15 = $('#Add15').val();
+                let Add16 = $('#Add16').val();
+
+                var ctx = document.getElementById("myAdd").getContext('2d');
+                var myAdd = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["서울", "부산", "대구", "인천", "광주", "대전",
+                            "울산", "강원", "경기", "경남", "경북", "전남", "전북", "제주", "충남", "충북"],
+                        datasets: [{
+                            data: [Add1,Add2,Add3,Add4,Add5,Add6,Add7,Add8,Add9,
+                                Add10,Add11,Add12,Add13,Add14,Add15,Add16 ], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)'
+
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+
+            // 회원 지역별 차트 숨기기
+            $('#myAddHide').on('click', () => {
+                $('#myAdd').hide();
+            })
+
+            // 10대 차트
+            $('#age10').on('click', () => { //10대
+                $('#ageChart10').show();
+                $('#ageChart20').hide();
+                $('#ageChart30').hide();
+                $('#ageChart40').hide();
+                $('#ageChart50').hide();
+                $('#ageChart60').hide();
+                $('#ageChart70').hide();
+                $('#ageChart80').hide();
+                $('#ageChartAll').hide();
+                let Summers1 = $('#Summers1').val();
+                console.log(Summers1)
+                var context = document.getElementById("ageChart10").getContext('2d');
+                var ageChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['10대'],
+                        datasets: [{
+                            labels: ['10대'],
+                            data: [Summers1], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)'
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+
+            // 20대 차트
+            $('#age20').on('click', () => { //20대
+                $('#ageChart10').hide();
+                $('#ageChart20').show();
+                $('#ageChart30').hide();
+                $('#ageChart40').hide();
+                $('#ageChart50').hide();
+                $('#ageChart60').hide();
+                $('#ageChart70').hide();
+                $('#ageChart80').hide();
+                $('#ageChartAll').hide();
+                let Summers2 = $('#Summers2').val();
+                console.log(Summers2)
+                var context = document.getElementById("ageChart20").getContext('2d');
+                var ageChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['20대'],
+                        datasets: [{
+                            labels: ['20대'],
+                            data: [Summers2], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(54, 162, 235, 1)'
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            })
+
+            // 30대 차트
+            $('#age30').on('click', () => { //30대
+                $('#ageChart10').hide();
+                $('#ageChart20').hide();
+                $('#ageChart30').show();
+                $('#ageChart40').hide();
+                $('#ageChart50').hide();
+                $('#ageChart60').hide();
+                $('#ageChart70').hide();
+                $('#ageChart80').hide();
+                $('#ageChartAll').hide();
+                let Summers3 = $('#Summers3').val();
+                console.log(Summers3)
+                var context = document.getElementById("ageChart30").getContext('2d');
+                var ageChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['30대'],
+                        datasets: [{
+                            labels: ['30대'],
+                            data: [Summers3], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(18, 130, 68, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(18, 130, 68, 1)'
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            })
+
+            // 40대 차트
+            $('#age40').on('click', () => { //10대
+                $('#ageChart10').hide();
+                $('#ageChart20').hide();
+                $('#ageChart30').hide();
+                $('#ageChart40').show();
+                $('#ageChart50').hide();
+                $('#ageChart60').hide();
+                $('#ageChart70').hide();
+                $('#ageChart80').hide();
+                $('#ageChartAll').hide();
+                let Summers4 = $('#Summers4').val();
+                console.log(Summers4)
+                var context = document.getElementById("ageChart40").getContext('2d');
+                var ageChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['40대'],
+                        datasets: [{
+                            labels: ['40대'],
+                            data: [Summers4], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(232, 202, 84, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(232, 202, 84, 1)'
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+
+            // 50대 차트
+            $('#age50').on('click', () => { //10대
+                $('#ageChart10').hide();
+                $('#ageChart20').hide();
+                $('#ageChart30').hide();
+                $('#ageChart40').hide();
+                $('#ageChart50').show();
+                $('#ageChart60').hide();
+                $('#ageChart70').hide();
+                $('#ageChart80').hide();
+                $('#ageChartAll').hide();
+                let Summers5 = $('#Summers5').val();
+                console.log(Summers5)
+                var context = document.getElementById("ageChart50").getContext('2d');
+                var ageChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['50대'],
+                        datasets: [{
+                            labels: ['50대'],
+                            data: [Summers5], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(84,232,170,0.2)'
+                            ],
+                            borderColor: [
+                                'rgb(84,232,170,1)'
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+
+            // 60대 차트
+            $('#age60').on('click', () => { //10대
+                $('#ageChart10').hide();
+                $('#ageChart20').hide();
+                $('#ageChart30').hide();
+                $('#ageChart40').hide();
+                $('#ageChart50').hide();
+                $('#ageChart60').show();
+                $('#ageChart70').hide();
+                $('#ageChart80').hide();
+                $('#ageChartAll').hide();
+                let Summers6 = $('#Summers6').val();
+                console.log(Summers6)
+                var context = document.getElementById("ageChart60").getContext('2d');
+                var ageChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['60대'],
+                        datasets: [{
+                            labels: ['60대'],
+                            data: [Summers6], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(156,84,232,0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(156,84,232,1)'
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+
+            // 70대 차트
+            $('#age70').on('click', () => { //10대
+                $('#ageChart10').hide();
+                $('#ageChart20').hide();
+                $('#ageChart30').hide();
+                $('#ageChart40').hide();
+                $('#ageChart50').hide();
+                $('#ageChart60').hide();
+                $('#ageChart70').show();
+                $('#ageChart80').hide();
+                $('#ageChartAll').hide();
+                let Summers7 = $('#Summers7').val();
+                console.log(Summers7)
+                var context = document.getElementById("ageChart70").getContext('2d');
+                var ageChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['70대'],
+                        datasets: [{
+                            labels: ['70대'],
+                            data: [Summers7], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(232,136,84,0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(232,136,84,1)'
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+
+            // 80대 차트
+            $('#age80').on('click', () => { //10대
+                $('#ageChart10').hide();
+                $('#ageChart20').hide();
+                $('#ageChart30').hide();
+                $('#ageChart40').hide();
+                $('#ageChart50').hide();
+                $('#ageChart60').hide();
+                $('#ageChart70').hide();
+                $('#ageChart80').show();
+                $('#ageChartAll').hide();
+                let Summers8 = $('#Summers8').val();
+                console.log(Summers8)
+                var context = document.getElementById("ageChart80").getContext('2d');
+                var ageChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['80대'],
+                        datasets: [{
+                            labels: ['80대'],
+                            data: [Summers8], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(84,86,232,0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(84,86,232,1)'
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+
+            // 전체 연령별 차트
+            $('#ageAll').on('click', () => { //10대
+                $('#ageChart10').hide();
+                $('#ageChart20').hide();
+                $('#ageChart30').hide();
+                $('#ageChart40').hide();
+                $('#ageChart50').hide();
+                $('#ageChart60').hide();
+                $('#ageChart70').hide();
+                $('#ageChart80').hide();
+                $('#ageChartAll').show();
+                let Summers1 = $('#Summers1').val();
+                let Summers2 = $('#Summers2').val();
+                let Summers3 = $('#Summers3').val();
+                let Summers4 = $('#Summers4').val();
+                let Summers5 = $('#Summers5').val();
+                let Summers6 = $('#Summers6').val();
+                let Summers7 = $('#Summers7').val();
+                let Summers8 = $('#Summers8').val();
+
+                let SummersAll = $('#SummersAll').val();
+                console.log(SummersAll)
+                var context = document.getElementById("ageChartAll").getContext('2d');
+                var ageChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: ['10대', '20대', '30대', '40대', '50대', '60대', '70대', '80대'],
+                        datasets: [{
+                            labels: ['10대', '20대', '30대', '40대', '50대', '60대', '70대', '80대'],
+                            data: [Summers1, Summers2, Summers3, Summers4, Summers5, Summers6, Summers7, Summers8 ], //컨트롤러에서 모델로 받아온다.
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(18, 130, 68, 0.2)',
+                                'rgba(232, 202, 84, 0.2)',
+                                'rgba(84,232,170,0.2)',
+                                'rgba(156,84,232,0.2)',
+                                'rgba(232,136,84,0.2)',
+                                'rgba(84,86,232,0.2)'
+
+
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(18, 130, 68, 1)',
+                                'rgba(232, 202, 84, 1)',
+                                'rgba(84,232,170,1)',
+                                'rgba(156,84,232,1)',
+                                'rgba(232,136,84,1)',
+                                'rgba(84,86,232,1)'
+
+
+                            ],
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+
+            // 연령별 차트 숨기기
+            $('#AgeHide').on('click', () => {
+                $('#ageChartAll').hide();
+            })
+        })
 
 
         // let MemberJoinDate1 = $('#MemberJoinDate1').val();
@@ -314,131 +791,6 @@
         //     }
         // });
 
-
-
-
-
-
-        let Add1 = $('#Add1').val();
-    let Add2 = $('#Add2').val();
-        let Add3 = $('#Add3').val();
-        let Add4 = $('#Add4').val();
-        let Add5 = $('#Add5').val();
-        let Add6 = $('#Add6').val();
-        let Add7 = $('#Add7').val();
-        let Add8 = $('#Add8').val();
-        let Add9 = $('#Add9').val();
-        let Add10 = $('#Add10').val();
-        let Add11 = $('#Add11').val();
-        let Add12 = $('#Add12').val();
-        let Add13 = $('#Add13').val();
-        let Add14 = $('#Add14').val();
-        let Add15 = $('#Add15').val();
-        let Add16 = $('#Add16').val();
-
-    var ctx = document.getElementById("myAdd").getContext('2d');
-    var myAdd = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["서울", "부산", "대구", "인천", "광주", "대전",
-                "울산", "강원", "경기", "경남", "경북", "전남", "전북", "제주", "충남", "충북"],
-            datasets: [{
-                data: [Add1,Add2,Add3,Add4,Add5,Add6,Add7,Add8,Add9,
-                    Add10,Add11,Add12,Add13,Add14,Add15,Add16 ], //컨트롤러에서 모델로 받아온다.
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-
-                ],
-                borderWidth: 1
-            }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
 </script>
 </body>
 </th:block>

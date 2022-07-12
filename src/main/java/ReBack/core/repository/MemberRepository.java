@@ -52,6 +52,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "or m.summers like '1938%' or m.summers like '1937%' or m.summers like '1936%' or m.summers like '1935%' or m.summers like '1934%'")
     List<Member> findBySummers8();
 
+    @Query("select distinct m from Member m where m.memberCode = m.memberCode")//All
+    List<Member> findBySummersAll();
 
     @Query("select m from Member m where m.memberAddress like '%서울%'")//
     List<Member> findByAdd1();

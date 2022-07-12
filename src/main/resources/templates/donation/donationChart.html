@@ -17,12 +17,14 @@
                 <th:block th:fragment="content">
                     <input type="hidden" id="findex" th:value="${findex}">
                     <input type="hidden" id="cindex" th:value="${cindex}">
+
                     <input type="hidden" id="findByType1" th:value="${findByType1}">
                     <input type="hidden" id="findByType2" th:value="${findByType2}">
                     <input type="hidden" id="findByArea1" th:value="${findByArea1}">
                     <input type="hidden" id="findByArea2" th:value="${findByArea2}">
                     <input type="hidden" id="findByArea3" th:value="${findByArea3}">
                     <input type="hidden" id="findByArea4" th:value="${findByArea4}">
+
                     <input type="hidden" id="findByAge1" th:value="${findByAge1}">
                     <input type="hidden" id="findByAge2" th:value="${findByAge2}">
                     <input type="hidden" id="findByAge3" th:value="${findByAge3}">
@@ -33,10 +35,24 @@
                     <input type="hidden" id="findByAge8" th:value="${findByAge8}">
                     <input type="hidden" id="findByAgeAll" th:value="${findByAgeAll}">
 
+                    <input type="hidden" id="findByMonth1" th:value="${findByMonth1}">
+                    <input type="hidden" id="findByMonth2" th:value="${findByMonth2}">
+                    <input type="hidden" id="findByMonth3" th:value="${findByMonth3}">
+                    <input type="hidden" id="findByMonth4" th:value="${findByMonth4}">
+                    <input type="hidden" id="findByMonth5" th:value="${findByMonth5}">
+                    <input type="hidden" id="findByMonth6" th:value="${findByMonth6}">
+                    <input type="hidden" id="findByMonth7" th:value="${findByMonth7}">
+                    <input type="hidden" id="findByMonth8" th:value="${findByMonth8}">
+                    <input type="hidden" id="findByMonth9" th:value="${findByMonth9}">
+                    <input type="hidden" id="findByMonth10" th:value="${findByMonth10}">
+                    <input type="hidden" id="findByMonth11" th:value="${findByMonth11}">
+                    <input type="hidden" id="findByMonth12" th:value="${findByMonth12}">
+                    <input type="hidden" id="findByMonthAll" th:value="${findByMonthAll}">
+
 
                     <button th:onclick="|location.href='@{/donation}'|">후원메인으로</button>
 
-                    <div style="width: 500px; height: 500px;">
+                    <div style="width: 500px; height: 500px; display: inline-block">
                             <h1>후원 현황 차트</h1>
                             <!--차트가 그려질 부분-->
                             <button type="submit" id="donationApplicationShow">차트 보이기</button>
@@ -57,59 +73,60 @@
                         <br>
                         <hr>
                             <h1>금전 후원 연령별 차트</h1>
-                        <button type="submit" id="age10">10대</button>
-                        <button type="submit" id="age20">20대</button>
-                        <button type="submit" id="age30">30대</button>
-                        <button type="submit" id="age40">40대</button>
-                        <button type="submit" id="age50">50대</button>
-                        <button type="submit" id="age60">60대</button>
-                        <button type="submit" id="age70">70대</button>
-                        <button type="submit" id="age80">80대</button>
-                        <button type="submit" id="ageAll">전체</button>
+                            <button type="submit" id="age10">10대</button>
+                            <button type="submit" id="age20">20대</button>
+                            <button type="submit" id="age30">30대</button>
+                            <button type="submit" id="age40">40대</button>
+                            <button type="submit" id="age50">50대</button>
+                            <button type="submit" id="age60">60대</button>
+                            <button type="submit" id="age70">70대</button>
+                            <button type="submit" id="age80">80대</button>
+                            <button type="submit" id="ageAll">전체</button>
                             <button type="submit" id="financialAgeHide">차트 숨기기</button>
-                        <canvas id="financialAgeChart10"></canvas>
-                        <canvas id="financialAgeChart20"></canvas>
-                        <canvas id="financialAgeChart30"></canvas>
-                        <canvas id="financialAgeChart40"></canvas>
-                        <canvas id="financialAgeChart50"></canvas>
-                        <canvas id="financialAgeChart60"></canvas>
-                        <canvas id="financialAgeChart70"></canvas>
-                        <canvas id="financialAgeChart80"></canvas>
-                        <canvas id="financialAgeChartAll"></canvas>
+                            <canvas id="financialAgeChart10"></canvas>
+                            <canvas id="financialAgeChart20"></canvas>
+                            <canvas id="financialAgeChart30"></canvas>
+                            <canvas id="financialAgeChart40"></canvas>
+                            <canvas id="financialAgeChart50"></canvas>
+                            <canvas id="financialAgeChart60"></canvas>
+                            <canvas id="financialAgeChart70"></canvas>
+                            <canvas id="financialAgeChart80"></canvas>
+                            <canvas id="financialAgeChartAll"></canvas>
+                        <br>
+                        <hr>
+                            <h1>금전 후원 기간별 차트</h1>
+                            <button type="submit" id="month1">1월</button>
+                            <button type="submit" id="month2">2월</button>
+                            <button type="submit" id="month3">3월</button>
+                            <button type="submit" id="month4">4월</button>
+                            <button type="submit" id="month5">5월</button>
+                            <button type="submit" id="month6">6월</button>
+                            <button type="submit" id="month7">7월</button>
+                            <button type="submit" id="month8">8월</button>
+                            <button type="submit" id="month9">9월</button>
+                            <button type="submit" id="month10">10월</button>
+                            <button type="submit" id="month11">11월</button>
+                            <button type="submit" id="month12">12월</button>
+                            <button type="submit" id="monthAll">전체 보기</button>
+                            <button type="submit" id="monthHide">차트 숨기기</button>
+                            <canvas id="monthChart1"></canvas>
+                            <canvas id="monthChart2"></canvas>
+                            <canvas id="monthChart3"></canvas>
+                            <canvas id="monthChart4"></canvas>
+                            <canvas id="monthChart5"></canvas>
+                            <canvas id="monthChart6"></canvas>
+                            <canvas id="monthChart7"></canvas>
+                            <canvas id="monthChart8"></canvas>
+                            <canvas id="monthChart9"></canvas>
+                            <canvas id="monthChart10"></canvas>
+                            <canvas id="monthChart11"></canvas>
+                            <canvas id="monthChart12"></canvas>
+                            <canvas id="monthChartAll"></canvas>
                     </div>
                 </th:block>
             </th:block>
             </body>
         </a>
-
-<!--            <div class="row">-->
-<!--                <div class="container">-->
-<!--                    <div style="margin-top:20px; margin-left:80px">-->
-<!--                        <select name="selectMonth" id="selectMonth">-->
-<!--                            <option value="1">JAN</option>-->
-<!--                            <option value="2">FEB</option>-->
-<!--                            <option value="3">MAR</option>-->
-<!--                            <option value="4">APR</option>-->
-<!--                            <option value="5">MAY</option>-->
-<!--                            <option value="6">JUN</option>-->
-<!--                            <option value="7">JUL</option>-->
-<!--                            <option value="8">AUG</option>-->
-<!--                            <option value="9">SEP</option>-->
-<!--                            <option value="10">OCT</option>-->
-<!--                            <option value="11">NOV</option>-->
-<!--                            <option value="12">DEC</option>-->
-<!--                        </select>-->
-<!--                        <button id="btn">보기</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--               <div id="graph" style="width: 80%; margin: 30px;">-->
-<!--                    <div>-->
-<!--                        <canvas id="canvas" height="350" width="600"></canvas>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            </div>-->
-
 
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
 
@@ -692,9 +709,661 @@
                     console.log("data : : : ::  :: : " + financialAgeChart)
                     console.log("data : : : ::  :: : " + financialAgeChart.toString()) // 금전 유형 차트 script
                 })
+
                 // 금전 후원 연령별 차트 숨기기
-               $('#financialAgeHide').on('click', () => {
+                $('#financialAgeHide').on('click', () => {
                     $('#financialAgeChart').hide();
+
+                })
+
+                $('#month1').on('click', () => { // 1월
+                    $('#monthChart1').show();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth1 = $('#findByMonth1').val();
+                    console.log(findByMonth1)
+                    var context = document.getElementById("monthChart1").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['1월'],
+                            datasets: [{
+                                labels: ['1월'],
+                                data: [findByMonth1], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month2').on('click', () => { // 2월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').show();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth2 = $('#findByMonth2').val();
+                    console.log(findByMonth2)
+                    var context = document.getElementById("monthChart2").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['2월'],
+                            datasets: [{
+                                labels: ['2월'],
+                                data: [findByMonth2], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(54, 162, 235, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(54, 162, 235, 1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month3').on('click', () => { // 3월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').show();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth3 = $('#findByMonth3').val();
+                    console.log(findByMonth3)
+                    var context = document.getElementById("monthChart3").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['3월'],
+                            datasets: [{
+                                labels: ['3월'],
+                                data: [findByMonth3], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(18, 130, 68, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(18, 130, 68, 1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month4').on('click', () => { // 4월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').show();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth4 = $('#findByMonth4').val();
+                    console.log(findByMonth4)
+                    var context = document.getElementById("monthChart4").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['4월'],
+                            datasets: [{
+                                labels: ['4월'],
+                                data: [findByMonth4], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(232, 202, 84, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(232, 202, 84, 1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month5').on('click', () => { // 5월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').show();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth5 = $('#findByMonth5').val();
+                    console.log(findByMonth5)
+                    var context = document.getElementById("monthChart5").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['5월'],
+                            datasets: [{
+                                labels: ['5월'],
+                                data: [findByMonth5], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(84,232,170,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(84,232,170,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month6').on('click', () => { // 6월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').show();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth6 = $('#findByMonth6').val();
+                    console.log(findByMonth6)
+                    var context = document.getElementById("monthChart6").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['6월'],
+                            datasets: [{
+                                labels: ['6월'],
+                                data: [findByMonth6], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(156,84,232,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(156,84,232,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month7').on('click', () => { // 7월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').show();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth7 = $('#findByMonth7').val();
+                    console.log(findByMonth7)
+                    var context = document.getElementById("monthChart7").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['7월'],
+                            datasets: [{
+                                labels: ['7월'],
+                                data: [findByMonth7], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(232,136,84,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(232,136,84,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month8').on('click', () => { // 8월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').show();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth8 = $('#findByMonth8').val();
+                    console.log(findByMonth8)
+                    var context = document.getElementById("monthChart8").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['8월'],
+                            datasets: [{
+                                labels: ['8월'],
+                                data: [findByMonth8], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(84,86,232,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(84,86,232,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month9').on('click', () => { // 9월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').show();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth9 = $('#findByMonth9').val();
+                    console.log(findByMonth9)
+                    var context = document.getElementById("monthChart9").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['9월'],
+                            datasets: [{
+                                labels: ['9월'],
+                                data: [findByMonth9], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgb(232,84,136,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgb(232,84,136,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month10').on('click', () => { // 10월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').show();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth10 = $('#findByMonth10').val();
+                    console.log(findByMonth10)
+                    var context = document.getElementById("monthChart10").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['10월'],
+                            datasets: [{
+                                labels: ['10월'],
+                                data: [findByMonth10], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgb(150,107,58,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgb(150,107,58,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month11').on('click', () => { // 11월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').show();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').hide();
+                    let findByMonth11 = $('#findByMonth11').val();
+                    console.log(findByMonth11)
+                    var context = document.getElementById("monthChart11").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['11월'],
+                            datasets: [{
+                                labels: ['11월'],
+                                data: [findByMonth11], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgb(73,101,39,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgb(73,101,39,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#month12').on('click', () => { // 12월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').show();
+                    $('#monthChartAll').hide();
+                    let findByMonth12 = $('#findByMonth12').val();
+                    console.log(findByMonth12)
+                    var context = document.getElementById("monthChart12").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['12월'],
+                            datasets: [{
+                                labels: ['12월'],
+                                data: [findByMonth12], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgb(136,61,29,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgb(136,61,29,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                $('#monthAll').on('click', () => { // 전체 월
+                    $('#monthChart1').hide();
+                    $('#monthChart2').hide();
+                    $('#monthChart3').hide();
+                    $('#monthChart4').hide();
+                    $('#monthChart5').hide();
+                    $('#monthChart6').hide();
+                    $('#monthChart7').hide();
+                    $('#monthChart8').hide();
+                    $('#monthChart9').hide();
+                    $('#monthChart10').hide();
+                    $('#monthChart11').hide();
+                    $('#monthChart12').hide();
+                    $('#monthChartAll').show();
+                    let findByMonth1 = $('#findByMonth1').val();
+                    let findByMonth2 = $('#findByMonth2').val();
+                    let findByMonth3 = $('#findByMonth3').val();
+                    let findByMonth4 = $('#findByMonth4').val();
+                    let findByMonth5 = $('#findByMonth5').val();
+                    let findByMonth6 = $('#findByMonth6').val();
+                    let findByMonth7 = $('#findByMonth7').val();
+                    let findByMonth8 = $('#findByMonth8').val();
+                    let findByMonth9 = $('#findByMonth9').val();
+                    let findByMonth10 = $('#findByMonth10').val();
+                    let findByMonth11 = $('#findByMonth11').val();
+                    let findByMonth12 = $('#findByMonth12').val();
+                    let findByMonthAll = $('#findByMonthAll').val();
+                    console.log(findByMonthAll)
+                    var context = document.getElementById("monthChartAll").getContext('2d');
+                    var monthChart = new Chart(context, {
+                        type: 'bar',
+                        data: {
+                            labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                            datasets: [{
+                                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                                data: [findByMonth1, findByMonth2, findByMonth3, findByMonth4, findByMonth5, findByMonth6, findByMonth7, findByMonth8, findByMonth9, findByMonth10, findByMonth11, findByMonth12, findByMonthAll], //컨트롤러에서 모델로 받아온다.
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(18, 130, 68, 0.2)',
+                                    'rgba(232, 202, 84, 0.2)',
+                                    'rgba(84,232,170,0.2)',
+                                    'rgba(156,84,232,0.2)',
+                                    'rgba(232,136,84,0.2)',
+                                    'rgba(84,86,232,0.2)',
+                                    'rgb(232,84,136,0.2)',
+                                    'rgb(150,107,58,0.2)',
+                                    'rgb(73,101,39,0.2)',
+                                    'rgb(136,61,29,0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(18, 130, 68, 1)',
+                                    'rgba(232, 202, 84, 1)',
+                                    'rgba(84,232,170,1)',
+                                    'rgba(156,84,232,1)',
+                                    'rgba(232,136,84,1)',
+                                    'rgba(84,86,232,1)',
+                                    'rgb(232,84,136,1)',
+                                    'rgb(150,107,58,1)',
+                                    'rgb(73,101,39,1)',
+                                    'rgb(136,61,29,1)'
+                                ],
+                                borderWidth: 1
+                            }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                })
+
+                // 금전 후원 기간별 차트 숨기기
+                $('#monthHide').on('click', () => {
+                    $('#monthChartAll').hide();
 
                 })
 
